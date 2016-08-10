@@ -1,0 +1,139 @@
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Cad_Curso.aspx.vb" Inherits="Cadastros_Cad_Curso" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="CPH_Head" runat="Server">
+</asp:Content>
+<asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
+
+    <div class="grid">
+        <h1>Cadastro de Cursos</h1>
+        <hr />
+
+        <div class="form-group">
+
+            <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
+                <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
+            </div>
+            <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
+                <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
+                        Informações Gerais
+                    </div>
+
+                    <fieldset class="rr" runat="server">
+                        <div class="row rr">
+                            <div class="col-md-6 col-md-offset-3">
+                                <asp:Label ID="L_Titulo" runat="server" Text="Título:"></asp:Label>
+                                <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título do Curso"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
+                                    Display="Dynamic" ErrorMessage="Título Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe um título para este curso.</asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div class="row rr">
+                            <div class="col-md-3 col-md-offset-3">
+                                <asp:Label ID="L_Dt_Inicio" runat="server" Text="Data de Início:"></asp:Label>
+                                <asp:TextBox ID="TB_Dt_Inicio" runat="server" class="form-control" ToolTip="Data de Início do Curso" type="Date" name="dtinicio"></asp:TextBox>
+                            </div>
+                            <div class="col-md-3">
+                                <asp:Label ID="L_Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
+                                <asp:TextBox ID="TB_Dt_Termino" runat="server" class="form-control" ToolTip="Data de Término do Curso" type="Date"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="row rr">
+                            <div class="col-md-6 col-md-offset-3">
+                                <asp:Label ID="L_Usuario" runat="server" Text="Instrutor:"></asp:Label>
+                                <asp:DropDownList ID="DDL_Usuario" runat="server" DataValueField="Cod_Usuario" class="form-control" DataTextField="Nome">
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RFV_DDL_Usuario" runat="server" ControlToValidate="DDL_Usuario"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    Class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div class="row rr">
+                            <div class="col-md-6 col-md-offset-3">
+                                <asp:Label ID="L_Categoria" runat="server" Text="Categoria:"></asp:Label>
+                                <asp:DropDownList ID="DDL_Categoria" runat="server" DataValueField="Cod_Categoria" class="form-control" DataTextField="Descricao" Value="0">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="row rr">
+                            <div class="col-md-6 col-md-offset-3">
+                                <asp:Label ID="L_palavra_chave" runat="server" Text="Palavras-Chaves:"></asp:Label>
+                                <asp:TextBox ID="TB_palavra_chave" runat="server" TextMode="MultiLine" ToolTip="Palavras-Chaves" Columns="50" Rows="5" class="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="row rr">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="checkbox-inline">
+                                    <asp:CheckBox ID="CB_Inativos" runat="server" Text="Inativo" ToolTip="Status do Registro" CssClass="pull-right" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+
+            <div class="col-xs-12" id="Visibilidade" runat="server">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
+                        Definir Visibilidade
+                    </div>
+                    <asp:UpdatePanel ID="UP_Visibilidade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                        <ContentTemplate>
+                            <fieldset class="rr">
+                                <div class="col-md-5">
+                                    <div class="row rr">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <asp:Label ID="L_N_Incluidos" runat="server" Text="Departamentos Sem Visibilidade"></asp:Label>
+                                        </div>
+                                    </div>
+                                    <div class="row rr">
+                                        <div class="col-md-12">
+                                            <asp:ListBox ID="LB_NIncluidos" runat="server" CssClass="form-control" SelectionMode="Multiple" Rows="15"></asp:ListBox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="margin-top: 5%">
+                                    <div class="row rr">
+                                        <asp:Button ID="B_Incluir_Todos" Text=">>" runat="server" class="btn btn-default form-control" ToolTip="Selecionar Todos os Departamento" />
+                                        <asp:Button ID="B_Incluir" Text=">" runat="server" class="btn btn-default form-control" ToolTip="Selecionar Departamento" />
+                                        <asp:Button ID="B_NIncluir" Text="<" runat="server" class="btn btn-default form-control" ToolTip="Desmarcar Departamento" />
+                                        <asp:Button ID="B_NIncluir_Todos" Text="<<" runat="server" class="btn btn-default form-control" ToolTip="Desmarcar Todos os Departamentos Selecionados" />
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row rr">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <asp:Label ID="Label1" runat="server" Text="Departamentos Com Visibilidade"></asp:Label>
+                                        </div>
+                                    </div>
+                                    <div class="row rr">
+                                        <div class="col-md-12">
+                                            <asp:ListBox ID="LB_Incluidos" runat="server" CssClass="form-control" SelectionMode="Multiple" Rows="15"></asp:ListBox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+            <fieldset class="rr">
+                <div class="row rr">
+                    <div class="col-md-12  col-md-offset-9">
+                        <asp:Button ID="B_Cancelar" Text="CANCELAR" runat="server" class="btn btn-danger" ToolTip="Cancelar" />
+                        <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Registro" CausesValidation="true" ValidationGroup="A" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</asp:Content>

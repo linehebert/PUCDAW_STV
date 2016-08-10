@@ -1,0 +1,52 @@
+﻿<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head runat="server">
+    <title>STV PUCDAW</title>
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap.js" type="text/javascript"></script>
+    
+    <asp:ContentPlaceHolder ID="CPH_Head" runat="server"></asp:ContentPlaceHolder>
+</head>
+
+<body>
+    <form id="Principal" runat="server">
+        <asp:ScriptManager ID="SM" runat="server" EnableScriptGlobalization="true" EnableScriptLocalization="true" />
+
+        <asp:ContentPlaceHolder ID="CPH_Menu" runat="server">
+
+            <div class="container">
+                <div class="head">
+                    <div class="logo">LOGOTIPO</div>
+                </div>
+                <nav class="navbar navbar-default" style="margin-bottom: 1px;">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="../Login.aspx">Login </a>
+                            <a class="navbar-brand" id="departamento" href="../Consultas/Con_Departamento.aspx">Departamentos </a>
+                            <a class="navbar-brand" href="../Consultas/Con_Usuario.aspx">Usuários </a>
+                            <a class="navbar-brand" href="../Consultas/Con_Curso.aspx">Cursos </a>
+                            <a class="navbar-brand" href="../Consultas/Con_Meus_Cursos.aspx">Meus Cursos</a>
+                            <a class="navbar-brand" href="../Cadastros/Cad_Atividade.aspx">Atividades </a>
+                            <a class="navbar-brand" href="../Consultas/Con_Unidade.aspx">Unidades </a>
+                            <asp:LinkButton ID="LB_Sair" CssClass="navbar-brand" runat="server" Text="Sair" />
+                        </div>
+                    </div>
+                </nav>
+                <div class="conteudo">
+                    <asp:ContentPlaceHolder ID="CPH_Conteudo" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+            <footer id="main">
+                Sistema de Treinamento em Vídeos - Ahebert ;*
+            </footer>
+        </asp:ContentPlaceHolder>
+    </form>
+
+</body>
+</html>
