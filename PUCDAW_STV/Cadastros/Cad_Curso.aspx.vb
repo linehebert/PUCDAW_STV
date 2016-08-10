@@ -82,66 +82,77 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
     End Sub
 
     Protected Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
+        If LB_Incluidos.Items.Count > 0 Then
+            If TB_Dt_Termino.Text >= Today Then
+                If Cod_Curso <> 0 Then
+                    'Alterar Informações do Curso
+                    Dim Dados As New Curso.Dados
 
-        If Cod_Curso <> 0 Then
-            'Alterar Informações do Curso
-            Dim Dados As New Curso.Dados
+                    Dados.Cod_Curso = Cod_Curso
+                    Dados.Titulo = TB_Titulo.Text
+                    Dados.Dt_Inicio = TB_Dt_Inicio.Text
+                    Dados.Dt_Termino = TB_Dt_Termino.Text
+                    Dados.Palavras_Chave = TB_palavra_chave.Text
+                    Dados.Instrutor = DDL_Usuario.SelectedValue
+                    Dados.Categoria = DDL_Categoria.SelectedValue
+                    Dados.Curso_Inativo = CB_Inativos.Checked
 
-            Dados.Cod_Curso = Cod_Curso
-            Dados.Titulo = TB_Titulo.Text.ToUpper()
-            Dados.Dt_Inicio = TB_Dt_Inicio.Text
-            Dados.Dt_Termino = TB_Dt_Termino.Text
-            Dados.Palavras_Chave = TB_palavra_chave.Text
-            Dados.Instrutor = DDL_Usuario.SelectedValue
-            Dados.Categoria = DDL_Categoria.SelectedValue
-            Dados.Curso_Inativo = CB_Inativos.Checked
+                    Curso.Alterar(Dados)
 
-            Curso.Alterar(Dados)
+                    'Excluir Visibilidades Anteriores
+                    Curso.Delete(Cod_Curso)
 
-            'Excluir Visibilidades Anteriores
-            Curso.Delete(Cod_Curso)
+                    'Insere novamente a visibilidade correta
+                    Dim listaSelecionados As New ListItemCollection
+                    For Each item As ListItem In LB_Incluidos.Items
+                        listaSelecionados.Add(item)
+                    Next
 
-            'Insere novamente a visibilidade correta
-            Dim listaSelecionados As New ListItemCollection
-            For Each item As ListItem In LB_Incluidos.Items
-                listaSelecionados.Add(item)
-            Next
+                    For Each item As ListItem In listaSelecionados
+                        Curso.Inserir_Visibilidade(item.Value, Cod_Curso)
+                    Next
+                    UP_Visibilidade.Update()
+                    Voltar()
 
-            For Each item As ListItem In listaSelecionados
-                Curso.Inserir_Visibilidade(item.Value, Cod_Curso)
-            Next
-            UP_Visibilidade.Update()
-            Voltar()
+                Else
+                    'INserir informações do curso
+                    Dim Dados As New Curso.Dados
 
+                    Dados.Titulo = TB_Titulo.Text.ToUpper()
+                    Dados.Dt_Inicio = TB_Dt_Inicio.Text
+                    Dados.Dt_Termino = TB_Dt_Termino.Text
+                    Dados.Palavras_Chave = TB_palavra_chave.Text
+                    Dados.Instrutor = DDL_Usuario.SelectedValue
+                    Dados.Categoria = DDL_Categoria.SelectedValue
+                    Dados.Curso_Inativo = CB_Inativos.Checked
+
+                    Dim codigo_curso As Integer = Curso.Inserir(Dados)
+
+                    'Inserir visibilidade
+                    Dim listaSelecionados As New ListItemCollection
+                    For Each item As ListItem In LB_Incluidos.Items
+                        listaSelecionados.Add(item)
+                    Next
+
+                    For Each item As ListItem In listaSelecionados
+                        Curso.Inserir_Visibilidade(item.Value, codigo_curso)
+                    Next
+                    UP_Visibilidade.Update()
+                    Voltar()
+                End If
+            Else
+                L_Info.Text = "A data de término do curso não pode ser inferior a data atual, informe uma nova data de término."
+                RegistrarScript("$('#myModalInfo').modal('show')")
+            End If
         Else
-            'INserir informações do curso
-            Dim Dados As New Curso.Dados
-
-            Dados.Titulo = TB_Titulo.Text.ToUpper()
-            Dados.Dt_Inicio = TB_Dt_Inicio.Text
-            Dados.Dt_Termino = TB_Dt_Termino.Text
-            Dados.Palavras_Chave = TB_palavra_chave.Text
-            Dados.Instrutor = DDL_Usuario.SelectedValue
-            Dados.Categoria = DDL_Categoria.SelectedValue
-            Dados.Curso_Inativo = CB_Inativos.Checked
-
-            Dim codigo_curso As Integer = Curso.Inserir(Dados)
-
-            'Inserir visibilidade
-            Dim listaSelecionados As New ListItemCollection
-            For Each item As ListItem In LB_Incluidos.Items
-                listaSelecionados.Add(item)
-            Next
-
-            For Each item As ListItem In listaSelecionados
-                Curso.Inserir_Visibilidade(item.Value, codigo_curso)
-            Next
-            UP_Visibilidade.Update()
-            Voltar()
+            L_Info.Text = "É preciso definir a visibilidade deste curso para concluir, selecione quais os departamentos terão acesso a este curso."
+            RegistrarScript("$('#myModalInfo').modal('show')")
         End If
-
     End Sub
 
+    Private Sub B_Continuar_Click(sender As Object, e As EventArgs) Handles B_Continuar.Click
+        RegistrarScript("$('#myModalInfo').modal('hide')")
+    End Sub
     Protected Sub B_Cancelar_Click(sender As Object, e As System.EventArgs) Handles B_Cancelar.Click
         Voltar()
     End Sub
@@ -260,6 +271,7 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
         item.Value = 0
         DDL_Categoria.Items.Insert(0, item)
     End Sub
+
 
 #End Region
 End Class

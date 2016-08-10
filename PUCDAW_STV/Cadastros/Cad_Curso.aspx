@@ -10,7 +10,6 @@
         <hr />
 
         <div class="form-group">
-
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
             </div>
@@ -31,18 +30,24 @@
                                 <asp:Label ID="L_Titulo" runat="server" Text="Título:"></asp:Label>
                                 <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título do Curso"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
-                                    Display="Dynamic" ErrorMessage="Título Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Informe um título para este curso.</asp:RequiredFieldValidator>
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe um título para este curso</asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row rr">
                             <div class="col-md-3 col-md-offset-3">
                                 <asp:Label ID="L_Dt_Inicio" runat="server" Text="Data de Início:"></asp:Label>
-                                <asp:TextBox ID="TB_Dt_Inicio" runat="server" class="form-control" ToolTip="Data de Início do Curso" type="Date" name="dtinicio"></asp:TextBox>
+                                <asp:TextBox ID="TB_Dt_Inicio" runat="server" class="form-control" ToolTip="INforme a data de início do curso" type="Date" name="dtinicio"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RFV_TB_Dt_Inicio" runat="server" ControlToValidate="TB_Dt_Inicio"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
                             </div>
                             <div class="col-md-3">
                                 <asp:Label ID="L_Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
-                                <asp:TextBox ID="TB_Dt_Termino" runat="server" class="form-control" ToolTip="Data de Término do Curso" type="Date"></asp:TextBox>
+                                <asp:TextBox ID="TB_Dt_Termino" runat="server" class="form-control" ToolTip="Informe a data de término do curso" type="Date"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RFV_TB_Dt_Termino" runat="server" ControlToValidate="TB_Dt_Termino"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row rr">
@@ -52,7 +57,7 @@
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RFV_DDL_Usuario" runat="server" ControlToValidate="DDL_Usuario"
                                     Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    Class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
+                                    Class="validation">* Informe qual o instrutor deste curso</asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row rr">
@@ -60,6 +65,9 @@
                                 <asp:Label ID="L_Categoria" runat="server" Text="Categoria:"></asp:Label>
                                 <asp:DropDownList ID="DDL_Categoria" runat="server" DataValueField="Cod_Categoria" class="form-control" DataTextField="Descricao" Value="0">
                                 </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RFV_DDL_Categoria" runat="server" ControlToValidate="DDL_Categoria"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    Class="validation">* Informe qual a categoria deste curso</asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row rr">
@@ -134,6 +142,30 @@
                     </div>
                 </div>
             </fieldset>
+
+            <!--Modal Exclusão-->
+            <%-- data-toggle="modal" data-target="#myModalE"--%>
+            <div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                            <ContentTemplate>
+                                <div class="modal-header">
+                                    <h4>Atenção!
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <asp:Label ID="L_Info" runat="server" Text=""></asp:Label>
+                                </div>
+                                <div class="modal-footer">
+                                    <asp:Button ID="B_Continuar" Text="CONTINUAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Continuar cadastro do curso" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </asp:Content>
