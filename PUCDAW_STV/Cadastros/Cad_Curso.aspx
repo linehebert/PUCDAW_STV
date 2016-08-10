@@ -143,8 +143,7 @@
                 </div>
             </fieldset>
 
-            <!--Modal Exclusão-->
-            <%-- data-toggle="modal" data-target="#myModalE"--%>
+            <!--Modal Informações-->
             <div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
