@@ -40,7 +40,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
     Private Sub Carrega_Atividades(Cod_Unidade As Integer)
         Try
-            rptAtividades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade)
+            rptAtividades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade, False)
             rptAtividades.DataBind()
         Catch ex As Exception
             Throw

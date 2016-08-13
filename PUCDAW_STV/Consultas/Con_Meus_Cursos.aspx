@@ -53,16 +53,14 @@
                                 <asp:TemplateField ControlStyle-Width="15px">
                                     <ItemTemplate>
                                         <asp:HyperLink ID="HL_Visualizar" runat="server">
-                                     <asp:Image ImageUrl="~/Images/visualizar.png" runat="server" ToolTip="Visualizar Conteúdo" />
+                                        <asp:Image ImageUrl="~/Images/visualizar.png" runat="server" ToolTip="Visualizar Conteúdo" />
                                         </asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Cod_Curso" HeaderText="Código" ItemStyle-HorizontalAlign="Center" />
                                 <asp:BoundField DataField="Titulo" HeaderText="Titulo" ItemStyle-VerticalAlign="Middle" />
                                 <asp:BoundField DataField="Instrutor" HeaderText="Instrutor" ItemStyle-VerticalAlign="Middle" />
                                 <asp:BoundField DataField="Dt_Inicio" HeaderText="Data Início" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:BoundField DataField="Dt_Termino" HeaderText="Data Término" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:dd/MM/yyyy}" />
-                                <asp:CheckBoxField HeaderText="Inativo" DataField="Curso_Inativo" SortExpression="Inativo" />
                             </Columns>
                             <RowStyle CssClass="cursor-pointer" />
                             <EmptyDataTemplate>

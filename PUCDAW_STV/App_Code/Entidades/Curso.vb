@@ -96,6 +96,18 @@ Namespace STV.Entidades
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
 
+        Public Function Carrega_Conteudo_Completo(Cod_Curso As Integer) As DataTable
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT U.Titulo as Unidade, A.Titulo as Atividade, U.Cod_Unidade, A.Cod_Atividade ")
+            Sql.AppendLine("FROM UNIDADE AS U")
+            Sql.AppendLine("LEFT JOIN Atividade as A ON A.Cod_Unidade = U.Cod_Unidade")
+            Sql.AppendLine("WHERE 0 = 0")
+            If Cod_Curso <> 0 Then Sql.AppendLine("AND Cod_Curso = " + Util.CString(Cod_Curso))
+
+
+            Return Biblio.Retorna_DataTable(Sql.ToString())
+        End Function
+
         Public Sub Delete(Cod_Curso As Integer)
             Dim Sql As New StringBuilder
             Sql.AppendLine("DELETE FROM cursoXdepartamento")

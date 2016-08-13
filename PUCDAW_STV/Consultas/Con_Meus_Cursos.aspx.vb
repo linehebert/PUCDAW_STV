@@ -90,6 +90,17 @@ Partial Class Consultas_Con_Meus_Cursos : Inherits STV.Base.Page
         End Try
     End Sub
 
+    Protected Sub GV_Curso_RowDataBound(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles GV_Curso.RowDataBound
+        Try
+            If e.Row.RowType = DataControlRowType.DataRow Then
+                CType(e.Row.FindControl("HL_Visualizar"), HyperLink).NavigateUrl = "../Consultas/Conteudo.aspx?Cod=" + Criptografia.Encryptdata(Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString)
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
 #Region "Carrega DDLs"
     Protected Sub Preenche_DDL_Usuario()
         Try

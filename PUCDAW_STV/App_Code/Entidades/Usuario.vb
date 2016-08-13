@@ -14,6 +14,9 @@ Namespace STV.Entidades
             Public Usuario_Inativo As Boolean
             Public Email As String
             Public Cod_Departamento As Integer
+            Public Resposta As String
+            Public Cod_Atividade As Integer
+            Public Cod_Questao As Integer
         End Class
 
         Public Function Carrega_Usuario(Cod_Usuario As Integer) As Dados
@@ -71,7 +74,7 @@ Namespace STV.Entidades
             Sql.AppendLine(",Email = " + Util.Sql_String(Registro.Email))
             Sql.AppendLine("WHERE Cod_Usuario = " + Util.Sql_String(Registro.Cod_Usuario))
 
-            Biblio.Executar_Query(Sql.ToString())
+            Biblio.Executar_Sql(Sql.ToString())
         End Sub
 
         Public Sub Inserir(Registro As Dados)
@@ -88,6 +91,8 @@ Namespace STV.Entidades
 
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
+
+
 
         Public Function Existe_CPF(cpf_informado As String) As Boolean
             Dim Sql As New StringBuilder

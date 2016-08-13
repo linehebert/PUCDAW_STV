@@ -22,6 +22,8 @@ Namespace STV.Entidades
             Public Alternativa_Correta As String
             Public Justificativa As String
             Public Cod_Questao As Integer
+            Public Cod_Usuario As Integer
+            Public Resposta As String
 
         End Class
 
@@ -51,12 +53,13 @@ Namespace STV.Entidades
             Return Retorno
         End Function
 
-        Public Function Carrega_Atividades(Cod_Unidade As Integer) As DataTable
+        Public Function Carrega_Atividades(Cod_Unidade As Integer, Publica As Boolean) As DataTable
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT Cod_Atividade, Titulo, Dt_Abertura, Dt_Fechamento, Valor, Cod_Unidade")
+            Sql.AppendLine("SELECT Cod_Atividade, Titulo, Dt_Abertura, Dt_Fechamento, Valor, Cod_Unidade, Publica")
             Sql.AppendLine("FROM Atividade")
             Sql.AppendLine("WHERE 0 = 0")
             If Cod_Unidade <> 0 Then Sql.AppendLine("AND Cod_Unidade = " + Util.CString(Cod_Unidade))
+            If Publica = True Then Sql.AppendLine("AND Publica = 1")
             Sql.AppendLine("ORDER BY Cod_Unidade ASC")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
@@ -64,13 +67,40 @@ Namespace STV.Entidades
 
         Public Function Carrega_Questoes(Cod_Atividade As Integer) As DataTable
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT Cod_Atividade, Cod_Questao, Enunciado, Alternativa_A, Alternativa_B, Alternativa_C, Alternativa_D, Alternativa_Correta, Justificativa")
-            Sql.AppendLine("FROM Questao")
-            Sql.AppendLine("WHERE 0 = 0")
+            Sql.AppendLine("SELECT  Cod_Atividade, Cod_Questao, Enunciado, Alternativa_A, Alternativa_B, Alternativa_C, Alternativa_D, Alternativa_Correta, Justificativa")
+            Sql.AppendLine(" FROM Questao")
+            Sql.AppendLine(" WHERE 0 = 0")
             If Cod_Atividade <> 0 Then Sql.AppendLine("AND Cod_Atividade = " + Util.CString(Cod_Atividade))
-            Sql.AppendLine("ORDER BY Cod_Atividade ASC")
+            Sql.AppendLine(" ORDER BY Cod_Questao ASC")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
+        End Function
+
+        Public Function Carrega_Questao_Inicial(Cod_Atividade As Integer) As Dados
+            Dim Retorno As New Dados
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT TOP 1")
+            Sql.AppendLine(" Cod_Atividade, Cod_Questao, Enunciado, Alternativa_A, Alternativa_B, Alternativa_C, Alternativa_D, Alternativa_Correta, Justificativa")
+            Sql.AppendLine(" FROM Questao")
+            Sql.AppendLine(" WHERE 0 = 0")
+            If Cod_Atividade <> 0 Then Sql.AppendLine("AND Cod_Atividade = " + Util.CString(Cod_Atividade))
+            Sql.AppendLine(" ORDER BY Cod_Questao ASC")
+
+            Dim Query = Biblio.Executar_Query(Sql.ToString)
+            If Query.Read() Then
+                Retorno.Cod_Atividade = Util.CInteger(Query("Cod_Atividade"))
+                Retorno.Cod_Questao = Util.CInteger(Query("Cod_Questao"))
+                Retorno.Enunciado = Util.CString(Query("Enunciado"))
+                Retorno.Alternativa_A = Util.CString(Query("Alternativa_A"))
+                Retorno.Alternativa_B = Util.CString(Query("Alternativa_B"))
+                Retorno.Alternativa_C = Util.CString(Query("Alternativa_C"))
+                Retorno.Alternativa_D = Util.CString(Query("Alternativa_D"))
+                Retorno.Alternativa_Correta = Util.CString(Query("Alternativa_Correta"))
+                Retorno.Justificativa = Util.CString(Query("Justificativa"))
+            End If
+            Biblio.FechaConexao()
+
+            Return Retorno
         End Function
 
         Public Function Carrega_Questao(Cod_Questao As Integer) As Dados
@@ -80,6 +110,39 @@ Namespace STV.Entidades
             Sql.AppendLine("SELECT Cod_Atividade, Cod_Questao, Enunciado, Alternativa_A, Alternativa_B, Alternativa_C, Alternativa_D, Alternativa_Correta, Justificativa")
             Sql.AppendLine("FROM Questao")
             Sql.AppendLine(" WHERE Cod_Questao = " + Util.CString(Cod_Questao))
+
+            Dim Query = Biblio.Executar_Query(Sql.ToString)
+            If Query.Read() Then
+                Retorno.Cod_Atividade = Util.CInteger(Query("Cod_Atividade"))
+                Retorno.Cod_Questao = Util.CInteger(Query("Cod_Questao"))
+                Retorno.Enunciado = Util.CString(Query("Enunciado"))
+                Retorno.Alternativa_A = Util.CString(Query("Alternativa_A"))
+                Retorno.Alternativa_B = Util.CString(Query("Alternativa_B"))
+                Retorno.Alternativa_C = Util.CString(Query("Alternativa_C"))
+                Retorno.Alternativa_D = Util.CString(Query("Alternativa_D"))
+                Retorno.Alternativa_Correta = Util.CString(Query("Alternativa_Correta"))
+                Retorno.Justificativa = Util.CString(Query("Justificativa"))
+            End If
+            Biblio.FechaConexao()
+
+            Return Retorno
+        End Function
+
+        Public Function Proxima_Questao(Cod_Atividade As Integer, Cod_Questao As Integer, Ordem As String) As Dados
+
+            Dim Retorno As New Dados
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT TOP 1 Cod_Atividade, Cod_Questao, Enunciado, Alternativa_A, Alternativa_B, Alternativa_C, Alternativa_D, Alternativa_Correta, Justificativa")
+            Sql.AppendLine("FROM Questao")
+            Sql.AppendLine(" WHERE Cod_Atividade = " + Util.CString(Cod_Atividade))
+            If Not String.IsNullOrEmpty(Ordem) And Ordem = "ASC" Then
+                Sql.AppendLine(" AND Cod_Questao > " + Util.CString(Cod_Questao))
+                Sql.AppendLine(" ORDER BY Cod_Questao ASC")
+            ElseIf Not String.IsNullOrEmpty(Ordem) And Ordem = "DESC" Then
+                Sql.AppendLine(" AND Cod_Questao < " + Util.CString(Cod_Questao))
+                Sql.AppendLine(" ORDER BY Cod_Questao DESC")
+            End If
+
 
             Dim Query = Biblio.Executar_Query(Sql.ToString)
             If Query.Read() Then
@@ -176,6 +239,36 @@ Namespace STV.Entidades
             Dim Sql As New StringBuilder
             Sql.AppendLine("DELETE FROM Atividade")
             Sql.AppendLine("WHERE Cod_Atividade = " + Util.Sql_String(Registro.Cod_Atividade))
+
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
+
+
+
+        Public Sub Alterar_Resposta(Registro As Dados)
+
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("UPDATE Usuarioxrespostas SET")
+            Sql.AppendLine("cod_usuario = " + Util.Sql_String(Registro.Cod_Usuario))
+            Sql.AppendLine(",cod_atividade = " + Util.Sql_String(Registro.Cod_Atividade))
+            Sql.AppendLine(",cod_questao = " + Util.Sql_String(Registro.Cod_Questao))
+            Sql.AppendLine(",resposta = " + Util.Sql_String(Registro.Resposta))
+            Sql.AppendLine("WHERE Cod_Usuario = " + Util.Sql_String(Registro.Cod_Usuario))
+            Sql.AppendLine("AND Cod_Questao = " + Util.Sql_String(Registro.Cod_Questao))
+            Sql.AppendLine("AND Cod_Atividade = " + Util.Sql_String(Registro.Cod_Atividade))
+
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
+
+        Public Sub Inserir_Resposta(Registro As Dados)
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("INSERT INTO Usuarioxrespostas (cod_usuario, cod_atividade, cod_questao, resposta)")
+            Sql.AppendLine("VALUES(")
+            Sql.AppendLine(Util.Sql_String(Registro.Cod_Usuario))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Atividade))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Questao))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Resposta))
+            Sql.AppendLine(")")
 
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
