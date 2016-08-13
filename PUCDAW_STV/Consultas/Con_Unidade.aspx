@@ -38,6 +38,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>Unidades deste Curso
@@ -48,6 +49,11 @@
                             <div class="row rr form-inline">
                                 <div class="col-md-2 col-md-offset-10">
                                     <asp:ImageButton ID="B_Nova_Unidade" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Nova Unidade" />
+                                </div>
+                            </div>
+                            <div class="row rr" id="Nenhuma_Unidade" visible="false" runat="server">
+                                <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                    <asp:Label ID="Label1" runat="server" Text="Não há unidades cadastradas para este curso."></asp:Label>
                                 </div>
                             </div>
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -127,7 +133,8 @@
                                         <div class="col-md-12">
                                             <h4 class="modal-title" id="L_Titulo_E">Tem certeza que deseja excluir esta unidade bem como todo o seu conteúdo?</h4>
                                         </div>
-                                    </div> </div>
+                                    </div>
+                                </div>
                                 <div class="modal-footer">
                                     <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão da Questão" />
                                     <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Questão" runat="server" class="btn btn-primary" ToolTip="Excluir Questão" />

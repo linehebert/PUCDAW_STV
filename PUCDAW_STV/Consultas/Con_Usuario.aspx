@@ -38,7 +38,6 @@
             <div class="panel panel-primary  table-responsive">
                 <div class="panel-heading">
                     Usuários
-                    <asp:ImageButton ID="ImageButton1" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Usuário" />
                 </div>
                 <div class="panel-body">
                         <asp:GridView ID="GV_Usuario" runat="server" AutoGenerateColumns="False" GridLines="None"

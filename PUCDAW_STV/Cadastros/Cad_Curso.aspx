@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Cad_Curso.aspx.vb" Inherits="Cadastros_Cad_Curso" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">

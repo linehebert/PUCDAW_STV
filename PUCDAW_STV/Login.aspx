@@ -5,12 +5,12 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="conteudo">
+    <div class="conteudo rr">
 
             <div class="container droppedHover">
                 <div class="form-signin" role="form" runat="server">
                     INSIRA SEUS DADOS DE ACESSO<br /><br />
-                    <div id="Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
+                    <div id="Erro" class="alert alert-danger" role="alert" runat="server">
                         <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
                     </div>
                     <label>CPF:</label>

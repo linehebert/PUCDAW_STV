@@ -1,4 +1,5 @@
 ﻿Imports STV.Seguranca
+Imports STV.Entidades
 
 Partial Class Login : Inherits STV.Base.Page
 
@@ -11,6 +12,7 @@ Partial Class Login : Inherits STV.Base.Page
             Return _Autenticacao
         End Get
     End Property
+
 
     Protected Sub B_Login_Click(sender As Object, e As System.EventArgs) Handles B_Login.Click
         Dim CPF As String = (Request("TB_CPF").Replace(".", "")).Replace("-", "")

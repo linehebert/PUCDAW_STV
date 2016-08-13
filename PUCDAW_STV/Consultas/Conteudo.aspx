@@ -29,6 +29,14 @@
                 </div>
             </div>
 
+            <div class="panel panel-default" id="Nenhuma_Unidade" Visible="false" runat="server">
+                <div class="row rr">
+                    <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top:30px; margin-bottom:30px;">
+                        <asp:Label ID="Label1" runat="server" Text="Nenhuma unidade foi disponibilidade para este curso no momento."></asp:Label>
+                    </div>
+                </div>
+            </div>
+
             <asp:UpdatePanel ID="UP_Unidades" runat="server">
                 <ContentTemplate>
                     <asp:Repeater ID="rptUnidades" runat="server">

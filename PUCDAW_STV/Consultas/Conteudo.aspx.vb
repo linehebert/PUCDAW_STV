@@ -64,8 +64,14 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         Try
             If Not Page.IsPostBack() Then
                 Monta_Dados()
-                Carrega_Unidades(Cod_Curso)
 
+                Dim qntd_unidade As String = Biblio.Pega_Valor("SELECT Cod_Unidade FROM Unidade WHERE Cod_Curso=" + Cod_Curso, "Cod_Unidade")
+                If qntd_unidade = Nothing Then
+                    Nenhuma_Unidade.Visible = True
+                Else
+                    Nenhuma_Unidade.Visible = False
+                    Carrega_Unidades(Cod_Curso)
+                End If
 
             End If
         Catch ex As Exception

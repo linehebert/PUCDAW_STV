@@ -24,14 +24,14 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
         If Not Page.IsPostBack Then
 
             Preenche_DDL_Departamento()
-            If Request("Codigo") <> "" Then
+            If Cod_Usuario <> Nothing Then
                 F_CPF.Disabled = True
                 Ok.Visible = True
                 B_Continuar.Visible = False
 
                 Complemento.Visible = True
                 Monta_Dados()
-            ElseIf Request("Codigo") = "" Then
+            ElseIf Cod_Usuario = Nothing Then
                 Complemento.Visible = False
                 B_Cancelar.Visible = False
                 B_Salvar.Visible = False
@@ -40,14 +40,19 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
         End If
     End Sub
 
-    Private Sub Monta_Dados()
-        Dim Dado = Usuario.Carrega_Usuario(Cod_Usuario)
+    Private Sub Monta_Dados(Optional Dado As Usuario.Dados = Nothing)
+
+
+        If Dado Is Nothing Then Dado = Usuario.Carrega_Usuario(Cod_Usuario)
 
         TB_CPF.Text = Dado.CPF
         TB_Nome.Text = Dado.Nome
         DDL_Departamento.SelectedValue = Dado.Cod_Departamento
         TB_Email.Text = Dado.Email
         CB_Inativos.Checked = Dado.Usuario_Inativo
+        If Dado.ADM = True Then RBL_Tipo_Usuario.SelectedValue = "1"
+        If Dado.ADM = False Then RBL_Tipo_Usuario.SelectedValue = "0"
+
 
     End Sub
 
@@ -102,7 +107,6 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                 If Usuario.Verifica_Responsabilidade(Cod_Usuario) = True And CB_Inativos.Checked Then
                     D_Erro.Visible = True
                     L_Erro.Text = "Este usuário tem cursos sob sua responsabilidade, não é possível inativá-lo!"
-                    Campo_Inativo.Attributes.Add("class", "has-error")
                     Monta_Dados()
                 Else
                     Dim Dados As New Usuario.Dados
@@ -114,11 +118,11 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     Dados.Email = TB_Email.Text
                     Dados.Senha = Criptografia.Encryptdata(TB_Senha.Text)
                     Dados.Usuario_Inativo = CB_Inativos.Checked
+                    Dados.ADM = RBL_Tipo_Usuario.SelectedValue
 
                     Usuario.Alterar(Dados)
 
                     D_Erro.Visible = False
-                    Campo_Inativo.Attributes.Add("class", "")
                     D_Aviso.Visible = True
                     L_Aviso.Text = "Registro atualizado com sucesso!"
                 End If
@@ -131,28 +135,18 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                 Dados.Email = TB_Email.Text
                 Dados.Senha = Criptografia.Encryptdata(TB_Senha.Text)
                 Dados.Usuario_Inativo = CB_Inativos.Checked
+                Dados.ADM = RBL_Tipo_Usuario.SelectedValue
 
-                Usuario.Inserir(Dados)
+                'Dim Cod_Usuario As Integer = Usuario.Inserir(Dados)
+                Dados.Cod_Usuario = Usuario.Inserir(Dados)
 
                 D_Erro.Visible = False
                 D_Aviso.Visible = True
                 L_Aviso.Text = "Cadastro realizado com sucesso!"
-                Campo_Nome.Attributes.Add("class", "")
-                Campo_Email.Attributes.Add("class", "")
-                Campo_Senha.Attributes.Add("class", "")
-                Campo_Confirma_Senha.Attributes.Add("class", "")
-                Campo_Departamento.Attributes.Add("class", "")
-                Monta_Dados()
+                Monta_Dados(Dados)
 
             End If
         Else
-            D_Erro.Visible = True
-            L_Erro.Text = "Preencha todos os campos obrigatórios (*) "
-            Campo_Nome.Attributes.Add("class", "has-error")
-            Campo_Email.Attributes.Add("class", "has-error")
-            Campo_Senha.Attributes.Add("class", "has-error")
-            Campo_Confirma_Senha.Attributes.Add("class", "has-error")
-            Campo_Departamento.Attributes.Add("class", "has-error")
             Monta_Dados()
         End If
     End Sub

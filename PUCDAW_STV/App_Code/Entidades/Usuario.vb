@@ -17,13 +17,14 @@ Namespace STV.Entidades
             Public Resposta As String
             Public Cod_Atividade As Integer
             Public Cod_Questao As Integer
+            Public ADM As Boolean
         End Class
 
         Public Function Carrega_Usuario(Cod_Usuario As Integer) As Dados
 
             Dim Retorno As New Dados
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo, D.descricao AS Departamento, cpf, email, U.Departamento AS Cod_Departamento")
+            Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo, D.descricao AS Departamento, cpf, email, U.Departamento AS Cod_Departamento, ADM")
             Sql.AppendLine(" FROM Usuario as U")
             Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.cod_departamento")
             Sql.AppendLine(" WHERE Cod_Usuario= " + Util.CString(Cod_Usuario))
@@ -41,6 +42,7 @@ Namespace STV.Entidades
                 Retorno.CPF = Util.CString(Query("CPF"))
                 Retorno.Email = Util.CString(Query("Email"))
                 Retorno.Cod_Departamento = Util.CInteger(Query("Cod_Departamento"))
+                Retorno.ADM = Util.CString(Query("ADM"))
             End If
 
             Biblio.FechaConexao()
@@ -50,7 +52,7 @@ Namespace STV.Entidades
 
         Public Function Carrega_Usuarios(Nome As String, Inativo As Boolean, Departamento As Integer) As DataTable
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo,U.Departamento AS Cod_Departamento, D.descricao AS Departamento, cpf, email")
+            Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo,U.Departamento AS Cod_Departamento, D.descricao AS Departamento, cpf, email, ADM")
             Sql.AppendLine(" FROM Usuario as U")
             Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.cod_departamento")
             Sql.AppendLine("WHERE 0 = 0")
@@ -72,14 +74,34 @@ Namespace STV.Entidades
             Sql.AppendLine(",Usuario_Inativo = " + Util.Sql_String(Registro.Usuario_Inativo))
             Sql.AppendLine(",Departamento = " + Util.Sql_String(Registro.Cod_Departamento))
             Sql.AppendLine(",Email = " + Util.Sql_String(Registro.Email))
+            Sql.AppendLine(",ADM = " + Util.Sql_String(Registro.ADM))
             Sql.AppendLine("WHERE Cod_Usuario = " + Util.Sql_String(Registro.Cod_Usuario))
 
+            Biblio.FechaConexao()
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
 
-        Public Sub Inserir(Registro As Dados)
+        'Public Sub Inserir(Registro As Dados)
+        '    Dim Sql As New StringBuilder
+        '    Sql.AppendLine("INSERT INTO Usuario (nome, senha, usuario_inativo, departamento, CPF, EMAIL, ADM)")
+        '    Sql.AppendLine("VALUES(")
+        '    Sql.AppendLine(Util.Sql_String(Registro.Nome))
+        '    Sql.AppendLine("," + Util.Sql_String(Registro.Senha))
+        '    Sql.AppendLine("," + Util.Sql_String(Registro.Usuario_Inativo))
+        '    Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Departamento))
+        '    Sql.AppendLine("," + Util.Sql_String(Registro.CPF))
+        '    Sql.AppendLine("," + Util.Sql_String(Registro.Email))
+        '    Sql.AppendLine("," + Util.Sql_String(Registro.ADM))
+        '    Sql.AppendLine(")")
+
+        '    Biblio.FechaConexao()
+        '    Biblio.Executar_Sql(Sql.ToString())
+        'End Sub
+
+        Public Function Inserir(Registro As Dados) As Integer
             Dim Sql As New StringBuilder
-            Sql.AppendLine("INSERT INTO Usuario (nome, senha, usuario_inativo, departamento, CPF, EMAIL)")
+            Sql.AppendLine("INSERT INTO Usuario (nome, senha, usuario_inativo, departamento, CPF, EMAIL, ADM)")
+            Sql.AppendLine(" Output Inserted.Cod_Usuario")
             Sql.AppendLine("VALUES(")
             Sql.AppendLine(Util.Sql_String(Registro.Nome))
             Sql.AppendLine("," + Util.Sql_String(Registro.Senha))
@@ -87,11 +109,13 @@ Namespace STV.Entidades
             Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Departamento))
             Sql.AppendLine("," + Util.Sql_String(Registro.CPF))
             Sql.AppendLine("," + Util.Sql_String(Registro.Email))
+            Sql.AppendLine("," + Util.Sql_String(Registro.ADM))
             Sql.AppendLine(")")
 
-            Biblio.Executar_Sql(Sql.ToString())
-        End Sub
+            Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
 
+            Return Util.CInteger(dt.Rows(0).Item("Cod_Usuario"))
+        End Function
 
 
         Public Function Existe_CPF(cpf_informado As String) As Boolean

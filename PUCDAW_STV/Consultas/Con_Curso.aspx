@@ -5,9 +5,7 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="grid">
-        <h1 id="Titulo_Page" runat="server">Consulta de Cursos 
-        
-        </h1>
+        <h1 id="Titulo_Page" runat="server">Consulta de Cursos </h1>
         <asp:imagebutton id="B_Novo" imageurl="~/Images/add.png" runat="server" imagealign="Right" tooltip="Adicionar Curso" />
         <br />
         <hr />
@@ -40,8 +38,13 @@
                     <asp:dropdownlist id="DDL_Usuario" runat="server" datavaluefield="Cod_Usuario" datatextfield="Nome" class="form-control">
                     </asp:dropdownlist>
                 </div>
-                <asp:button id="B_Filtrar_Aluno" text="BUSCAR" runat="server" class="btn btn-primary" tooltip="Buscar Cursos" visible="false" />
             </div>
+
+            <div class="row rr">
+                <div class="col-md-1">
+                    <asp:button id="B_Filtrar_Aluno" text="BUSCAR" runat="server" class="btn btn-primary" tooltip="Buscar Cursos" visible="false" />
+                    </div>
+                </div>
             <div class="row rr" id="filtro_inativo" runat="server">
                 <div class="col-md-5">
                     <div class="checkbox-inline">

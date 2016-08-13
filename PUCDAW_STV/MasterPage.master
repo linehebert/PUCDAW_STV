@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -25,17 +25,18 @@
                 </div>
                 <nav class="navbar navbar-default" style="margin-bottom: 1px;">
                     <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="../Login.aspx">Login </a>
-                            <a class="navbar-brand" id="departamento" href="../Consultas/Con_Departamento.aspx">Departamentos </a>
-                            <a class="navbar-brand" href="../Consultas/Con_Usuario.aspx">Usuários </a>
-                            <a class="navbar-brand" href="../Consultas/Con_Curso.aspx">Cursos </a>
-                            <a class="navbar-brand" href="../Consultas/Con_Meus_Cursos.aspx">Meus Cursos</a>
-                            <a class="navbar-brand" href="../Cadastros/Cad_Atividade.aspx">Atividades </a>
-                            <a class="navbar-brand" href="../Consultas/Con_Unidade.aspx">Unidades </a>
+                        <div class="navbar-header pull-right">
+                            <a class="navbar-brand" href="../Default.aspx"> Home </a>
+                            <a class="navbar-brand" id="departamentos" runat="server" href="Consultas/Con_Departamento.aspx"> Departamentos </a>
+                            <a class="navbar-brand" id="usuarios" runat="server" href="Consultas/Con_Usuario.aspx"> Usuários </a>
+                            <a class="navbar-brand" id="cursos" runat="server" href="Consultas/Con_Curso.aspx"> Cursos Disponíveis </a>
+                            <a class="navbar-brand" id="A1" runat="server" href="Consultas/Con_Curso.aspx?INST=S"> Minha Responsabilidade </a>
+                            <a class="navbar-brand" id="meus_cursos" runat="server" href="Consultas/Con_Meus_Cursos.aspx"> Meus Cursos</a>
                             <asp:LinkButton ID="LB_Sair" CssClass="navbar-brand" runat="server" Text="Sair" />
                         </div>
+                         <asp:Label ID="L_Usuario_Logado" runat="server" class="navbar-brand pull-left" Text="" ></asp:Label>
                     </div>
+                   
                 </nav>
                 <div class="conteudo">
                     <asp:ContentPlaceHolder ID="CPH_Conteudo" runat="server">

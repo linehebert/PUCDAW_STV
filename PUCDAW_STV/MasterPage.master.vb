@@ -11,11 +11,43 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
             Return _Autenticacao
         End Get
     End Property
+
+    Dim _Usuario As Usuario
+    Private ReadOnly Property Usuario As Usuario
+        Get
+            If IsNothing(_Usuario) Then _
+                _Usuario = New Usuario
+
+            Return _Usuario
+        End Get
+    End Property
     Private Sub MasterPage_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        'Dim teste As String = Page.User.Identity.Name -- método que faz requisição toda vez no banco
         Dim Usuario_Logado As Usuario.Dados = Autenticacao.Obter_User_Logado()
-        'If Usuario_Logado.Nome = "Aline" Then... codigo 
+        'Identifica usuário logado no cabeçalho
+        If Usuario_Logado.Nome <> "" Then
+            L_Usuario_Logado.Text = "Olá " + Usuario_Logado.Nome
+        Else
+            L_Usuario_Logado.Text = "Você ainda não está logado"
+        End If
+
+        'Identifica qual o tipo de usuário logado e libera as páginas de acordo com as permissões
+        If Usuario_Logado.ADM = True Then
+            'Libera todas as páginas
+            departamentos.Visible = True
+            usuarios.Visible = True
+        Else
+            If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) = True Then
+                'Libera acesso de instrutor
+                departamentos.Visible = False
+                usuarios.Visible = False
+            Else
+                'Libera acesso somente de usuário/aluno
+                departamentos.Visible = False
+                usuarios.Visible = False
+            End If
+        End If
+
     End Sub
 
     Protected Sub LB_Sair_Click(sender As Object, e As System.EventArgs) Handles LB_Sair.Click

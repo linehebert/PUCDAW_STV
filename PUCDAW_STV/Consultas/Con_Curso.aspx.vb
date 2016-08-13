@@ -57,27 +57,47 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
             If Not Page.IsPostBack() Then
                 Preenche_DDL_Usuario()
                 Carrega_Inscricoes()
-                If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
-                    'Instrutor
-                    Titulo_Page.InnerText = "Consulta de Cursos"
-                    Preenche_DDL_Departamento()
+
+                'Verifica o tipo de usuário que está logado e define suas permissões
+                If Usuario_Logado.ADM = True Then
+                    'Administrador
+                    B_Novo.Visible = True
                     Carrega_Grid("", 0, False, 0)
+                    GV_Curso.Columns(2).Visible = False
+                    GV_Curso.Columns(3).Visible = False
+
 
                 Else
-                    'Somente Aluno
-                    Titulo_Page.InnerText = "Cursos Disponíveis"
-                    B_Novo.Visible = False
-                    Carrega_Grid(Usuario_Logado.Cod_Departamento, 0, "")
+                    If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
+                        'Instrutor
+                        Titulo_Page.InnerText = "Consulta de Cursos"
+                        Preenche_DDL_Departamento()
+                        Carrega_Grid("", 0, False, Usuario_Logado.Cod_Usuario)
 
-                    'Define a visibilidade da página
-                    B_Filtrar_Aluno.Visible = True
-                    filtro_departamento.Visible = False
-                    filtro_inativo.Visible = False
-                    GV_Curso.Columns(0).Visible = False
-                    GV_Curso.Columns(1).Visible = False
-                    GV_Curso.Columns(3).Visible = False
-                    GV_Curso.Columns(9).Visible = False
+                        'Define visibilidade da página
+                        B_Novo.Visible = False
+
+
+
+
+                    Else
+                        'Somente Aluno
+                        Titulo_Page.InnerText = "Cursos Disponíveis"
+                        Carrega_Grid(Usuario_Logado.Cod_Departamento, 0, "")
+
+                        'Define a visibilidade da página
+                        B_Filtrar_Aluno.Visible = True
+                        B_Novo.Visible = False
+                        filtro_departamento.Visible = False
+                        filtro_inativo.Visible = False
+                        GV_Curso.Columns(0).Visible = False
+                        GV_Curso.Columns(1).Visible = False
+                        GV_Curso.Columns(3).Visible = False
+                        GV_Curso.Columns(9).Visible = False
+                    End If
                 End If
+
+
             End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
