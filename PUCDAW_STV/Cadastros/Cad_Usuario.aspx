@@ -4,7 +4,6 @@
 <asp:Content ID="C_Head" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
-
     <div class="grid">
         <h1>Cadastro de Usuários</h1>
         <hr />
@@ -35,6 +34,9 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_CPF" runat="server" ControlToValidate="TB_CPF"
                                         Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
                                         class="validation">* Informe o CPF do usuário</asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ControlToValidate="TB_CPF" class="validation" Text="* CPF incorreto" ValidationGroup="A"
+                                     ValidationExpression="^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$"  runat="server"></asp:RegularExpressionValidator>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -82,6 +84,8 @@
                                 <asp:RequiredFieldValidator ID="RF_TB_Email" runat="server" ControlToValidate="TB_Email"
                                     Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
                                     class="validation">* Informe o e-mail deste usuário</asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator ControlToValidate="TB_Email" class="validation" Text="E-mail inválido" ValidationGroup="B"
+                                     ValidationExpression="^([\w\-]+\.)*[\w\- ]+@([\w\- ]+\.)+([\w\-]{2,3})$"  runat="server"></asp:RegularExpressionValidator>
                             </div>
                         </div>
                     </div>

@@ -46,7 +46,7 @@ Namespace STV.Entidades
             Return Retorno
         End Function
 
-        Public Function Carrega_Cursos(Titulo As String, Departamento As Integer, Instrutor As Integer, Inativo As Boolean) As DataTable
+        Public Function Carrega_Cursos(Titulo As String, Departamento As Integer, Instrutor As Integer, Inativo As Boolean, Outros As Boolean) As DataTable
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT C.cod_curso, C.titulo, C.dt_inicio, C.dt_termino, C.palavras_chave,")
             Sql.AppendLine("C.instrutor as cod_user, U.nome as Instrutor, C.departamento, C.categoria as cod_categoria, Cat.descricao as categoria, C.curso_inativo ")
@@ -56,7 +56,8 @@ Namespace STV.Entidades
             Sql.AppendLine("WHERE 0 = 0")
             If Not String.IsNullOrEmpty(Titulo) Then Sql.AppendLine("AND C.Titulo LIKE " + Util.Sql_String("%" + Titulo + "%"))
             If Departamento <> 0 Then Sql.AppendLine("AND C.Departamento = " + Util.Sql_String(Departamento))
-            If Instrutor <> 0 Then Sql.AppendLine("AND Instrutor = " + Util.Sql_String(Instrutor))
+            If Instrutor <> 0 And Outros = False Then Sql.AppendLine("AND Instrutor = " + Util.Sql_String(Instrutor))
+            If Instrutor <> 0 And Outros = True Then Sql.AppendLine("AND Instrutor <> " + Util.Sql_String(Instrutor))
             If Inativo = False Then Sql.AppendLine("AND C.Curso_Inativo = 0 ")
             Sql.AppendLine("ORDER BY Cod_Curso")
 

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic
+Imports STV.Entidades
 
 Namespace STV.Base
 
@@ -33,6 +34,14 @@ Namespace STV.Base
             Edicao
             Exclusao
         End Enum
+
+        Public Overrides Property StyleSheetTheme() As String
+            Get
+                Return (New Layout()).Retorna_Tema()
+            End Get
+            Set(value As String)
+            End Set
+        End Property
 
     End Class
 

@@ -61,26 +61,43 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                 'Verifica o tipo de usuário que está logado e define suas permissões
                 If Usuario_Logado.ADM = True Then
                     'Administrador
+                    Preenche_DDL_Departamento()
                     B_Novo.Visible = True
-                    Carrega_Grid("", 0, False, 0)
+                    Carrega_Grid("", 0, False, 0, False)
                     GV_Curso.Columns(2).Visible = False
                     GV_Curso.Columns(3).Visible = False
 
 
                 Else
+
+
                     If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
                         'Instrutor
                         Titulo_Page.InnerText = "Consulta de Cursos"
                         Preenche_DDL_Departamento()
-                        Carrega_Grid("", 0, False, Usuario_Logado.Cod_Usuario)
-
-                        'Define visibilidade da página
                         B_Novo.Visible = False
+                        CB_Inativos.Visible = False
+
+                        If Request("INST") = "S" Then
+                            'Cursos de Minha Responsabilidade
+                            Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, False)
+                            DDL_Usuario.Visible = False
+                            L_Usuario.Visible = False
+                            GV_Curso.Columns(2).Visible = False
+                            GV_Curso.Columns(3).Visible = False
 
 
+                        Else
+                            'Cursos Disponíveis/Papel de Aluno
+                            Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, True)
+                            GV_Curso.Columns(0).Visible = False
+                            GV_Curso.Columns(1).Visible = False
+                            GV_Curso.Columns(3).Visible = False
+                        End If
 
 
                     Else
+
                         'Somente Aluno
                         Titulo_Page.InnerText = "Cursos Disponíveis"
                         Carrega_Grid(Usuario_Logado.Cod_Departamento, 0, "")
@@ -121,9 +138,9 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
         End Try
     End Sub
 
-    Private Sub Carrega_Grid(Titulo As String, Departamento As Integer, Instrutor As Integer, Inativo As Boolean)
+    Private Sub Carrega_Grid(Titulo As String, Departamento As Integer, Instrutor As Integer, Inativo As Boolean, Outros As Boolean)
         Try
-            GV_Curso.DataSource = Curso.Carrega_Cursos(Titulo, Departamento, Instrutor, Inativo)
+            GV_Curso.DataSource = Curso.Carrega_Cursos(Titulo, Departamento, Instrutor, Inativo, Outros)
             GV_Curso.DataBind()
         Catch ex As Exception
             Throw
@@ -159,7 +176,11 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
 
     Protected Sub B_Filtrar_Click(sender As Object, e As System.EventArgs) Handles B_Filtrar.Click
         Try
-            Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked)
+            If Request("INST") = "S" Then
+                Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, Usuario_Logado.Cod_Usuario, CB_Inativos.Checked, False)
+            Else
+                Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, Usuario_Logado.Cod_Usuario, CB_Inativos.Checked, True)
+            End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -186,7 +207,13 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
     Protected Sub GV_Curso_PageIndexChanging(sender As Object, e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles GV_Curso.PageIndexChanging
         Try
             GV_Curso.PageIndex = e.NewPageIndex
-            Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked)
+
+            If Request("INST") = "S" Then
+                Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked, False)
+            Else
+                Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked, True)
+            End If
+
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -255,7 +282,11 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
             Carrega_Inscricoes()
             If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
                 Preenche_DDL_Departamento()
-                Carrega_Grid("", 0, False, 0)
+                If Request("INST") = "S" Then
+                    Carrega_Grid("", 0, False, 0, False)
+                Else
+                    Carrega_Grid("", 0, False, 0, True)
+                End If
             Else
                 Carrega_Grid(Usuario_Logado.Cod_Departamento, 0, "")
             End If

@@ -15,8 +15,11 @@ Partial Class Login : Inherits STV.Base.Page
 
 
     Protected Sub B_Login_Click(sender As Object, e As System.EventArgs) Handles B_Login.Click
-        Dim CPF As String = (Request("TB_CPF").Replace(".", "")).Replace("-", "")
-        Dim Senha As String = Request("TB_Senha")
+        'Dim CPF As String = (Request("TB_CPF").Replace(".", "")).Replace("-", "")
+        'Dim Senha As String = Request("TB_Senha")
+
+        Dim CPF As String = TB_CPF.Text
+        Dim Senha As String = TB_Senha.Text
 
         Dim Autenticou As String = Autenticacao.Login_Usuario(CPF, Senha)
         L_Erro.Text = Autenticou

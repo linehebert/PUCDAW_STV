@@ -69,6 +69,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                 If Usuario.Existe_CPF(CPF) Then
                     D_Erro.Visible = True
                     L_Erro.Text = "CPF já cadastrado!"
+                    TB_CPF.Text = ""
                     Campo_CPF.Attributes.Add("class", "form-inline has-error")
                     TB_CPF.Focus()
 
@@ -87,6 +88,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
             Else
                 D_Erro.Visible = True
                 L_Erro.Text = "CPF inválido!"
+                TB_CPF.Text = ""
                 TB_CPF.Focus()
                 Campo_CPF.Attributes.Add("class", "form-inline has-error")
             End If

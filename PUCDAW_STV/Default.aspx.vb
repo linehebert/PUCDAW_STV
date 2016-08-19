@@ -1,5 +1,4 @@
 ﻿
-Partial Class _Default
-    Inherits System.Web.UI.Page
+Partial Class _Default : Inherits STV.Base.Page
 
 End Class
