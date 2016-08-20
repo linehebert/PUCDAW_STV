@@ -24,7 +24,7 @@ Partial Class Cadastros_Cad_Departamento : Inherits STV.Base.Page
             If Request("Codigo") <> "" Then
                 Monta_Dados()
             Else
-                TB_Codigo.Visible = False
+
                 L_Codigo.Visible = False
             End If
 

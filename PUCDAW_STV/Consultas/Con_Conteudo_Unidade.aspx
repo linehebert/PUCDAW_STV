@@ -70,6 +70,11 @@
                             </div>
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
+                                    <div class="row rr" id="Nenhuma_Atividade" visible="false" runat="server">
+                                        <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                            <asp:Label ID="Label2" runat="server" Text="Não há atividades cadastradas para esta unidade."></asp:Label>
+                                        </div>
+                                    </div>
                                     <asp:Repeater ID="rptAtividades" runat="server">
                                         <ItemTemplate>
                                             <div class="row rr form-inline">
@@ -94,7 +99,13 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
-
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-12">
+                        <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
+                    </div>
+                </div>
+            </fieldset>
             <!--Modal de Inclusão-->
             <div class="modal fade" id="myModalI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -106,32 +117,45 @@
                                     <h4 class="modal-title" id="L_TItulo_Modal" runat="server">Nova Atividade:</h4>
                                 </div>
                                 <div class="modal-body">
+                                    <asp:Label ID="L_Info" runat="server" Text=""></asp:Label>
                                     <div class="row rr">
                                         <div class="col-md-12">
                                             <asp:Label ID="Label1" runat="server" Text="Título:"></asp:Label>
                                             <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título da Atividade"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Informe um título para esta atividade</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-6">
                                             <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:"></asp:Label>
-                                            <asp:TextBox ID="TB_Dt_Abertura" runat="server" class="form-control" ToolTip="Data de Abertura da Atividade" type="Date" name="dtinicio"></asp:TextBox>
+                                            <asp:TextBox ID="TB_Dt_Abertura" runat="server" class="form-control" ToolTip="Data de Abertura da Atividade" type="Date"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Dt_Abertura" runat="server" ControlToValidate="TB_Dt_Abertura"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
                                         </div>
                                         <div class="col-md-6">
                                             <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:"></asp:Label>
                                             <asp:TextBox ID="TB_Dt_Encerramento" runat="server" class="form-control" ToolTip="Data de Fechamento da Atividade" type="Date"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Dt_Encerramento" runat="server" ControlToValidate="TB_Dt_Encerramento"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-6">
                                             <asp:Label ID="L_Valor" runat="server" Text="Valor:"></asp:Label>
                                             <asp:TextBox ID="TB_Valor" runat="server" class="form-control" ToolTip="Valor Total da Atividade"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Valor" runat="server" ControlToValidate="TB_Valor"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Informe um valor para esta atividade</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <asp:Button ID="B_Fechar" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
-                                    <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" />
+                                    <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="A" />
                                 </div>
                                 </div>
                             </ContentTemplate>
@@ -139,7 +163,6 @@
                     </div>
                 </div>
             </div>
-
 
             <!--Modal Exclusão-->
             <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

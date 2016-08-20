@@ -15,8 +15,10 @@ Partial Class Tema : Inherits STV.Base.Page
     End Property
 
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Preenche_DDL_Tema()
-        Monta_Dados()
+        If Not IsPostBack Then
+            Preenche_DDL_Tema()
+            Monta_Dados()
+        End If
     End Sub
 
     Private Sub Monta_Dados()

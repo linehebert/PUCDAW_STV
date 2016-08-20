@@ -51,26 +51,22 @@
                                     <asp:ImageButton ID="B_Nova_Unidade" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Nova Unidade" />
                                 </div>
                             </div>
-                            <div class="row rr" id="Nenhuma_Unidade" visible="false" runat="server">
-                                <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                                    <asp:Label ID="Label1" runat="server" Text="Não há unidades cadastradas para este curso."></asp:Label>
-                                </div>
-                            </div>
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
+                                    <div class="row rr" id="Nenhuma_Unidade" visible="false" runat="server">
+                                        <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                            <asp:Label ID="Label1" runat="server" Text="Não há unidades cadastradas para este curso."></asp:Label>
+                                        </div>
+                                    </div>
                                     <asp:Repeater ID="rptUnidades" runat="server">
                                         <ItemTemplate>
                                             <div class="row rr form-inline">
-                                                <div class="col-md-4 col-md-offset-3" style="padding: 15px; margin-top: 15px">
+                                                <div class="col-md-10 col-md-offset-1" style="padding: 10px; margin-top: 15px;">
+                                                    <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Renomear Unidade" />
+                                                    <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Excluir Unidade" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Renomear Unidade" />
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Unidade" />
                                                 </div>
                                             </div>
                                         </ItemTemplate>
@@ -104,12 +100,15 @@
                                         <div class="col-md-12">
                                             <asp:Label ID="L_Titulo_Unidade" runat="server" Text="Título:"></asp:Label>
                                             <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título da Unidade"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe um título para esta unidade</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <asp:Button ID="B_Fechar" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
-                                    <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Questão" />
+                                    <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Questão" CausesValidation="true" ValidationGroup="A" />
                                 </div>
                                 </div>
                             </ContentTemplate>
@@ -136,8 +135,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão da Questão" />
-                                    <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Questão" runat="server" class="btn btn-primary" ToolTip="Excluir Questão" />
+                                    <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão da Unidade" />
+                                    <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Unidade" runat="server" class="btn btn-primary" ToolTip="Excluir Unidade" />
                                 </div>
                                 </div>
                             </ContentTemplate>

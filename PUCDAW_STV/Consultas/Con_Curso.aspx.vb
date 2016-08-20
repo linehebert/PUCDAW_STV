@@ -52,6 +52,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
         End Get
     End Property
 
+
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
             If Not Page.IsPostBack() Then
@@ -63,11 +64,10 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                     'Administrador
                     Preenche_DDL_Departamento()
                     B_Novo.Visible = True
-                    Carrega_Grid("", 0, False, 0, False)
+                    Carrega_Grid("", 0, 0, False, False)
+
                     GV_Curso.Columns(2).Visible = False
                     GV_Curso.Columns(3).Visible = False
-
-
                 Else
 
 
@@ -77,6 +77,8 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                         Preenche_DDL_Departamento()
                         B_Novo.Visible = False
                         CB_Inativos.Visible = False
+                        GV_Curso.Columns(0).Visible = False
+
 
                         If Request("INST") = "S" Then
                             'Cursos de Minha Responsabilidade
@@ -86,16 +88,14 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                             GV_Curso.Columns(2).Visible = False
                             GV_Curso.Columns(3).Visible = False
 
-
                         Else
                             'Cursos Disponíveis/Papel de Aluno
                             Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, True)
                             GV_Curso.Columns(0).Visible = False
                             GV_Curso.Columns(1).Visible = False
                             GV_Curso.Columns(3).Visible = False
+                            filtro_departamento.Visible = False
                         End If
-
-
                     Else
 
                         'Somente Aluno
@@ -160,7 +160,11 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
         Try
             If e.Row.RowType = DataControlRowType.DataRow Then
                 CType(e.Row.FindControl("HL_Alterar"), HyperLink).NavigateUrl = "../Cadastros/Cad_Curso.aspx?Cod=" + Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString()
-                CType(e.Row.FindControl("HL_Visualizar"), HyperLink).NavigateUrl = "../Consultas/Con_Unidade.aspx?Cod=" + Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString()
+                If Request("INST") = "S" Then
+                    CType(e.Row.FindControl("HL_Visualizar"), HyperLink).NavigateUrl = "../Consultas/Con_Unidade.aspx?INST=S&Cod=" + Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString()
+                Else
+                    CType(e.Row.FindControl("HL_Visualizar"), HyperLink).NavigateUrl = "../Consultas/Con_Unidade.aspx?Cod=" + Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString()
+                End If
 
                 If Cursos_Usuario.Select("Cod_Curso = " & e.Row.DataItem("Cod_Curso")).Length > 0 Then
                     CType(e.Row.FindControl("B_Inscrito"), Button).Visible = True
@@ -176,10 +180,14 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
 
     Protected Sub B_Filtrar_Click(sender As Object, e As System.EventArgs) Handles B_Filtrar.Click
         Try
-            If Request("INST") = "S" Then
-                Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, Usuario_Logado.Cod_Usuario, CB_Inativos.Checked, False)
+            If DDL_Usuario.SelectedValue = Usuario_Logado.Cod_Usuario Then
+                RegistrarScript("alert('Não é possível se inscrever nos cursos em que você é o instrutor. Utilize o menu Minha Responsabilidade para acessar estes cursos!');")
             Else
-                Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, Usuario_Logado.Cod_Usuario, CB_Inativos.Checked, True)
+                If Request("INST") = "S" Then
+                    Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, Usuario_Logado.Cod_Usuario, CB_Inativos.Checked, False)
+                Else
+                    Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked, False)
+                End If
             End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
@@ -189,7 +197,12 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
 
     Protected Sub B_Filtrar_Aluno_Click(sender As Object, e As System.EventArgs) Handles B_Filtrar_Aluno.Click
         Try
-            Carrega_Grid(Usuario_Logado.Cod_Departamento, DDL_Usuario.SelectedValue, TB_Titulo.Text)
+            If DDL_Usuario.SelectedValue = Usuario_Logado.Cod_Usuario Then
+                RegistrarScript("alert('Não é possível se inscrever nos cursos em que você é o instrutor. Utilize o menu Minha Responsabilidade para acessar estes cursos!');")
+            Else
+                Carrega_Grid(Usuario_Logado.Cod_Departamento, DDL_Usuario.SelectedValue, TB_Titulo.Text)
+            End If
+
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -283,9 +296,9 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
             If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
                 Preenche_DDL_Departamento()
                 If Request("INST") = "S" Then
-                    Carrega_Grid("", 0, False, 0, False)
+                    Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, False)
                 Else
-                    Carrega_Grid("", 0, False, 0, True)
+                    Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, True)
                 End If
             Else
                 Carrega_Grid(Usuario_Logado.Cod_Departamento, 0, "")

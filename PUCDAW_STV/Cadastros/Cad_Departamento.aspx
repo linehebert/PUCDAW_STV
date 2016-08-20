@@ -33,7 +33,7 @@
                             <div class="row rr">
                                 <div class="col-md-2 col-md-offset-3">
                                     <asp:Label ID="L_Codigo" runat="server" Text="Código:"></asp:Label>
-                                    <asp:TextBox ID="TB_Codigo" runat="server" class="form-control" ToolTip="Código do Departamento"></asp:TextBox>
+                                    <asp:TextBox ID="TB_Codigo" runat="server" class="form-control" ToolTip="Código do Departamento" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
                         </fieldset>
@@ -42,6 +42,9 @@
                                 <div class="col-md-6 col-md-offset-3">
                                     <asp:Label ID="L_Descr" runat="server" Text="Descrição:"></asp:Label>
                                     <asp:TextBox ID="TB_Descr" runat="server" class="form-control" ToolTip="Descrição do Departamento"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Descr" runat="server" ControlToValidate="TB_Descr"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe uma descrição para este departamento</asp:RequiredFieldValidator>
                                 </div>
                             </div>
                             <div class="row rr">
@@ -58,7 +61,7 @@
                     <div class="row rr">
                         <div class="col-md-12  col-md-offset-9">
                             <asp:Button ID="B_Cancelar" Text="CANCELAR" runat="server" class="btn btn-danger" ToolTip="Cancelar" />
-                            <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Registro" />
+                            <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Registro" CausesValidation="true" ValidationGroup="A"/>
                         </div>
                     </div>
                 </fieldset>

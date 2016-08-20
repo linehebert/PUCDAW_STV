@@ -1,4 +1,5 @@
 ﻿Imports STV.Entidades
+Imports STV.Seguranca
 Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
 
     Dim _Unidade As Unidade
@@ -26,9 +27,33 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
         End Get
     End Property
 
+    Dim _Autenticacao As Autenticacao
+    Private ReadOnly Property Autenticacao As Autenticacao
+        Get
+            If IsNothing(_Autenticacao) Then _
+                _Autenticacao = New Autenticacao
+            Return _Autenticacao
+        End Get
+    End Property
+
+    Dim _Usuario_Logado As Usuario.Dados
+    Private ReadOnly Property Usuario_Logado As Usuario.Dados
+        Get
+            If IsNothing(_Usuario_Logado) Then
+                _Usuario_Logado = New Usuario.Dados
+                _Usuario_Logado = Autenticacao.Obter_User_Logado()
+            End If
+
+            Return _Usuario_Logado
+        End Get
+    End Property
+
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
             If Not Page.IsPostBack() Then
+                If Usuario_Logado.ADM = True Then
+                    B_Nova_Unidade.Visible = False
+                End If
                 Monta_Dados_Curso()
 
                 Dim qntd_unidade As String = Biblio.Pega_Valor("SELECT Cod_Unidade FROM Unidade WHERE Cod_Curso=" + Util.Sql_String(Cod_Curso), "Cod_Unidade")
@@ -68,7 +93,12 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
 
     Protected Sub B_Voltar_Click(sender As Object, e As System.EventArgs) Handles B_Voltar.Click
         Try
-            Response.Redirect("../Consultas/Con_Curso.aspx")
+            If Request("INST") = "S" Then
+                Response.Redirect("../Consultas/Con_Curso.aspx?INST=S")
+            Else
+                Response.Redirect("../Consultas/Con_Curso.aspx")
+            End If
+
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -104,6 +134,8 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
             End If
 
             TB_Titulo.Text = ""
+
+            Nenhuma_Unidade.Visible = False
             Carrega_Unidades(Cod_Curso)
             RegistrarScript("$('#myModalI').modal('hide')")
         Catch ex As Exception
@@ -161,6 +193,11 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
             Dim Dado As New Unidade.Dados
             Dado.Cod_Unidade = CInt(Me.ViewState("Unidade_Selecionada"))
             Unidade.Excluir_Unidade(Dado)
+
+            Dim qntd_unidade As String = Biblio.Pega_Valor("SELECT Cod_Unidade FROM Unidade WHERE Cod_Curso=" + Util.Sql_String(Cod_Curso), "Cod_Unidade")
+            If qntd_unidade = "" Then
+                Nenhuma_Unidade.Visible = True
+            End If
 
             Carrega_Unidades(Cod_Curso)
             RegistrarScript("$('#myModalE').modal('hide')")

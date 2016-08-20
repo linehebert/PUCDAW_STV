@@ -1,4 +1,5 @@
 ﻿Imports STV.Entidades
+Imports STV.Seguranca
 Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
     Dim _Unidade As Unidade
@@ -25,12 +26,42 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Return Request("Unit")
         End Get
     End Property
+    Dim _Autenticacao As Autenticacao
+    Private ReadOnly Property Autenticacao As Autenticacao
+        Get
+            If IsNothing(_Autenticacao) Then _
+                _Autenticacao = New Autenticacao
+            Return _Autenticacao
+        End Get
+    End Property
 
+    Dim _Usuario_Logado As Usuario.Dados
+    Private ReadOnly Property Usuario_Logado As Usuario.Dados
+        Get
+            If IsNothing(_Usuario_Logado) Then
+                _Usuario_Logado = New Usuario.Dados
+                _Usuario_Logado = Autenticacao.Obter_User_Logado()
+            End If
+
+            Return _Usuario_Logado
+        End Get
+    End Property
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
             If Not Page.IsPostBack() Then
-                Carrega_Atividades(Cod_Unidade)
+                If Usuario_Logado.ADM = True Then
+                    B_Nova_Atividade.Visible = False
+                    B_Novo_Material.Visible = False
+                End If
                 Monta_Dados_Unidade()
+
+                Dim qntd_unidade As String = Biblio.Pega_Valor("SELECT Cod_Atividade FROM Atividade WHERE Cod_Unidade=" + Util.Sql_String(Cod_Unidade), "Cod_Atividade")
+                If qntd_unidade = "" Then
+                    Nenhuma_Atividade.Visible = True
+                Else
+                    Nenhuma_Atividade.Visible = False
+                    Carrega_Atividades(Cod_Unidade)
+                End If
             End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
@@ -67,26 +98,39 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Throw
         End Try
     End Sub
+    Protected Sub B_Voltar_Click(sender As Object, e As System.EventArgs) Handles B_Voltar.Click
+        Try
+            Response.Redirect("../Consultas/Con_Curso.aspx")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
 
+    End Sub
     Private Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
         Try
-            Dim Dados As New Atividade.Dados
-            Dados.Titulo = TB_Titulo.Text
-            Dados.Dt_Abertura = TB_Dt_Abertura.Text
-            Dados.Dt_Fechamento = TB_Dt_Encerramento.Text
-            Dados.Valor = TB_Valor.Text
+            If TB_Dt_Encerramento.Text >= Today Then
+                Dim Dados As New Atividade.Dados
+                Dados.Titulo = TB_Titulo.Text
+                Dados.Dt_Abertura = TB_Dt_Abertura.Text
+                Dados.Dt_Fechamento = TB_Dt_Encerramento.Text
+                Dados.Valor = TB_Valor.Text
 
-            If Me.ViewState("Atividade_Selecionada") Is Nothing Then
-                Dados.Cod_Unidade = Cod_Unidade
-                Atividade.Inserir_Atividade(Dados)
+                If Me.ViewState("Atividade_Selecionada") Is Nothing Then
+                    Dados.Cod_Unidade = Cod_Unidade
+                    Atividade.Inserir_Atividade(Dados)
+                Else
+                    Dados.Cod_Atividade = CInt(Me.ViewState("Atividade_Selecionada"))
+                    Atividade.Alterar_Atividade(Dados)
+                End If
+
+                Limpa_Dados_Modal()
+                Carrega_Atividades(Cod_Unidade)
+                RegistrarScript("$('#myModalI').modal('hide')")
             Else
-                Dados.Cod_Atividade = CInt(Me.ViewState("Atividade_Selecionada"))
-                Atividade.Alterar_Atividade(Dados)
+                L_Info.Text = "A data de término do curso não pode ser inferior a data atual, informe uma nova data de término."
             End If
 
-            Limpa_Dados_Modal()
-            Carrega_Atividades(Cod_Unidade)
-            RegistrarScript("$('#myModalI').modal('hide')")
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

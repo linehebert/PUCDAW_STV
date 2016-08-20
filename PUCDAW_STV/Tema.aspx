@@ -28,9 +28,8 @@
                         <div class="row rr">
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="row rr">
-                                    <asp:Label ID="L_Tema" runat="server" Text="Tema:"></asp:Label>
-                                    <asp:DropDownList ID="DDL_Tema" runat="server" DataValueField="Cod_Tema" DataTextField="Cor" class="form-control">
-                                    </asp:DropDownList>
+                                    <asp:Label ID="L_Tema" runat="server" Text="Tema:" ></asp:Label>
+                                    <asp:DropDownList ID="DDL_Tema" runat="server" DataValueField="Cod_Tema" DataTextField="Cor" class="form-control"></asp:DropDownList>
                                 </div>
                             </div>
                         </div>

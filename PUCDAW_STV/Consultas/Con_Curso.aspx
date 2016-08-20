@@ -94,7 +94,7 @@
                             </Columns>
                             <RowStyle CssClass="cursor-pointer" />
                             <EmptyDataTemplate>
-                                <label>
+                                <label id="msg" runat="server">
                                     Nenhum registro encontrado!
                                 </label>
                             </EmptyDataTemplate>
