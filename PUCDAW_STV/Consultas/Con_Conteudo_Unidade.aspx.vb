@@ -1,7 +1,16 @@
 ﻿Imports STV.Entidades
+Imports System.IO
 Imports STV.Seguranca
 Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
+    Dim _Material As Material
+    Private ReadOnly Property Material As Material
+        Get
+            If IsNothing(_Material) Then _
+                _Material = New Material
 
+            Return _Material
+        End Get
+    End Property
     Dim _Unidade As Unidade
     Private ReadOnly Property Unidade As Unidade
         Get
@@ -11,7 +20,6 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Return _Unidade
         End Get
     End Property
-
     Dim _Atividade As Atividade
     Private ReadOnly Property Atividade As Atividade
         Get
@@ -34,7 +42,6 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Return _Autenticacao
         End Get
     End Property
-
     Dim _Usuario_Logado As Usuario.Dados
     Private ReadOnly Property Usuario_Logado As Usuario.Dados
         Get
@@ -46,21 +53,47 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Return _Usuario_Logado
         End Get
     End Property
+    Dim _Usuario As Usuario
+    Private ReadOnly Property Usuario As Usuario
+        Get
+            If IsNothing(_Usuario) Then _
+                _Usuario = New Usuario
+            Return _Usuario
+        End Get
+    End Property
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
+            Page.Form.Attributes.Add("enctype", "multipart/form-data")
             If Not Page.IsPostBack() Then
+                Monta_Dados_Unidade()
+
+                'Esconde inclusão se o usuario logado for ADM
                 If Usuario_Logado.ADM = True Then
                     B_Nova_Atividade.Visible = False
                     B_Novo_Material.Visible = False
+                ElseIf Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
+                    B_Nova_Atividade.Visible = True
+                    B_Novo_Material.Visible = True
+                Else
+                    B_Nova_Atividade.Visible = False
+                    B_Novo_Material.Visible = False
                 End If
-                Monta_Dados_Unidade()
 
-                Dim qntd_unidade As String = Biblio.Pega_Valor("SELECT Cod_Atividade FROM Atividade WHERE Cod_Unidade=" + Util.Sql_String(Cod_Unidade), "Cod_Atividade")
-                If qntd_unidade = "" Then
+                'Traz todas as Atividades
+                Dim qntd_atividade As String = Biblio.Pega_Valor("SELECT Cod_Atividade FROM Atividade WHERE Cod_Unidade=" + Util.Sql_String(Cod_Unidade), "Cod_Atividade")
+                If qntd_atividade = "" Then
                     Nenhuma_Atividade.Visible = True
                 Else
                     Nenhuma_Atividade.Visible = False
                     Carrega_Atividades(Cod_Unidade)
+                End If
+                ' Traz todos os materiais
+                Dim qntd_material As String = Biblio.Pega_Valor("SELECT Cod_Material FROM Materiais WHERE Cod_Unidade=" + Util.Sql_String(Cod_Unidade), "Cod_Material")
+                If qntd_material = "" Then
+                    Nenhum_Material.Visible = True
+                Else
+                    Nenhum_Material.Visible = False
+                    Carrega_Materiais(Cod_Unidade)
                 End If
             End If
         Catch ex As Exception
@@ -69,20 +102,32 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         End Try
     End Sub
 
-    Private Sub Carrega_Atividades(Cod_Unidade As Integer)
-        Try
-            rptAtividades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade, False)
-            rptAtividades.DataBind()
-        Catch ex As Exception
-            Throw
-        End Try
-    End Sub
-
+#Region "Funções da Página"
     Private Sub Monta_Dados_Unidade()
         Try
             Dim Dado = Unidade.Carrega_Unidade(Cod_Unidade)
             L_Titulo.Text = Dado.Titulo
             L_Curso_Unidade.Text = Dado.Curso
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+    Protected Sub B_Voltar_Click(sender As Object, e As System.EventArgs) Handles B_Voltar.Click
+        Try
+            Response.Redirect("../Consultas/Con_Curso.aspx")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+
+    End Sub
+#End Region
+
+#Region "Atividade"
+    Private Sub Carrega_Atividades(Cod_Unidade As Integer)
+        Try
+            rptAtividades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade, False)
+            rptAtividades.DataBind()
         Catch ex As Exception
             Throw
         End Try
@@ -98,15 +143,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Throw
         End Try
     End Sub
-    Protected Sub B_Voltar_Click(sender As Object, e As System.EventArgs) Handles B_Voltar.Click
-        Try
-            Response.Redirect("../Consultas/Con_Curso.aspx")
-        Catch ex As Exception
-            L_Erro.Text = ex.Message
-            D_Erro.Visible = True
-        End Try
 
-    End Sub
     Private Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
         Try
             If TB_Dt_Encerramento.Text >= Today Then
@@ -136,6 +173,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
+
     Protected Sub B_Nova_Atividade_Click(sender As Object, e As System.EventArgs) Handles B_Nova_Atividade.Click
         Try
             Limpa_Dados_Modal()
@@ -207,6 +245,190 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
+#End Region
 
+#Region "Materiais"
+    Private Sub Carrega_Materiais(Cod_Unidade As Integer)
+        Try
+            rptMateriais.DataSource = Material.Carrega_Materiais(Cod_Unidade)
+            rptMateriais.DataBind()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+    Private Sub Limpa_Dados_Modal_Material()
+        Try
+            DDL_Tipo.SelectedValue = 0
+            TB_Descricao.Text = ""
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+    Protected Sub B_Novo_Material_Click(sender As Object, e As System.EventArgs) Handles B_Novo_Material.Click
+        Try
+            Preenche_DDL_Tipo_Material()
+            RegistrarScript("$('#myModalMat').modal('show')")
+            Limpa_Dados_Modal_Material()
+
+            L_TItulo_Modal_Mat.InnerText = "Novo Material:"
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    Private Sub B_Salvar_Material_Click(sender As Object, e As EventArgs) Handles B_Salvar_Material.Click
+        Try
+            Dim Dados As New Material.Dados
+            Dados.Titulo = TB_Descricao.Text
+            Dados.Cod_Tipo = DDL_Tipo.SelectedValue
+            Dados.Cod_Unidade = Cod_Unidade
+
+            If DDL_Tipo.SelectedValue = 0 Then
+                'Mensagem para selecionar um arquivo
+                RegistrarScript("alert('Selecione um tipo de material');")
+                Exit Sub
+            ElseIf DDL_Tipo.SelectedValue = 1 Or DDL_Tipo.SelectedValue = 2 Then
+                Dados.Material = TB_Link.Text
+                Material.Inserir_Material(Dados)
+            Else
+                'Salvar arquivo
+                Salvar_Material(Dados)
+            End If
+
+
+            Limpa_Dados_Modal_Material()
+            Carrega_Materiais(Cod_Unidade)
+            RegistrarScript("$('#myModalMat').modal('hide')")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+
+    Private Sub Salvar_Material(ByVal Dados As Material.Dados)
+        Try
+            D_Erro.Visible = False
+            D_Aviso.Visible = False
+            If FU_Arquivo.HasFile Then
+
+                Dim Extensao As String = Path.GetExtension(FU_Arquivo.FileName).Replace(".", "").ToLower()
+                Dim Caminho As String = ""
+
+                'Verifica se a extensão esta de acordo com o tipo selecionado
+                Select Case DDL_Tipo.SelectedValue
+                    Case 3
+                        If Extensao <> "mp4" And Extensao <> "webm" Then
+                            RegistrarScript("alert('Extensão Inválida');")
+                            Exit Sub
+                        End If
+                    Case 4
+                        If Extensao <> "pdf" Then
+                            RegistrarScript("alert('Extensão Inválida');")
+                            Exit Sub
+                        End If
+                    Case 5
+                        If Extensao <> "txt" And Extensao <> "docx" And Extensao <> "xls" And Extensao <> "doc" And Extensao <> "xlsx" And Extensao <> "zip" And Extensao <> "rar" And Extensao <> "ppt" And Extensao <> "pptx" Then
+                            RegistrarScript("alert('Extensão Inválida');")
+                            Exit Sub
+                        End If
+
+                    Case Else
+                        RegistrarScript("alert('Selecione um tipo de material');")
+                        Exit Sub
+                End Select
+
+                'Salvar no banco
+                Dados.Material = ""
+                Dim Cod_Material = Material.Inserir_Material(Dados)
+
+                'Atualizar Nome do Arquivo com Codigo do Material
+                Dim Arquivo As String = ("/Anexos/" + Cod_Material.ToString() + "_" + TB_Descricao.Text + "." + Extensao)
+                Dados.Material = Arquivo
+                Dados.Cod_Material = Cod_Material
+                Material.Alterar_Material(Dados)
+
+                'Salva o Arquivo
+                Caminho = Request.PhysicalApplicationPath
+                FU_Arquivo.SaveAs(Caminho + Arquivo)
+
+                D_Aviso.Visible = True
+                L_Aviso.Visible = True
+                L_Aviso.Text = "Alterações realizadas com sucesso!"
+            Else
+                D_Erro.Visible = True
+                L_Erro.Visible = True
+                L_Erro.Text = "A extensão do arquivo é inválida."
+            End If
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
+    Protected Sub DDL_Tipo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DDL_Tipo.SelectedIndexChanged
+        If DDL_Tipo.SelectedValue = 1 Or DDL_Tipo.SelectedValue = 2 Then
+            Link.Visible = True
+            Arquivo.Visible = False
+        ElseIf DDL_Tipo.SelectedValue > 2 Then
+            Link.Visible = False
+            Arquivo.Visible = True
+        Else
+            Link.Visible = False
+            Arquivo.Visible = False
+        End If
+    End Sub
+
+#End Region
+
+#Region "Carrega DDL's"
+    Protected Sub Preenche_DDL_Tipo_Material()
+        Dim Tipo As New Material
+        DDL_Tipo.DataSource = Material.Carrega_Tipo()
+        DDL_Tipo.DataBind()
+
+        Dim item As New ListItem
+        item.Text = "Selecione um tipo de material"
+        item.Value = 0
+        DDL_Tipo.Items.Insert(0, item)
+    End Sub
+
+    Private Sub rptMateriais_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rptMateriais.ItemCommand
+        Try
+            If e.CommandName = "ExibirMaterial" Then
+                Dim Argument() As String = e.CommandArgument.Split(",")
+                Dim Cod_Tipo = Argument(0)
+                Dim Cod_Material = Argument(1)
+                Dim URL As String = HttpContext.Current.Request.Url.Authority + Biblio.Pega_Valor("SELECT Material FROM Materiais WHERE Cod_Material =" + Cod_Material, "Material")
+
+                Select Case Cod_Tipo
+                    Case "3"
+                        'Abrir modal para mostrar o vídeo
+                        Dim SB As New StringBuilder
+                        SB.Append("<video width='320' height='240' controls>")
+                        SB.Append("<source src='http://" + URL + "' type='video/mp4'>")
+                        SB.Append("<source src='http://" + URL + "' type='video/webm'>")
+                        SB.Append(" Seu navegador não suporte HTML5 ")
+                        SB.Append("</video>")
+
+                        LIT_Video.Text = SB.ToString
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                    Case "4"
+                        'Abrir pdf em nova guia
+                    Case "5"
+                        'Fazer download do arquivo
+                    Case "6"
+                        'Abrir modal para mostrar a imagem
+                    Case Else
+
+                End Select
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+#End Region
 
 End Class

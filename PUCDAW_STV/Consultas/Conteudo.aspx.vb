@@ -57,7 +57,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
             Return _Usuario_Logado
         End Get
     End Property
+    Dim _Material As Material
+    Private ReadOnly Property Material As Material
+        Get
+            If IsNothing(_Material) Then _
+                _Material = New Material
 
+            Return _Material
+        End Get
+    End Property
 
 
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -106,6 +114,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         End Try
     End Sub
 
+    Private Sub Carrega_Materiais(Cod_Unidade As Integer)
+        Try
+            rptMateriais.DataSource = Material.Carrega_Materiais(Cod_Unidade)
+            rptMateriais.DataBind()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
     Private Sub rptUnidades_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptUnidades.ItemDataBound
         If e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.AlternatingItem Then
             Dim rptAtividades As Repeater = CType(e.Item.FindControl("rptAtividades"), Repeater)
@@ -118,7 +135,17 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                 CType(Footer.FindControl("L_Empty"), Label).Visible = True
             End If
 
+            Dim rptMateriais As Repeater = CType(e.Item.FindControl("rptMateriais"), Repeater)
+            Dim Dtm As Data.DataTable = Material.Carrega_Materiais(CInt(e.Item.DataItem("Cod_Unidade")))
+            rptMateriais.DataSource = Dtm
+            rptMateriais.DataBind()
+
+            If Dtm.Rows.Count = 0 Then
+                Dim Footer As Control = rptMateriais.Controls(rptMateriais.Controls.Count - 1).Controls(0)
+                CType(Footer.FindControl("L_Emptym"), Label).Visible = True
+            End If
 
         End If
     End Sub
+
 End Class

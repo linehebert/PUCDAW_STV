@@ -25,12 +25,14 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
 
             Preenche_DDL_Departamento()
             If Cod_Usuario <> Nothing Then
-                F_CPF.Disabled = True
+                Monta_Dados()
+                'F_CPF.Disabled = True
+                TB_CPF.ReadOnly = True
                 Ok.Visible = True
                 B_Continuar.Visible = False
 
                 Complemento.Visible = True
-                Monta_Dados()
+
             ElseIf Cod_Usuario = Nothing Then
                 Complemento.Visible = False
                 B_Cancelar.Visible = False

@@ -43,13 +43,43 @@
                         </a>
                     </span>
                 </div>
-                <div id="MateriaisPanel" class="panel-collapse collapse in">
-                    <div class="row rr form-inline">
-                        <div class="col-md-2 col-md-offset-10">
-                            <asp:ImageButton ID="B_Novo_Material" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Novo Material Didático" />
+                <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                    <ContentTemplate>
+                        <div id="MateriaisPanel" class="panel-collapse collapse in">
+                            <div class="row rr form-inline">
+                                <div class="col-md-2 col-md-offset-10">
+                                    <asp:ImageButton ID="B_Novo_Material" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Novo Material Didático" />
+                                </div>
+                            </div>
+                            <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                                <ContentTemplate>
+                                    <div class="row rr" id="Nenhum_Material" visible="false" runat="server">
+                                        <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                            <asp:Label ID="Label_Material" runat="server" Text="Não há materiais cadastrados para esta unidade."></asp:Label>
+                                        </div>
+                                    </div>
+                                    <asp:Repeater ID="rptMateriais" runat="server">
+                                        <ItemTemplate>
+                                            <div class="row rr form-inline">
+                                                <div class="col-md-1">
+                                                    <%--<asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Alterar Atividade" />--%>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <%--<asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />--%>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <asp:LinkButton ID="lnk_Material" runat="server" CommandArgument='<%# Container.DataItem("Cod_Tipo").ToString() + "," + Container.DataItem("Cod_Material").ToString() %>' CommandName="ExibirMaterial">
+                                                        <%# Container.DataItem("Titulo").ToString.ToUpper %>
+                                                    </asp:LinkButton>
+                                                </div>
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
                         </div>
-                    </div>
-                </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading expandir" id="Atividades">
@@ -78,7 +108,6 @@
                                     <asp:Repeater ID="rptAtividades" runat="server">
                                         <ItemTemplate>
                                             <div class="row rr form-inline">
-
                                                 <div class="col-md-1  col-md-offset-3">
                                                     <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Alterar Atividade" />
                                                 </div>
@@ -106,7 +135,75 @@
                     </div>
                 </div>
             </fieldset>
-            <!--Modal de Inclusão-->
+
+            <!--Modal de Inclusão Material-->
+            <div class="modal fade" id="myModalMat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                            <ContentTemplate>
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="L_TItulo_Modal_Mat" runat="server">Novo Material:</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <asp:Label ID="L_Info_Mat" runat="server" Text=""></asp:Label>
+                                    <div class="row rr">
+                                        <div class="col-md-12">
+                                            <asp:Label ID="L_Nome" runat="server" Text="Descrição do Material:"></asp:Label>
+                                            <asp:TextBox ID="TB_Descricao" runat="server" class="form-control" ToolTip="Descrição do MAterial"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Descricao" runat="server" ControlToValidate="TB_Descricao"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
+                                                class="validation">* Informe a descrição deste material</asp:RequiredFieldValidator>
+                                        </div>
+                                    </div>
+                                    <div class="row rr">
+                                        <div class="col-md-12">
+                                            <asp:Label ID="L_Tipo" runat="server" Text="Tipo do Material:"></asp:Label>
+                                            <asp:DropDownList ID="DDL_Tipo" runat="server" DataValueField="Cod_Tipo" class="form-control" DataTextField="Descricao" AutoPostBack="true" OnSelectedIndexChanged="DDL_Tipo_SelectedIndexChanged">
+                                            </asp:DropDownList>
+                                            <asp:RequiredFieldValidator ID="RFV_DDL_Tipo" runat="server" ControlToValidate="DDL_Tipo"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
+                                                Class="validation">* Informe qual o tipo de material</asp:RequiredFieldValidator>
+                                        </div>
+                                    </div>
+                                    <div class="row rr" id="Arquivo" runat="server" visible="false">
+                                        <div class="col-md-12">
+                                            <asp:Label ID="Label3" runat="server" SkinID="Skin_label" Text="Arquivo:"></asp:Label>
+                                            <asp:FileUpload ID="FU_Arquivo" runat="server" class="form-control" />
+                                            <asp:RequiredFieldValidator ID="RFV_FU_Arquivo" runat="server" ControlToValidate="FU_Arquivo"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
+                                                Class="validation">* Realize o upload do material</asp:RequiredFieldValidator>
+                                        </div>
+                                    </div>
+                                    <div class="row rr" id="Link" runat="server" visible="false">
+                                        <div class="col-md-12">
+                                            <asp:Label ID="Label4" runat="server" SkinID="Skin_label" Text="Link do Material:"></asp:Label>
+                                            <asp:TextBox ID="TB_Link" runat="server" class="form-control" ToolTip="Descrição do MAterial"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TB_Descricao"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
+                                                class="validation">* Preencha com o link do material</asp:RequiredFieldValidator>
+                                            <asp:RegularExpressionValidator ControlToValidate="TB_Link" class="validation" Text="* Campo Incorreto" ValidationGroup="B"
+                                                ValidationExpression="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})" runat="server"></asp:RegularExpressionValidator>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <asp:Button ID="Cancelar_Material" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
+                                    <asp:Button ID="B_Salvar_Material" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="B" />
+                                </div>
+                                </div>
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:PostBackTrigger ControlID="B_Salvar_Material" runat="server" />
+                            </Triggers>
+
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal de Inclusão Atividade-->
             <div class="modal fade" id="myModalI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -152,6 +249,7 @@
                                                 class="validation">* Informe um valor para esta atividade</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <asp:Button ID="B_Fechar" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
@@ -191,6 +289,35 @@
                     </div>
                 </div>
             </div>
+
+
+            <!--Modal Exibição-->
+            <div class="modal fade" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                            <ContentTemplate>
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="L_Cabecalho">Exibir Material:</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row rr">
+                                        <div class="col-md-12">
+                                            <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
+                                </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>

@@ -24,20 +24,19 @@
                 </div>
                 <div class="row rr">
                     <div class="col-md-10 col-md-offset-1" style="text-align: center">
-                        <asp:Label ID="L_Curso_Unidade" runat="server" Text=""></asp:Label>
+                        <asp:Label CssClass="Titulo_Curso" ID="L_Curso_Unidade" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
             </div>
-
-            <div class="panel panel-default" id="Nenhuma_Unidade" Visible="false" runat="server">
+            <div class="panel panel-default" id="Nenhuma_Unidade" visible="false" runat="server">
                 <div class="row rr">
-                    <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top:30px; margin-bottom:30px;">
+                    <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
                         <asp:Label ID="Label1" runat="server" Text="Nenhuma unidade foi disponibilidade para este curso no momento."></asp:Label>
                     </div>
                 </div>
             </div>
 
-            <asp:UpdatePanel ID="UP_Unidades" runat="server">
+            <asp:UpdatePanel ID="UP_Unidades" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                 <ContentTemplate>
                     <asp:Repeater ID="rptUnidades" runat="server">
                         <ItemTemplate>
@@ -51,8 +50,45 @@
                                         </a>
                                     </span>
                                 </div>
-                                <asp:UpdatePanel ID="UP_Unidades" runat="server">
+                                <asp:UpdatePanel ID="UP_Materiais" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                                     <ContentTemplate>
+
+                                        <asp:Repeater ID="rptMateriais" runat="server">
+                                            <HeaderTemplate>
+                                                <div class="row">
+                                                    <div class="col-md-8 col-md-offset-2 form-inline">
+                                                        <br />
+                                                        <div class="pull-right" >
+                                                            <asp:Label ID="L_Title" runat="server" Text="MATERIAIS"></asp:Label>
+                                                            <asp:Image ImageUrl="~/Images/materiais.png" runat="server" />
+                                                        </div>
+                                                        <br />
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            </HeaderTemplate>
+                                            <ItemTemplate>
+                                                <div id="MateriaisPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a href="../Cadastros/Atividade.aspx">
+                                                                <%# Container.DataItem("Titulo").ToString.ToUpper %>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ItemTemplate>
+                                            <FooterTemplate>
+                                                <div class="row rr" style="text-align: center">
+                                                    <asp:Label ID="L_Emptym" runat="server" Text="Nenhum material disponível para esta unidade" Visible="false"></asp:Label>
+                                                </div>
+                                            </FooterTemplate>
+                                        </asp:Repeater>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <asp:UpdatePanel ID="UP_Atividades" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                                    <ContentTemplate>
+
                                         <asp:Repeater ID="rptAtividades" runat="server">
                                             <HeaderTemplate>
                                                 <div class="row">
@@ -60,8 +96,9 @@
                                                         <br />
                                                         <div class="pull-right">
                                                             <asp:Label ID="L_Title" runat="server" Text="ATIVIDADES"></asp:Label>
-                                                            <asp:Image ImageUrl="~/Images/atividades.png" runat="server" ToolTip="Editar Cadastro"/>
-                                                        </div><br />
+                                                            <asp:Image ImageUrl="~/Images/atividades.png" runat="server" />
+                                                        </div>
+                                                        <br />
                                                         <hr />
                                                     </div>
                                                 </div>

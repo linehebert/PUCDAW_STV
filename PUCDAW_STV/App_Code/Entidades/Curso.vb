@@ -193,7 +193,17 @@ Namespace STV.Entidades
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
 
+        Public Function Verifica_Inscritos(Curso As Integer, Departamento As Integer) As Boolean
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT CU.Cod_Curso FROM cursoXusuario AS CU ")
+            Sql.AppendLine("inner join USUARIO as U ON U.cod_usuario = CU.Cod_Usuario ")
+            Sql.AppendLine("WHERE 0 = 0 ")
+            If Curso <> 0 Then Sql.AppendLine("AND CU.Cod_Curso = " + Util.Sql_String(Curso))
+            If Departamento <> 0 Then Sql.AppendLine("AND U.departamento = " + Util.Sql_String(Departamento))
 
+            Dim Query = Biblio.Executar_Query(Sql.ToString)
+            Return Query.Read()
+        End Function
     End Class
 
 End Namespace

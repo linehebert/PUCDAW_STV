@@ -1,9 +1,28 @@
 ﻿Imports System.Data
-Imports STV
 Imports STV.Entidades
+Imports STV.Seguranca
 
 Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
+    Dim _Autenticacao As Autenticacao
+    Private ReadOnly Property Autenticacao As Autenticacao
+        Get
+            If IsNothing(_Autenticacao) Then _
+                _Autenticacao = New Autenticacao
+            Return _Autenticacao
+        End Get
+    End Property
 
+    Dim _Usuario_Logado As Usuario.Dados
+    Private ReadOnly Property Usuario_Logado As Usuario.Dados
+        Get
+            If IsNothing(_Usuario_Logado) Then
+                _Usuario_Logado = New Usuario.Dados
+                _Usuario_Logado = Autenticacao.Obter_User_Logado()
+            End If
+
+            Return _Usuario_Logado
+        End Get
+    End Property
     Dim _Curso As Curso
     Private ReadOnly Property Curso As Curso
         Get
@@ -213,8 +232,13 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
         Next
         'Adiciona na segunda lista
         For Each item As ListItem In listaSelecionados
-            LB_NIncluidos.Items.Add(item)
-            LB_Incluidos.Items.Remove(item)
+            If Curso.Verifica_Inscritos(Cod_Curso, item.Value) Then
+                RegistrarScript("alert('Já existe aluno deste departamento inscrito neste curso. " + item.Text + "');")
+                Exit For
+            Else
+                LB_NIncluidos.Items.Add(item)
+                LB_Incluidos.Items.Remove(item)
+            End If
         Next
         UP_Visibilidade.Update()
     End Sub
@@ -223,7 +247,14 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
         'Percorre os selecionados da primeira lista
         Dim listaSelecionados As New ListItemCollection
         For Each item As ListItem In LB_Incluidos.Items
-            If item.Selected Then listaSelecionados.Add(item)
+            If item.Selected Then
+                If Curso.Verifica_Inscritos(Cod_Curso, item.Value) Then
+                    RegistrarScript("alert('Já existe aluno deste departamento inscrito neste curso. " + item.Text + "');")
+                    Exit For
+                Else
+                    listaSelecionados.Add(item)
+                End If
+            End If
         Next
         'Adiciona na segunda lista
         For Each item As ListItem In listaSelecionados
@@ -252,7 +283,7 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
     End Sub
     Protected Sub Preenche_DDL_Usuarios()
         Dim usuario As New Usuario
-        DDL_Usuario.DataSource = usuario.Carrega_Usuarios("", False, 0)
+        DDL_Usuario.DataSource = usuario.Carrega_Usuarios("", False, 0, Usuario_Logado.Cod_Usuario, False)
         DDL_Usuario.DataBind()
 
         Dim item As New ListItem
