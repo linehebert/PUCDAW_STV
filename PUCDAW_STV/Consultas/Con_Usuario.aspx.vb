@@ -1,4 +1,6 @@
 ﻿Imports STV.Entidades
+
+
 Partial Class Consultas_Con_Usuario : Inherits STV.Base.Page
 
     Dim _Usuario As Usuario
@@ -13,7 +15,7 @@ Partial Class Consultas_Con_Usuario : Inherits STV.Base.Page
 
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack() Then
-            Carrega_Grid("", False, 0)
+            Carrega_Grid("", False, 0, 0, True)
             Preenche_DDL_Departamento()
         End If
     End Sub
@@ -22,8 +24,8 @@ Partial Class Consultas_Con_Usuario : Inherits STV.Base.Page
         GV_Usuario.DataSource = Usuario.Carrega_Usuario(Cod_Usuario)
         GV_Usuario.DataBind()
     End Sub
-    Private Sub Carrega_Grid(Descricao As String, Inativo As Boolean, Departamento As Integer)
-        GV_Usuario.DataSource = Usuario.Carrega_Usuarios(Descricao, Inativo, Departamento)
+    Private Sub Carrega_Grid(Descricao As String, Inativo As Boolean, Departamento As Integer, UserLogado As Integer, CarregaAdm As Boolean)
+        GV_Usuario.DataSource = Usuario.Carrega_Usuarios(Descricao, Inativo, Departamento, UserLogado, CarregaAdm)
         GV_Usuario.DataBind()
     End Sub
 
@@ -34,16 +36,16 @@ Partial Class Consultas_Con_Usuario : Inherits STV.Base.Page
     End Sub
 
     Protected Sub B_Filtrar_Click(sender As Object, e As System.EventArgs) Handles B_Filtrar.Click
-        Carrega_Grid(TB_Descr.Text, CB_Inativos.Checked, DDL_Departamento.SelectedValue)
+        Carrega_Grid(TB_Descr.Text, CB_Inativos.Checked, DDL_Departamento.SelectedValue, 0, True)
     End Sub
 
     Protected Sub B_Novo_Click(sender As Object, e As System.EventArgs) Handles B_Novo.Click
         Response.Redirect("../Cadastros/Cad_Usuario.aspx")
     End Sub
 
-    Protected Sub GV_Departamento_PageIndexChanging(sender As Object, e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles GV_Usuario.PageIndexChanging
+    Protected Sub GV_Usuario_PageIndexChanging(sender As Object, e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles GV_Usuario.PageIndexChanging
         GV_Usuario.PageIndex = e.NewPageIndex
-        Carrega_Grid(TB_Descr.Text, CB_Inativos.Checked, DDL_Departamento.SelectedValue)
+        Carrega_Grid(TB_Descr.Text, CB_Inativos.Checked, DDL_Departamento.SelectedValue, 0, True)
     End Sub
 
 #Region "Carrega DDLs"

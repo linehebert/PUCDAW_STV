@@ -1,23 +1,23 @@
 ﻿Imports Microsoft.VisualBasic
 Imports System.Data
 
-
 Namespace STV.Entidades
     Public Class Layout : Inherits STV.Base.ClasseBase
 
         Public Class Dados
-            Public Cod_Tema As Integer
+
             Public Cor As String
             Public Atual As Boolean
+            Public Cod_Tema As Integer
         End Class
 
-        Public Function Carrega_Tema() As DataTable
+        Public Function Carrega_Tema() As Dados
             Dim Retorno As New Dados
             Dim Sql As New StringBuilder
 
             Sql.AppendLine("SELECT Cod_Tema, Cor, Atual")
             Sql.AppendLine(" FROM Layout")
-            Sql.AppendLine(" WHERE 0 = 0")
+            Sql.AppendLine(" WHERE 0 = 0 AND Atual=1 ")
 
             Dim Query = Biblio.Executar_Query(Sql.ToString)
             If Query.Read() Then
@@ -27,7 +27,7 @@ Namespace STV.Entidades
             End If
 
             Biblio.FechaConexao()
-            Return Biblio.Retorna_DataTable(Sql.ToString())
+            Return Retorno
         End Function
 
 

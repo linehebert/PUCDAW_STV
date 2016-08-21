@@ -253,7 +253,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
     Protected Sub Preenche_DDL_Usuario()
         Try
             Dim Usuario As New Usuario
-            DDL_Usuario.DataSource = Usuario.Carrega_Usuarios("", False, 0)
+            DDL_Usuario.DataSource = Usuario.Carrega_Usuarios("", False, 0, Usuario_Logado.Cod_Usuario, False)
             DDL_Usuario.DataBind()
 
             Dim item As New ListItem

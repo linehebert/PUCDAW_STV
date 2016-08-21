@@ -6,11 +6,10 @@
 
 
     <div class="grid">
-        <h1>Consulta de Usuários
+        <h1>Consulta de Usuários</h1><hr />
                 <asp:ImageButton ID="B_Novo" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Usuário" />
-        </h1>
         <br />
-        <hr />
+        
 
         <div class="form-group">
             <div class="row rr">

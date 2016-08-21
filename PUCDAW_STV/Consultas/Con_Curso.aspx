@@ -5,10 +5,10 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="grid">
-        <h1 id="Titulo_Page" runat="server">Consulta de Cursos </h1>
+        <h1 id="Titulo_Page" runat="server">Consulta de Cursos </h1><hr />
         <asp:imagebutton id="B_Novo" imageurl="~/Images/add.png" runat="server" imagealign="Right" tooltip="Adicionar Curso" />
         <br />
-        <hr />
+        
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">

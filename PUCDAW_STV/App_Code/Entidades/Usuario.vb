@@ -50,16 +50,17 @@ Namespace STV.Entidades
             Return Retorno
         End Function
 
-        Public Function Carrega_Usuarios(Nome As String, Inativo As Boolean, Departamento As Integer) As DataTable
+        Public Function Carrega_Usuarios(Nome As String, Inativo As Boolean, Departamento As Integer, UserLogado As Integer, CarregarAdm As Boolean) As DataTable
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo,U.Departamento AS Cod_Departamento, D.descricao AS Departamento, cpf, email, ADM")
             Sql.AppendLine(" FROM Usuario as U")
-            Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.cod_departamento")
-            Sql.AppendLine("WHERE 0 = 0")
-            If Not String.IsNullOrEmpty(Nome) Then Sql.AppendLine("AND Nome LIKE " + Util.Sql_String("%" + Nome + "%"))
-            If Inativo = False Then Sql.AppendLine("AND Usuario_Inativo = 0 ")
-            If Departamento <> 0 Then Sql.AppendLine("AND Departamento = " + Util.Sql_String(Departamento))
-            Sql.AppendLine("ORDER BY Cod_Usuario")
+            Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.cod_departamento ")
+            Sql.AppendLine("WHERE 0 = 0 AND U.Cod_Usuario <> " + Util.Sql_String(UserLogado))
+            If Not String.IsNullOrEmpty(Nome) Then Sql.AppendLine(" AND Nome LIKE " + Util.Sql_String("%" + Nome + "%"))
+            If Inativo = False Then Sql.AppendLine(" AND Usuario_Inativo = 0 ")
+            If Departamento <> 0 Then Sql.AppendLine(" AND Departamento = " + Util.Sql_String(Departamento))
+            If CarregarAdm = False Then Sql.AppendLine(" AND U.ADM = 0 ")
+            Sql.AppendLine(" ORDER BY Cod_Usuario")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function

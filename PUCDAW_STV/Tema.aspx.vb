@@ -3,6 +3,7 @@ Imports System.IO
 Imports STV.Entidades
 Imports STV.Seguranca
 
+
 Partial Class Tema : Inherits STV.Base.Page
 
     Dim _Layout As Layout
@@ -29,8 +30,8 @@ Partial Class Tema : Inherits STV.Base.Page
             I_Logo.ImageUrl = "~/Images/Logo_Default.png"
         End If
 
-        'Dim Dado = Layout.Carrega_Tema()
-        'DDL_Tema.SelectedValue = Dado.Cod_Tema
+        Dim Dado = Layout.Carrega_Tema()
+        DDL_Tema.SelectedValue = Dado.Cod_Tema
 
     End Sub
 

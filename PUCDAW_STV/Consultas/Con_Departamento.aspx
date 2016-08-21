@@ -6,11 +6,11 @@
     <div class="conteudo">
 
         <div class="grid">
-            <h1>Consulta de Departamentos 
+            <h1>Consulta de Departamentos</h1> <hr />
                 <asp:ImageButton ID="B_Novo" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Departamento" />
-            </h1>
+            
             <br />
-            <hr />
+            
 
             <div class="form-group">
                 <div class="row rr">
