@@ -29,6 +29,7 @@
                         <div class="navbar-header pull-right">
                             <a class="navbar-brand" id="home" runat="server" href="Default.aspx"> Home </a>
                             <a class="navbar-brand" id="tema" runat="server" href="Tema.aspx"> Layout </a>
+                            <a class="navbar-brand" id="relatorio_usuarios" runat="server" href="Relatorios/Relatorio_Usuarios.aspx"> Relatório </a>
                             <a class="navbar-brand" id="departamentos" runat="server" href="Consultas/Con_Departamento.aspx"> Departamentos </a>
                             <a class="navbar-brand" id="usuarios" runat="server" href="Consultas/Con_Usuario.aspx"> Usuários </a>
                             <a class="navbar-brand" id="cursos" runat="server" href="Consultas/Con_Curso.aspx"> Cursos Disponíveis </a>
