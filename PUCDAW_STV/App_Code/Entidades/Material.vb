@@ -24,6 +24,28 @@ Namespace STV.Entidades
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
 
+        Public Function Carrega_Material(Cod_Material As Integer) As Dados
+
+            Dim Retorno As New Dados
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT Cod_Unidade, Cod_Tipo, Cod_Material, Material, Titulo")
+            Sql.AppendLine("FROM Materiais")
+            Sql.AppendLine("WHERE Cod_Material= " + Util.CString(Cod_Material))
+
+            Dim Query = Biblio.Executar_Query(Sql.ToString)
+            If Query.Read() Then
+                Retorno.Cod_Unidade = Util.CInteger(Query("Cod_Unidade"))
+                Retorno.Cod_Tipo = Util.CInteger(Query("Cod_Tipo"))
+                Retorno.Cod_Material = Util.CInteger(Query("Cod_Material"))
+                Retorno.Material = Util.CString(Query("Material"))
+                Retorno.Titulo = Util.CString(Query("Titulo"))
+            End If
+
+            Biblio.FechaConexao()
+
+            Return Retorno
+        End Function
+
         Public Function Carrega_Tipo() As DataTable
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT Cod_Tipo, Descricao")

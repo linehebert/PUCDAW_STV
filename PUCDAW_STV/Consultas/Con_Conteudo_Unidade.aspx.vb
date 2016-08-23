@@ -333,7 +333,11 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                             RegistrarScript("alert('Extensão Inválida');")
                             Exit Sub
                         End If
-
+                    Case 6
+                        If Extensao <> "jpg" And Extensao <> "jpeg" And Extensao <> "png" Then
+                            RegistrarScript("alert('Extensão Inválida');")
+                            Exit Sub
+                        End If
                     Case Else
                         RegistrarScript("alert('Selecione um tipo de material');")
                         Exit Sub
@@ -345,13 +349,13 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
                 'Atualizar Nome do Arquivo com Codigo do Material
                 Dim Arquivo As String = ("/Anexos/" + Cod_Material.ToString() + "_" + TB_Descricao.Text + "." + Extensao)
-                Dados.Material = Arquivo
+                Dados.Material = "/Anexos/" + FU_Arquivo.FileName
                 Dados.Cod_Material = Cod_Material
                 Material.Alterar_Material(Dados)
 
                 'Salva o Arquivo
                 Caminho = Request.PhysicalApplicationPath
-                FU_Arquivo.SaveAs(Caminho + Arquivo)
+                FU_Arquivo.SaveAs(Caminho + "\Anexos\" + FU_Arquivo.FileName)
 
                 D_Aviso.Visible = True
                 L_Aviso.Visible = True
@@ -399,9 +403,23 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Dim Argument() As String = e.CommandArgument.Split(",")
                 Dim Cod_Tipo = Argument(0)
                 Dim Cod_Material = Argument(1)
-                Dim URL As String = HttpContext.Current.Request.Url.Authority + Biblio.Pega_Valor("SELECT Material FROM Materiais WHERE Cod_Material =" + Cod_Material, "Material")
+                Dim Conteudo_Material As String = Biblio.Pega_Valor("SELECT Material FROM Materiais WHERE Cod_Material =" + Cod_Material, "Material")
+                Dim URL As String = HttpContext.Current.Request.Url.Authority + Conteudo_Material
 
                 Select Case Cod_Tipo
+                    Case "1"
+                        'Exibir vídeo com URL de terceiros
+                        Dim SB As New StringBuilder
+                        SB.Append("<iframe width = '420' height='315'")
+                        SB.Append("src = '" + Conteudo_Material + "' >")
+                        SB.Append("</iframe>")
+
+                        LIT_Video.Text = SB.ToString
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                    Case "2"
+                        'Abrir link para outros sites
+
                     Case "3"
                         'Abrir modal para mostrar o vídeo
                         Dim SB As New StringBuilder
@@ -418,6 +436,13 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         'Abrir pdf em nova guia
                     Case "5"
                         'Fazer download do arquivo
+                        Me.ViewState("Material_Selecionado") = Cod_Material
+                        LB_Download.Visible = True
+                        LB_Material_Download.Visible = True
+                        LB_Material_Download.Text = Conteudo_Material.Replace("/Anexos/", "")
+
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
                     Case "6"
                         'Abrir modal para mostrar a imagem
                     Case Else
@@ -429,6 +454,49 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
+
+    Private Sub B_Download_Click(sender As Object, e As EventArgs) Handles B_Download.Click
+        Try
+            If Not Me.ViewState("Material_Selecionado") Is Nothing Then
+                Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
+
+                'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
+                Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
+                Dim arquivo As FileInfo = New FileInfo(Path)
+
+                Response.Clear()
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + arquivo.Name)
+                Response.AddHeader("Content-Length", arquivo.Length.ToString())
+                Select Case arquivo.Extension
+                    Case "xls"
+                        Response.ContentType = "application/vnd.ms-excel"
+                    Case "xlsx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    Case "doc"
+                        Response.ContentType = "application/vnd.ms-word"
+                    Case "docx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    Case "ppt"
+                        Response.ContentType = "application/vnd.ms-powerpoint"
+                    Case "pptx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                    Case Else
+                        Response.ContentType = "application/octet-stream"
+                End Select
+
+                'Response.WriteFile(arquivo.FullName)
+                Response.TransmitFile(arquivo.FullName)
+                'Response.Flush()
+                'Response.End()
+
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+
 #End Region
 
 End Class

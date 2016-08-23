@@ -22,10 +22,7 @@ Partial Class Relatorios_Relatorio_Usuarios : Inherits STV.Base.Page
     Private Sub Monta_Relatorio()
         Dim ParamList As New List(Of ReportParameter)
         Dim DT = Biblio.Retorna_DataTable(Retorna_SQL)
-        'With ParamList
-        '    .Add(New ReportParameter("Nome", Biblio.Pega_Conteudo("SELECT Nome FROM Sys_Dados_Empresa", "Nome")))
-        '    .Add(New ReportParameter("AnoMes", "Ano / Mês:          " + TB_Ano.Text + "      / " + TB_Mes.Text))
-        'End With
+
         With RV
             .LocalReport.DataSources.Clear()
             .LocalReport.DataSources.Add(New ReportDataSource("Lista", DT))

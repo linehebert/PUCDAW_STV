@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Con_Conteudo_Unidade.aspx.vb" Inherits="Consultas_Con_Conteudo_Unidade" %>
 
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 
@@ -289,31 +287,32 @@
                     </div>
                 </div>
             </div>
-
-
             <!--Modal Exibição-->
             <div class="modal fade" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <asp:UpdatePanel ID="UpdatePanel6" runat="server">
-                            <ContentTemplate>
+                        <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                            <ContentTemplate>--%>
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="L_Cabecalho">Exibir Material:</h4>
+                                    <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row rr">
                                         <div class="col-md-12">
                                             <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
+                                            <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label><br /><br />
+                                            <asp:Label Visible="false" ID="LB_Material_Download" runat="server" Text=''></asp:Label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
+                                    <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
                                 </div>
                                 </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
+                           <%-- </ContentTemplate>
+                        </asp:UpdatePanel>--%>
                     </div>
                 </div>
             </div>

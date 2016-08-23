@@ -42,9 +42,6 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                 'Libera todas as páginas
                 departamentos.Visible = True
                 usuarios.Visible = True
-
-
-                'Liberar somente se o ADM não puder ser instrutor
                 cursos_instrutor.Visible = False
                 meus_cursos.Visible = False
             Else
@@ -53,11 +50,13 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                     'Libera acesso de instrutor
                     departamentos.Visible = False
                     usuarios.Visible = False
+                    relatorio_usuarios.Visible = False
                 Else
                     'Libera acesso somente de usuário/aluno
                     departamentos.Visible = False
                     usuarios.Visible = False
                     cursos_instrutor.Visible = False
+                    relatorio_usuarios.Visible = False
                 End If
             End If
         Else
