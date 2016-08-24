@@ -294,8 +294,8 @@
             </div>
         </div>
         <!--Modal Exibição-->
-        <div class="modal fade" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade bs-example-modal-lg" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
                             <ContentTemplate>--%>
@@ -305,7 +305,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="row rr">
+                        <div class="row">
                             <div class="col-md-12">
                                 <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
                                 <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label><br />

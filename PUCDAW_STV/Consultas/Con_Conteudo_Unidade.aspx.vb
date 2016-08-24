@@ -334,7 +334,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                             Throw New Exception("Extensão Inválida")
                         End If
                     Case 6
-                        If Extensao <> "jpg" And Extensao <> "jpeg" And Extensao <> "png" Then
+                        If Extensao <> "jpg" And Extensao <> "jpeg" And Extensao <> "png" And Extensao <> "gif" Then
                             Throw New Exception("Extensão Inválida")
                         End If
                     Case Else
@@ -445,12 +445,14 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                     Case "6"
                         'Abrir modal para mostrar a imagem
                         Dim SB As New StringBuilder
-                        SB.Append("<img src='.." + Conteudo_Material + "'  />")
+                        SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
 
                         LIT_Video.Text = SB.ToString
                         LB_Download.Visible = False
                         LB_Material_Download.Visible = False
                         RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                        Me.ViewState("Material_Selecionado") = Cod_Material
                     Case Else
 
                 End Select
@@ -486,6 +488,14 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         Response.ContentType = "application/vnd.ms-powerpoint"
                     Case "pptx"
                         Response.ContentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                    Case "png"
+                        Response.ContentType = "image/png"
+                    Case "jpg"
+                        Response.ContentType = "image/jpg"
+                    Case "jpeg"
+                        Response.ContentType = "image/jpeg"
+                    Case "gif"
+                        Response.ContentType = "image/gif"
                     Case Else
                         Response.ContentType = "application/octet-stream"
                 End Select
