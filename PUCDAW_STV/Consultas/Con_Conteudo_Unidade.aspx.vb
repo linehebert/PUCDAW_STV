@@ -267,10 +267,13 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
     Protected Sub B_Novo_Material_Click(sender As Object, e As System.EventArgs) Handles B_Novo_Material.Click
         Try
             Preenche_DDL_Tipo_Material()
-            RegistrarScript("$('#myModalMat').modal('show')")
             Limpa_Dados_Modal_Material()
-
+            RegistrarScript("$('#myModalMat').modal('show')")
             L_TItulo_Modal_Mat.InnerText = "Novo Material:"
+            D_Alerta.Visible = False
+            Link.Visible = False
+            Arquivo.Visible = False
+
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -286,8 +289,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
             If DDL_Tipo.SelectedValue = 0 Then
                 'Mensagem para selecionar um arquivo
-                RegistrarScript("alert('Selecione um tipo de material');")
-                Exit Sub
+                Throw New Exception("Selecione um tipo de material")
             ElseIf DDL_Tipo.SelectedValue = 1 Or DDL_Tipo.SelectedValue = 2 Then
                 Dados.Material = TB_Link.Text
                 Material.Inserir_Material(Dados)
@@ -296,13 +298,14 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Salvar_Material(Dados)
             End If
 
-
             Limpa_Dados_Modal_Material()
             Carrega_Materiais(Cod_Unidade)
             RegistrarScript("$('#myModalMat').modal('hide')")
+
         Catch ex As Exception
-            L_Erro.Text = ex.Message
-            D_Erro.Visible = True
+            D_Alerta.Visible = True
+            L_Alerta.Text = ex.Message
+            RegistrarScript("$('#myModalMat').modal('show')")
         End Try
     End Sub
 
@@ -320,27 +323,22 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Select Case DDL_Tipo.SelectedValue
                     Case 3
                         If Extensao <> "mp4" And Extensao <> "webm" Then
-                            RegistrarScript("alert('Extensão Inválida');")
-                            Exit Sub
+                            Throw New Exception("Extensão Inválida")
                         End If
                     Case 4
                         If Extensao <> "pdf" Then
-                            RegistrarScript("alert('Extensão Inválida');")
-                            Exit Sub
+                            Throw New Exception("Extensão Inválida")
                         End If
                     Case 5
                         If Extensao <> "txt" And Extensao <> "docx" And Extensao <> "xls" And Extensao <> "doc" And Extensao <> "xlsx" And Extensao <> "zip" And Extensao <> "rar" And Extensao <> "ppt" And Extensao <> "pptx" Then
-                            RegistrarScript("alert('Extensão Inválida');")
-                            Exit Sub
+                            Throw New Exception("Extensão Inválida")
                         End If
                     Case 6
                         If Extensao <> "jpg" And Extensao <> "jpeg" And Extensao <> "png" Then
-                            RegistrarScript("alert('Extensão Inválida');")
-                            Exit Sub
+                            Throw New Exception("Extensão Inválida")
                         End If
                     Case Else
-                        RegistrarScript("alert('Selecione um tipo de material');")
-                        Exit Sub
+                        Throw New Exception("Selecione um tipo de material")
                 End Select
 
                 'Salvar no banco
@@ -381,6 +379,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Link.Visible = False
             Arquivo.Visible = False
         End If
+
     End Sub
 
 #End Region
@@ -445,6 +444,13 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
                     Case "6"
                         'Abrir modal para mostrar a imagem
+                        Dim SB As New StringBuilder
+                        SB.Append("<img src='.." + Conteudo_Material + "'  />")
+
+                        LIT_Video.Text = SB.ToString
+                        LB_Download.Visible = False
+                        LB_Material_Download.Visible = False
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
                     Case Else
 
                 End Select
@@ -494,6 +500,13 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
         End Try
+    End Sub
+
+    Private Sub Cancelar_Material_Click(sender As Object, e As EventArgs) Handles Cancelar_Material.Click
+        D_Alerta.Visible = False
+        Limpa_Dados_Modal_Material()
+        Link.Visible = False
+        Arquivo.Visible = False
     End Sub
 
 

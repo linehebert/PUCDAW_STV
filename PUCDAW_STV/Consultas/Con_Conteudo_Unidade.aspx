@@ -138,7 +138,7 @@
             <div class="modal fade" id="myModalMat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                        <asp:UpdatePanel ID="UP_Geral" runat="server">
                             <ContentTemplate>
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -146,6 +146,11 @@
                                 </div>
                                 <div class="modal-body">
                                     <asp:Label ID="L_Info_Mat" runat="server" Text=""></asp:Label>
+
+                                    <div id="D_Alerta" class="alert alert-danger" role="alert" runat="server" visible="false">
+                                        <asp:Label ID="L_Alerta" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
+                                    </div>
+
                                     <div class="row rr">
                                         <div class="col-md-12">
                                             <asp:Label ID="L_Nome" runat="server" Text="Descrição do Material:"></asp:Label>
@@ -186,139 +191,142 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <asp:Button ID="Cancelar_Material" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
-                                    <asp:Button ID="B_Salvar_Material" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="B" />
-                                </div>
-                                </div>
                             </ContentTemplate>
                             <Triggers>
                                 <asp:PostBackTrigger ControlID="B_Salvar_Material" runat="server" />
                             </Triggers>
-
                         </asp:UpdatePanel>
+                        <div class="modal-footer">
+                            <asp:Button ID="Cancelar_Material" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
+                            <asp:Button ID="B_Salvar_Material" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="B" />
+                        </div>
                     </div>
+
                 </div>
             </div>
-
-            <!--Modal de Inclusão Atividade-->
-            <div class="modal fade" id="myModalI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <asp:UpdatePanel ID="UP_Modal" runat="server">
-                            <ContentTemplate>
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="L_TItulo_Modal" runat="server">Nova Atividade:</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <asp:Label ID="L_Info" runat="server" Text=""></asp:Label>
-                                    <div class="row rr">
-                                        <div class="col-md-12">
-                                            <asp:Label ID="Label1" runat="server" Text="Título:"></asp:Label>
-                                            <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título da Atividade"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
-                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                                class="validation">* Informe um título para esta atividade</asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                    <div class="row rr">
-                                        <div class="col-md-6">
-                                            <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:"></asp:Label>
-                                            <asp:TextBox ID="TB_Dt_Abertura" runat="server" class="form-control" ToolTip="Data de Abertura da Atividade" type="Date"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RFV_TB_Dt_Abertura" runat="server" ControlToValidate="TB_Dt_Abertura"
-                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                                class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:"></asp:Label>
-                                            <asp:TextBox ID="TB_Dt_Encerramento" runat="server" class="form-control" ToolTip="Data de Fechamento da Atividade" type="Date"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RFV_TB_Dt_Encerramento" runat="server" ControlToValidate="TB_Dt_Encerramento"
-                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                                class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                    <div class="row rr">
-                                        <div class="col-md-6">
-                                            <asp:Label ID="L_Valor" runat="server" Text="Valor:"></asp:Label>
-                                            <asp:TextBox ID="TB_Valor" runat="server" class="form-control" ToolTip="Valor Total da Atividade"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RFV_TB_Valor" runat="server" ControlToValidate="TB_Valor"
-                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                                class="validation">* Informe um valor para esta atividade</asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <asp:Button ID="B_Fechar" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
-                                    <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="A" />
-                                </div>
-                                </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-                </div>
-            </div>
-
-            <!--Modal Exclusão-->
-            <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                            <ContentTemplate>
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="L_Titulo_MOdal_E">Excluir Atividade:</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row rr">
-                                        <div class="col-md-12">
-                                            <h4 class="modal-title" id="L_Titulo_E">Tem certeza que deseja excluir esta atividade bem como todo o seu conteúdo?</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão da Questão" />
-                                    <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Questão" runat="server" class="btn btn-primary" ToolTip="Excluir Questão" />
-                                </div>
-                                </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-                </div>
-            </div>
-            <!--Modal Exibição-->
-            <div class="modal fade" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
-                            <ContentTemplate>--%>
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row rr">
-                                        <div class="col-md-12">
-                                            <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
-                                            <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label><br /><br />
-                                            <asp:Label Visible="false" ID="LB_Material_Download" runat="server" Text=''></asp:Label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
-                                    <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
-                                </div>
-                                </div>
-                           <%-- </ContentTemplate>
-                        </asp:UpdatePanel>--%>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+
+        <!--Modal de Inclusão Atividade-->
+        <div class="modal fade" id="myModalI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <asp:UpdatePanel ID="UP_Modal" runat="server">
+                        <ContentTemplate>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="L_TItulo_Modal" runat="server">Nova Atividade:</h4>
+                            </div>
+                            <div class="modal-body">
+                                <asp:Label ID="L_Info" runat="server" Text=""></asp:Label>
+
+                                <div class="row rr">
+                                    <div class="col-md-12">
+                                        <asp:Label ID="Label1" runat="server" Text="Título:"></asp:Label>
+                                        <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título da Atividade"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
+                                            Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                            class="validation">* Informe um título para esta atividade</asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="row rr">
+                                    <div class="col-md-6">
+                                        <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:"></asp:Label>
+                                        <asp:TextBox ID="TB_Dt_Abertura" runat="server" class="form-control" ToolTip="Data de Abertura da Atividade" type="Date"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_Dt_Abertura" runat="server" ControlToValidate="TB_Dt_Abertura"
+                                            Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                            class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:"></asp:Label>
+                                        <asp:TextBox ID="TB_Dt_Encerramento" runat="server" class="form-control" ToolTip="Data de Fechamento da Atividade" type="Date"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_Dt_Encerramento" runat="server" ControlToValidate="TB_Dt_Encerramento"
+                                            Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                            class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="row rr">
+                                    <div class="col-md-6">
+                                        <asp:Label ID="L_Valor" runat="server" Text="Valor:"></asp:Label>
+                                        <asp:TextBox ID="TB_Valor" runat="server" class="form-control" ToolTip="Valor Total da Atividade"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_Valor" runat="server" ControlToValidate="TB_Valor"
+                                            Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                            class="validation">* Informe um valor para esta atividade</asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <asp:Button ID="B_Fechar" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
+                                <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="A" />
+                            </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal Exclusão-->
+        <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                        <ContentTemplate>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="L_Titulo_MOdal_E">Excluir Atividade:</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row rr">
+                                    <div class="col-md-12">
+                                        <h4 class="modal-title" id="L_Titulo_E">Tem certeza que deseja excluir esta atividade bem como todo o seu conteúdo?</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão da Questão" />
+                                <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Questão" runat="server" class="btn btn-primary" ToolTip="Excluir Questão" />
+                            </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+        <!--Modal Exibição-->
+        <div class="modal fade" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                            <ContentTemplate>--%>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row rr">
+                            <div class="col-md-12">
+                                <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
+                                <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label><br />
+                                <br />
+                                <asp:Label Visible="false" ID="LB_Material_Download" runat="server" Text=''></asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
+                        <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
+                    </div>
+                </div>
+                <%-- </ContentTemplate>
+                        </asp:UpdatePanel>--%>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
     </div>
     <script src="../js/jsstyle.js"></script>
 </asp:Content>
