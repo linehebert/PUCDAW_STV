@@ -268,6 +268,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Try
             Preenche_DDL_Tipo_Material()
             Limpa_Dados_Modal_Material()
+
             RegistrarScript("$('#myModalMat').modal('show')")
             L_TItulo_Modal_Mat.InnerText = "Novo Material:"
             D_Alerta.Visible = False

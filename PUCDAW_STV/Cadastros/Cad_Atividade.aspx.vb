@@ -71,8 +71,8 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             Curso.Text = Dado.Curso
 
             Titulo.Text = Dado.Titulo
-            Dt_Abertura.Text = Dado.Dt_Abertura.ToString("yyyy-MM-dd")
-            Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("yyyy-MM-dd")
+            Dt_Abertura.Text = Dado.Dt_Abertura.ToString("dd/MM/yyyy")
+            Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("dd/MM/yyyy")
             Valor.Text = Dado.Valor
         Catch ex As Exception
             Throw

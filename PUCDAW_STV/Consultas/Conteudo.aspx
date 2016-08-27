@@ -23,7 +23,7 @@
                     Curso
                 </div>
                 <div class="row rr">
-                    <div class="col-md-10 col-md-offset-1" style="text-align: center">
+                    <div class="col-md-10 col-md-offset-1 table-responsive" style="text-align: center">
                         <asp:Label CssClass="Titulo_Curso" ID="L_Curso_Unidade" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
@@ -52,18 +52,15 @@
                                 </div>
                                 <asp:UpdatePanel ID="UP_Materiais" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                                     <ContentTemplate>
-
                                         <asp:Repeater ID="rptMateriais" runat="server">
                                             <HeaderTemplate>
                                                 <div class="row">
                                                     <div class="col-md-8 col-md-offset-2 form-inline">
                                                         <br />
-                                                        <div class="pull-right" >
+                                                        <div class="pull-right">
                                                             <asp:Label ID="L_Title" runat="server" Text="MATERIAIS"></asp:Label>
                                                             <asp:Image ImageUrl="~/Images/materiais.png" runat="server" />
-                                                        </div>
-                                                        <br />
-                                                        <hr />
+                                                        </div><br /> <hr />
                                                     </div>
                                                 </div>
                                             </HeaderTemplate>
@@ -71,9 +68,9 @@
                                                 <div id="MateriaisPanel" class="panel-collapse collapse in">
                                                     <div class="row rr form-inline">
                                                         <div class="col-md-8 col-md-offset-2">
-                                                            <a href="../Cadastros/Atividade.aspx">
-                                                                <%# Container.DataItem("Titulo").ToString.ToUpper %>
-                                                            </a>
+                                                            <asp:LinkButton ID="lnk_Material" runat="server" CommandArgument='<%# Container.DataItem("Cod_Tipo").ToString() + "," + Container.DataItem("Cod_Material").ToString() %>' CommandName="ExibirMaterial">
+                                                        <%# Container.DataItem("Titulo").ToString.ToUpper %>
+                                                            </asp:LinkButton>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -88,7 +85,6 @@
                                 </asp:UpdatePanel>
                                 <asp:UpdatePanel ID="UP_Atividades" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                                     <ContentTemplate>
-
                                         <asp:Repeater ID="rptAtividades" runat="server">
                                             <HeaderTemplate>
                                                 <div class="row">
@@ -97,9 +93,7 @@
                                                         <div class="pull-right">
                                                             <asp:Label ID="L_Title" runat="server" Text="ATIVIDADES"></asp:Label>
                                                             <asp:Image ImageUrl="~/Images/atividades.png" runat="server" />
-                                                        </div>
-                                                        <br />
-                                                        <hr />
+                                                        </div> <br /><hr />
                                                     </div>
                                                 </div>
                                             </HeaderTemplate>
@@ -127,7 +121,38 @@
                     </asp:Repeater>
                 </ContentTemplate>
             </asp:UpdatePanel>
+
+        <!--Modal Exibição-->
+        <div class="modal fade bs-example-modal-lg" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                       <ContentTemplate>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
+                                    <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label>
+                                    <br />
+                                    <br />
+                                    <asp:Label Visible="false" ID="LB_Material_Download" runat="server" Text=''></asp:Label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
+                            <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
+                        </div>
+                       </ContentTemplate>
+                    </asp:UpdatePanel>
+               </div>
+           </div>
         </div>
+      </div>
     </div>
 
     <script src="../js/jsstyle.js"></script>

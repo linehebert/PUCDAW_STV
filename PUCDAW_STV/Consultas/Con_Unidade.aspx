@@ -24,7 +24,7 @@
                     Informações Gerais
                 </div>
                 <div class="row rr">
-                    <div class="col-md-10 col-md-offset-1" style="text-align: center">
+                    <div class="col-md-10 col-md-offset-1 table-responsive" style="text-align: center">
                         <asp:Label ID="L_Titulo" runat="server" Text="Curso SS" CssClass="Titulo_Curso"></asp:Label>
                     </div>
                 </div>

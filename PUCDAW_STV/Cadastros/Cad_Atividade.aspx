@@ -165,42 +165,57 @@
                                         <div class="col-md-12">
                                             <asp:Label ID="L_Questao" runat="server" Text="Enunciado:"></asp:Label>
                                             <asp:TextBox ID="TB_Enunciado" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Enunciado da Questão" Columns="50" Rows="6"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Enunciado" runat="server" ControlToValidate="TB_Enunciado"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe o enunciado desta questão</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-11">
                                             <asp:Label ID="Label3" runat="server" Text="Alternativa A:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_A" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa A" Columns="50" Rows="2"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_A" runat="server" ControlToValidate="TB_Alternativa_A"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-11">
                                             <asp:Label ID="Label2" runat="server" Text="Alternativa B:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_B" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa B" Columns="50" Rows="2"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_B" runat="server" ControlToValidate="TB_Alternativa_B"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-11">
                                             <asp:Label ID="Label4" runat="server" Text="Alternativa C:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_C" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa C" Columns="50" Rows="2"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_C" runat="server" ControlToValidate="TB_Alternativa_C"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-11">
                                             <asp:Label ID="Label5" runat="server" Text="Alternativa D:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_D" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa D" Columns="50" Rows="2"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_D" runat="server" ControlToValidate="TB_Alternativa_D"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-11">
                                             <asp:Label ID="Label6" runat="server" Text="Alternativa Correta:"></asp:Label>
                                             <div class="checkbox-inline">
-                                                <asp:RadioButtonList ID="RBL_Alternativa_Correta" runat="server" RepeatDirection="Horizontal"
-                                                    CellPadding="5" CellSpacing="5" RepeatLayout="Flow">
-                                                    <asp:ListItem Value="A" Selected="True"> A  </asp:ListItem>
-                                                    <asp:ListItem Value="B"> B </asp:ListItem>
-                                                    <asp:ListItem Value="C"> C </asp:ListItem>
-                                                    <asp:ListItem Value="D"> D </asp:ListItem>
+                                                <asp:RadioButtonList ID="RBL_Alternativa_Correta" CellPadding="5" CellSpacing="5" CssClass="Checkbox-inline" runat="server"
+                                                    RepeatLayout="Flow" RepeatDirection="Horizontal">
+                                                    <asp:ListItem Value="A" Selected="True">&nbsp; A &nbsp;&nbsp;&nbsp;&nbsp;</asp:ListItem>
+                                                    <asp:ListItem Value="B">&nbsp;  B&nbsp;&nbsp;&nbsp;&nbsp;</asp:ListItem>
+                                                    <asp:ListItem Value="C">&nbsp;  C&nbsp;&nbsp;&nbsp;&nbsp;</asp:ListItem>
+                                                    <asp:ListItem Value="D">&nbsp;  D&nbsp;&nbsp;&nbsp;&nbsp;</asp:ListItem>
                                                 </asp:RadioButtonList>
                                             </div>
                                         </div>
@@ -209,12 +224,15 @@
                                         <div class="col-md-11">
                                             <asp:Label ID="L_Justiftv" runat="server" Text="Justificativa:"></asp:Label>
                                             <asp:TextBox ID="TB_Justificativa" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa D" Columns="50" Rows="2"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFV_TB_Justificativa" runat="server" ControlToValidate="TB_Justificativa"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe a justificativa para a resposta desta questão</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
 
                                     <div class="modal-footer">
                                         <asp:Button ID="B_Fechar" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Cadastro de Questão" />
-                                        <asp:Button ID="B_Salvar_Questao" Text="Salvar" runat="server" class="btn btn-success" ToolTip="Salvar Nova Questão" />
+                                        <asp:Button ID="B_Salvar_Questao" Text="Salvar" runat="server" class="btn btn-success" ToolTip="Salvar Nova Questão" CausesValidation="true" ValidationGroup="A" />
                                     </div>
                                 </div>
                             </ContentTemplate>

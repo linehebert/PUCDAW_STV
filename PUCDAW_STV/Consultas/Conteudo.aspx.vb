@@ -1,4 +1,5 @@
 ﻿Imports STV.Entidades
+Imports System.IO
 Imports STV.Seguranca
 
 Partial Class Consultas_Conteudo : Inherits STV.Base.Page
@@ -70,6 +71,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
+            Page.Form.Attributes.Add("enctype", "multipart/form-data")
             If Not Page.IsPostBack() Then
                 Monta_Dados()
 
@@ -148,4 +150,128 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         End If
     End Sub
 
+#Region "Materiais"
+
+    Private Sub rptMateriais_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rptMateriais.ItemCommand
+        Try
+            If e.CommandName = "ExibirMaterial" Then
+                Dim Argument() As String = e.CommandArgument.Split(",")
+                Dim Cod_Tipo = Argument(0)
+                Dim Cod_Material = Argument(1)
+                Dim Conteudo_Material As String = Biblio.Pega_Valor("SELECT Material FROM Materiais WHERE Cod_Material =" + Cod_Material, "Material")
+                Dim URL As String = HttpContext.Current.Request.Url.Authority + Conteudo_Material
+
+                Select Case Cod_Tipo
+                    Case "1"
+                        'Exibir vídeo com URL de terceiros
+                        Dim SB As New StringBuilder
+                        SB.Append("<iframe width = '420' height='315'")
+                        SB.Append("src = '" + Conteudo_Material + "' >")
+                        SB.Append("</iframe>")
+
+                        LIT_Video.Text = SB.ToString
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                    Case "2"
+                        'Abrir link para outros sites
+
+                    Case "3"
+                        'Abrir modal para mostrar o vídeo
+                        Dim SB As New StringBuilder
+                        SB.Append("<video width='320' height='240' controls>")
+                        SB.Append("<source src='http://" + URL + "' type='video/mp4'>")
+                        SB.Append("<source src='http://" + URL + "' type='video/webm'>")
+                        SB.Append(" Seu navegador não suporte HTML5 ")
+                        SB.Append("</video>")
+
+                        LIT_Video.Text = SB.ToString
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                    Case "4"
+                        'Abrir pdf em nova guia
+                    Case "5"
+                        'Fazer download do arquivo
+                        Me.ViewState("Material_Selecionado") = Cod_Material
+                        LB_Download.Visible = True
+                        LB_Material_Download.Visible = True
+                        LB_Material_Download.Text = Conteudo_Material.Replace("/Anexos/", "")
+
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                    Case "6"
+                        'Abrir modal para mostrar a imagem
+                        Dim SB As New StringBuilder
+                        SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
+
+                        LIT_Video.Text = SB.ToString
+                        LB_Download.Visible = False
+                        LB_Material_Download.Visible = False
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                        Me.ViewState("Material_Selecionado") = Cod_Material
+                    Case Else
+
+                End Select
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+    Private Sub B_Download_Click(sender As Object, e As EventArgs) Handles B_Download.Click
+        Try
+            If Not Me.ViewState("Material_Selecionado") Is Nothing Then
+                Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
+
+                'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
+                Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
+                Dim arquivo As FileInfo = New FileInfo(Path)
+
+                Response.Clear()
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + arquivo.Name)
+                Response.AddHeader("Content-Length", arquivo.Length.ToString())
+                Select Case arquivo.Extension
+                    Case "xls"
+                        Response.ContentType = "application/vnd.ms-excel"
+                    Case "xlsx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    Case "doc"
+                        Response.ContentType = "application/vnd.ms-word"
+                    Case "docx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    Case "ppt"
+                        Response.ContentType = "application/vnd.ms-powerpoint"
+                    Case "pptx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                    Case "png"
+                        Response.ContentType = "image/png"
+                    Case "jpg"
+                        Response.ContentType = "image/jpg"
+                    Case "jpeg"
+                        Response.ContentType = "image/jpeg"
+                    Case "gif"
+                        Response.ContentType = "image/gif"
+                    Case Else
+                        Response.ContentType = "application/octet-stream"
+                End Select
+
+                'Response.WriteFile(arquivo.FullName)
+                Response.TransmitFile(arquivo.FullName)
+                'Response.Flush()
+                'Response.End()
+
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    'Private Sub Cancelar_Material_Click(sender As Object, e As EventArgs) Handles Cancelar_Material.Click
+    '    'D_Alerta.Visible = False
+    '    'Limpa_Dados_Modal_Material()
+    '    'Link.Visible = False
+    '    'Arquivo.Visible = False
+    'End Sub
+#End Region
 End Class
