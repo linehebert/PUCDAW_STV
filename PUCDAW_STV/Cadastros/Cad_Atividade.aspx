@@ -66,6 +66,9 @@
                         <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
                         Conteúdo da Atividade
                     </div>
+                    <div id="D_Info" class="alert alert-info rr" role="alert" runat="server" visible="false">
+                       <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
+                    </div>
                     <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>
                             <fieldset id="Info_Questoes" runat="server">
@@ -146,6 +149,7 @@
                 <div class="row rr">
                     <div class="col-md-12">
                         <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
+                        <asp:Button ID="B_Publicar" Text="PUBLICAR" runat="server" class="btn btn-primary" ToolTip="Liberar Atividade Aos Alunos" />
                     </div>
                 </div>
             </fieldset>
@@ -166,8 +170,8 @@
                                             <asp:Label ID="L_Questao" runat="server" Text="Enunciado:"></asp:Label>
                                             <asp:TextBox ID="TB_Enunciado" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Enunciado da Questão" Columns="50" Rows="6"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Enunciado" runat="server" ControlToValidate="TB_Enunciado"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Informe o enunciado desta questão</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Informe o enunciado desta questão</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
@@ -175,8 +179,8 @@
                                             <asp:Label ID="Label3" runat="server" Text="Alternativa A:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_A" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa A" Columns="50" Rows="2"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_A" runat="server" ControlToValidate="TB_Alternativa_A"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
@@ -184,8 +188,8 @@
                                             <asp:Label ID="Label2" runat="server" Text="Alternativa B:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_B" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa B" Columns="50" Rows="2"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_B" runat="server" ControlToValidate="TB_Alternativa_B"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
@@ -193,8 +197,8 @@
                                             <asp:Label ID="Label4" runat="server" Text="Alternativa C:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_C" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa C" Columns="50" Rows="2"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_C" runat="server" ControlToValidate="TB_Alternativa_C"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
@@ -202,8 +206,8 @@
                                             <asp:Label ID="Label5" runat="server" Text="Alternativa D:"></asp:Label>
                                             <asp:TextBox ID="TB_Alternativa_D" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa D" Columns="50" Rows="2"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Alternativa_D" runat="server" ControlToValidate="TB_Alternativa_D"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Todas as alternativas são obrigatórias</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                     <div class="row rr">
@@ -225,8 +229,8 @@
                                             <asp:Label ID="L_Justiftv" runat="server" Text="Justificativa:"></asp:Label>
                                             <asp:TextBox ID="TB_Justificativa" runat="server" class="form-control" TextMode="MultiLine" ToolTip="Alternativa D" Columns="50" Rows="2"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Justificativa" runat="server" ControlToValidate="TB_Justificativa"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Informe a justificativa para a resposta desta questão</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Informe a justificativa para a resposta desta questão</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
 
@@ -242,7 +246,6 @@
             </div>
 
             <!--Modal Exclusão-->
-            <%-- data-toggle="modal" data-target="#myModalE"--%>
             <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -262,7 +265,31 @@
                 </div>
             </div>
 
-
+            <!--Modal Confirmação-->
+            <div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                            <ContentTemplate>
+                                <div class="modal-header">
+                                    <h4>Atenção!
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <asp:Label ID="L_1" runat="server" Text="Ao publicar a atividade ela torna-se disponível a todos os alunos e consequentemente não poderá mais sofrer alterações em suas questões."></asp:Label><br />
+                                    <br />
+                                    <asp:Label ID="L_2" runat="server" Text="Tem certeza que deseja publicar esta atividade bem como todas as suas informações?"></asp:Label>
+                                </div>
+                                <div class="modal-footer">
+                                    <asp:Button ID="B_Fechar_Confir" Text="Cancelar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Publicação" />
+                                    <asp:Button ID="B_Confirma_Publicar" Text="Confirmar Publicação" runat="server" class="btn btn-primary" ToolTip="Confirmar a publicação desta atividade" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </asp:Content>

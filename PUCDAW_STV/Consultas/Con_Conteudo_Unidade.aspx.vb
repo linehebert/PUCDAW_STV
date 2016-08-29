@@ -409,6 +409,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Select Case Cod_Tipo
                     Case "1"
                         'Exibir vídeo com URL de terceiros
+                        LIT_Video.Visible = True
+
                         Dim SB As New StringBuilder
                         SB.Append("<iframe width = '420' height='315'")
                         SB.Append("src = '" + Conteudo_Material + "' >")
@@ -422,6 +424,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
                     Case "3"
                         'Abrir modal para mostrar o vídeo
+                        LIT_Video.Visible = True
+
                         Dim SB As New StringBuilder
                         SB.Append("<video width='320' height='240' controls>")
                         SB.Append("<source src='http://" + URL + "' type='video/mp4'>")
@@ -436,6 +440,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         'Abrir pdf em nova guia
                     Case "5"
                         'Fazer download do arquivo
+                        LIT_Video.Visible = False
+
                         Me.ViewState("Material_Selecionado") = Cod_Material
                         LB_Download.Visible = True
                         LB_Material_Download.Visible = True
@@ -445,6 +451,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
                     Case "6"
                         'Abrir modal para mostrar a imagem
+                        LIT_Video.Visible = True
+
                         Dim SB As New StringBuilder
                         SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
 

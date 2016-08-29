@@ -120,7 +120,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     Dados.Nome = TB_Nome.Text.ToUpper()
                     Dados.Cod_Departamento = DDL_Departamento.SelectedValue
                     Dados.Email = TB_Email.Text
-                    Dados.Senha = Criptografia.Encryptdata(TB_Senha.Text)
+                    If TB_Senha.Text <> "" Then Dados.Senha = Criptografia.Encryptdata(TB_Senha.Text)
                     Dados.Usuario_Inativo = CB_Inativos.Checked
                     Dados.ADM = RBL_Tipo_Usuario.SelectedValue
 

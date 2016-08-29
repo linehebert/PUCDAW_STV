@@ -30,8 +30,24 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
                 If Not IsNothing(Cod_Atividade) Then
                     Cad_Questões.Visible = True
                     Monta_Dados()
-
                     Carrega_Questoes(Cod_Atividade)
+
+                    Dim atvpublicada As Boolean = Biblio.Pega_Valor_Boolean("SELECT Publica FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(Cod_Atividade), "Publica")
+                    If atvpublicada = True Then
+
+                        B_Add_Questao.Attributes.Add("class", "btn btn-primary disabled")
+                        B_Publicar.Attributes.Add("class", "btn btn-primary disabled")
+                        B_Add_Questao.Attributes.Add("disabled", "true")
+                        B_Publicar.Attributes.Add("disabled", "true")
+
+                        Info_Questoes.Disabled = True
+
+
+                        D_Info.Visible = True
+                        L_Info.Text = "Atividade Publicada! Não é possível realizar alterações."
+                    Else
+
+                    End If
                 End If
             End If
         Catch ex As Exception
@@ -209,6 +225,31 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
     Private Sub B_Voltar_Click(sender As Object, e As EventArgs) Handles B_Voltar.Click
         Try
             Response.Redirect("../Consultas/Con_Conteudo_Unidade.aspx?Unit=" & Cod_Unidade)
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    Private Sub B_Confirma_Publicar_Click(sender As Object, e As EventArgs) Handles B_Confirma_Publicar.Click
+        Try
+            Dim Dado As New Atividade.Dados
+            Dado.Cod_Atividade = Cod_Atividade
+            Atividade.Publicar_Atividade(Dado)
+
+            RegistrarScript("$('#myModalConfirm').modal('hide')")
+            Response.Redirect("../Cadastros/Cad_Atividade.aspx?Unit=" & Cod_Unidade & "&Atv=" & Cod_Atividade)
+
+
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    Private Sub B_Publicar_Click(sender As Object, e As EventArgs) Handles B_Publicar.Click
+        Try
+            RegistrarScript("$('#myModalConfirm').modal('show')")
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

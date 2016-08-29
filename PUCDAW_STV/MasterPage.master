@@ -5,7 +5,7 @@
 
 <head runat="server">
     <title>STV PUCDAW</title>
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <%--<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />--%>
     <%--<link href="css/style.css" type="text/css" rel="stylesheet" />--%>
     <%--<link href="App_Themes/Amarelo/Amarelo_1.css" type="text/css" rel="stylesheet" />--%>
     <script src="../js/jquery.min.js" type="text/javascript"></script>

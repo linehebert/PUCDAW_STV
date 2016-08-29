@@ -172,6 +172,14 @@ Namespace STV.Entidades
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
 
+        Public Sub Publicar_Atividade(Registro As Dados)
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("UPDATE Atividade SET Publica = 1 ")
+            Sql.AppendLine("WHERE Cod_Atividade = " + Util.Sql_String(Registro.Cod_Atividade))
+
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
+
         Public Sub Inserir_Atividade(Registro As Dados)
             Dim Sql As New StringBuilder
             Sql.AppendLine("INSERT INTO Atividade (titulo, dt_abertura, dt_fechamento, valor, cod_unidade)")

@@ -1,0 +1,112 @@
+body{
+background-color:#4fd8e8;
+background: linear-gradient(#D5D5D5, #B6B0D5, indigo);
+font-family:'Century Gothic' !important;
+
+}
+
+.conteudo {
+    border: 3px solid #ddd;
+    border-radius: 6px;
+    height:1500px;
+    background-color:white;
+}
+
+.grid{
+    margin-left:10%;
+    margin-right:10%;
+    align-content:center;
+}
+
+
+.head{
+    border: 12px solid #ddd;
+    border-bottom-color:#170B3B;
+    border-top-color:#170B3B;
+    border-radius: 5px; 
+    height: 120px; 
+    margin-top: 0px; 
+    margin-bottom: 0px;
+    background-color:white;
+}
+
+.logo{
+    text-align:center;
+    
+}
+
+
+footer#main{
+	position:relative;
+	left:0;
+	bottom:10px;
+	text-align:center;
+	font:normal 11px/16px Arial, Helvetica, sans-serif;
+	width:100%;
+    margin-top:20px;
+}
+
+/*login*/
+
+.form-signin {
+  max-width: 300px;
+  padding: 15px;
+  margin: 0 auto;
+  border: 2px solid #ddd;
+  margin-top:10%;
+  border-bottom: 7px solid gray;
+  border-right: 7px solid gray;
+  border-radius: 10px;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: 8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}  
+
+.rr { 
+    display: block;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    /*border:2px solid green;*/
+}
+
+.Titulo_Curso{
+    font-size:3em;
+    text-align:center;
+}
+
+.validation{
+    color:red;
+}
+
+.formlabel {
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

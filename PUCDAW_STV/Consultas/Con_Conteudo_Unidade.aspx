@@ -306,7 +306,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <asp:Literal ID="LIT_Video" runat="server"></asp:Literal>
+                                <asp:Literal ID="LIT_Video" runat="server" Visible="false"></asp:Literal>
                                 <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label>
                                 <br />
                                 <br />

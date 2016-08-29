@@ -43,7 +43,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading expandir" id="Atividades">
                                     <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>
-                                    <%# Container.DataItem("Titulo").ToString.ToUpper %>
+                                   UNIDADE: <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                     <span class="pull-right">
                                         <a data-toggle="collapse" data-parent="#panel-quote-group" href="#AtividadesPanel">
                                             <span class="toggle-icon glyphicon glyphicon-minus"></span>
