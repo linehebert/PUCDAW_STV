@@ -56,6 +56,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
         End Try
     End Sub
 
+#Region "Funções e Rotinas"
     Private Sub Monta_Dados()
         Try
             Dim Dado = Atividade.Carrega_Atividade(Cod_Atividade)
@@ -89,12 +90,13 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             If Resposta = "D" Then RB_D.Checked = True
 
             B_Anterior.Visible = False
-
         Catch ex As Exception
             Throw
         End Try
-
     End Sub
+#End Region
+
+#Region "Botões e Eventos"
 
     Private Sub B_Proximo_Click(sender As Object, e As EventArgs) Handles B_Proximo.Click
         Try
@@ -132,7 +134,6 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Atividade.Alterar_Resposta(Registro)
                 End If
 
-
                 'Carregar a próxima questão
                 Dim Dado = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "ASC")
 
@@ -154,9 +155,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                 UP_Atividade.Update()
             Else
                 RegistrarScript("$('#myModalInfo').modal('show')")
-
             End If
-
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -229,4 +228,6 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
     Private Sub B_Responder_Click(sender As Object, e As EventArgs) Handles B_Responder.Click
         RegistrarScript("$('#myModalInfo').modal('hide')")
     End Sub
+
+#End Region
 End Class

@@ -44,6 +44,7 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                 usuarios.Visible = True
                 cursos_instrutor.Visible = False
                 meus_cursos.Visible = False
+                relatorio_usuarios.Visible = True
             Else
                 tema.Visible = False
                 If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) = True Then

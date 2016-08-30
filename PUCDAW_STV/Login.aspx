@@ -29,13 +29,7 @@
                     Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
                     class="validation">* Informe a senha</asp:RequiredFieldValidator>
 
-
-<%--                <div class="checkbox">
-                    <label class="checkbox">
-                        <input type="checkbox" value="remember-me">Remember me
-                    </label>
-                </div>--%>
-                <asp:Button ID="B_Login" runat="server" class="btn btn-lg btn-primary btn-block" Text="Sign in" SkinID="Skin_Button_Tabela"
+                <asp:Button ID="B_Login" runat="server" class="btn btn-lg btn-primary btn-block" Text="Entrar" SkinID="Skin_Button_Tabela"
                     CausesValidation="true" ValidationGroup="A"/>
             </div>
         </div>

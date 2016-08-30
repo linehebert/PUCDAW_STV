@@ -71,7 +71,7 @@ Namespace STV.Entidades
             Sql.AppendLine("UPDATE Usuario SET")
             Sql.AppendLine("CPF = " + Util.Sql_String(Registro.CPF))
             Sql.AppendLine(",Nome = " + Util.Sql_String(Registro.Nome))
-            Sql.AppendLine(",Senha = " + Util.Sql_String(Registro.Senha))
+            'Sql.AppendLine(",Senha = " + Util.Sql_String(Registro.Senha))
             Sql.AppendLine(",Usuario_Inativo = " + Util.Sql_String(Registro.Usuario_Inativo))
             Sql.AppendLine(",Departamento = " + Util.Sql_String(Registro.Cod_Departamento))
             Sql.AppendLine(",Email = " + Util.Sql_String(Registro.Email))
@@ -82,22 +82,17 @@ Namespace STV.Entidades
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
 
-        'Public Sub Inserir(Registro As Dados)
-        '    Dim Sql As New StringBuilder
-        '    Sql.AppendLine("INSERT INTO Usuario (nome, senha, usuario_inativo, departamento, CPF, EMAIL, ADM)")
-        '    Sql.AppendLine("VALUES(")
-        '    Sql.AppendLine(Util.Sql_String(Registro.Nome))
-        '    Sql.AppendLine("," + Util.Sql_String(Registro.Senha))
-        '    Sql.AppendLine("," + Util.Sql_String(Registro.Usuario_Inativo))
-        '    Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Departamento))
-        '    Sql.AppendLine("," + Util.Sql_String(Registro.CPF))
-        '    Sql.AppendLine("," + Util.Sql_String(Registro.Email))
-        '    Sql.AppendLine("," + Util.Sql_String(Registro.ADM))
-        '    Sql.AppendLine(")")
+        Public Sub Alterar_Senha(Registro As Dados)
 
-        '    Biblio.FechaConexao()
-        '    Biblio.Executar_Sql(Sql.ToString())
-        'End Sub
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("UPDATE Usuario SET")
+            Sql.AppendLine(" Senha = " + Util.Sql_String(Registro.Senha))
+            Sql.AppendLine("WHERE Cod_Usuario = " + Util.Sql_String(Registro.Cod_Usuario))
+
+            Biblio.FechaConexao()
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
+
 
         Public Function Inserir(Registro As Dados) As Integer
             Dim Sql As New StringBuilder

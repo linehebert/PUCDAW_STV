@@ -35,8 +35,8 @@
                                         Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
                                         class="validation">* Informe o CPF do usuário</asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ControlToValidate="TB_CPF" class="validation" Text="* CPF incorreto" ValidationGroup="A"
-                                     ValidationExpression="^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$"  runat="server"></asp:RegularExpressionValidator>
-                                    
+                                        ValidationExpression="^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$" runat="server"></asp:RegularExpressionValidator>
+
                                 </div>
                             </div>
                         </div>
@@ -85,11 +85,11 @@
                                     Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
                                     class="validation">* Informe o e-mail deste usuário</asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ControlToValidate="TB_Email" class="validation" Text="E-mail inválido" ValidationGroup="B"
-                                     ValidationExpression="^([\w\-]+\.)*[\w\- ]+@([\w\- ]+\.)+([\w\-]{2,3})$"  runat="server"></asp:RegularExpressionValidator>
+                                    ValidationExpression="^([\w\-]+\.)*[\w\- ]+@([\w\- ]+\.)+([\w\-]{2,3})$" runat="server"></asp:RegularExpressionValidator>
                             </div>
                         </div>
                     </div>
-                    <div class="row rr">
+                    <%--                    <div class="row rr">
                         <div class="col-md-3 col-md-offset-3">
                             <div id="Campo_Senha" runat="server">
                                 <asp:Label ID="L_Senha" runat="server" Text="Senha:"></asp:Label>
@@ -108,12 +108,12 @@
                                     class="validation">* Confirme a senha informada</asp:RequiredFieldValidator>
                             </div>
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="row rr">
                         <div class="col-md-5 col-md-offset-3">
                             Tipo do Usuário:
-                            </div>
                         </div>
+                    </div>
                     <div class="row rr">
                         <div class="col-md-5 col-md-offset-3">
                             <div id="radio" runat="server">
@@ -134,6 +134,20 @@
                             </div>
                         </div>
                     </div>
+                    <br />
+                    <br />
+                    <div class="row rr">
+                        <div id="Div2" runat="server" class="form-inline col-md-6 col-md-offset-3">
+                            <div style="border: 3px solid #D8D8D8; padding: 10px">
+                                <center>
+                                <asp:Label ID="L_Senha_Padrao" runat="server" Text="Senha Padrão: 123"></asp:Label>
+                                &nbsp;&nbsp;&nbsp;
+                            <asp:Button ID="B_Resetar" Text="RESTAURAR SENHA" runat="server" class="btn btn-info" ToolTip="Restaurar Senha Padrão " />
+
+                                </center>
+                            </div>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
             <fieldset class="rr">
@@ -142,8 +156,8 @@
                         <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default pull-left" ToolTip="Voltar" />
                     </div>
                     <div class="col-md-4  col-md-offset-6">
-                        <asp:Button ID="B_Cancelar" Text="CANCELAR" runat="server" class="btn btn-danger" ToolTip="Cancelar" />
-                        <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Registro" CausesValidation="true" ValidationGroup="B" />
+                        <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary pull-right" ToolTip="Salvar Registro" CausesValidation="true" ValidationGroup="B" />
+                        <asp:Button ID="B_Cancelar" Text="CANCELAR" runat="server" class="btn btn-danger pull-right" ToolTip="Cancelar" />
                         <asp:Button ID="B_Continuar" Text="CONTINUAR" runat="server" class="btn btn-primary pull-right" ToolTip="Validar CPF" CausesValidation="true" ValidationGroup="A" />
                     </div>
                 </div>
