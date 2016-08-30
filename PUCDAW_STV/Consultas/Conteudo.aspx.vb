@@ -107,23 +107,23 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
             Throw
         End Try
     End Sub
-    Private Sub Carrega_Atividades(Cod_Unidade As Integer)
-        Try
-            rptUnidades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade, True)
-            rptUnidades.DataBind()
-        Catch ex As Exception
-            Throw
-        End Try
-    End Sub
+    'Private Sub Carrega_Atividades(Cod_Unidade As Integer)
+    '    Try
+    '        rptUnidades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade, True)
+    '        rptUnidades.DataBind()
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Sub
 
-    Private Sub Carrega_Materiais(Cod_Unidade As Integer)
-        Try
-            rptMateriais.DataSource = Material.Carrega_Materiais(Cod_Unidade)
-            rptMateriais.DataBind()
-        Catch ex As Exception
-            Throw
-        End Try
-    End Sub
+    'Private Sub Carrega_Materiais(Cod_Unidade As Integer)
+    '    Try
+    '        rptMateriais.DataSource = Material.Carrega_Materiais(Cod_Unidade)
+    '        rptMateriais.DataBind()
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Sub
 
     Private Sub rptUnidades_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptUnidades.ItemDataBound
         If e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.AlternatingItem Then
@@ -152,7 +152,56 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
 #Region "Materiais"
 
-    Private Sub rptMateriais_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rptMateriais.ItemCommand
+    Private Sub B_Download_Click(sender As Object, e As EventArgs) Handles B_Download.Click
+        Try
+            If Not Me.ViewState("Material_Selecionado") Is Nothing Then
+                Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
+
+                'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
+                Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
+                Dim arquivo As FileInfo = New FileInfo(Path)
+
+                Response.Clear()
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + arquivo.Name)
+                Response.AddHeader("Content-Length", arquivo.Length.ToString())
+                Select Case (Replace(arquivo.Extension, ".", ""))
+                    Case "xls"
+                        Response.ContentType = "application/vnd.ms-excel"
+                    Case "xlsx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    Case "doc"
+                        Response.ContentType = "application/vnd.ms-word"
+                    Case "docx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    Case "ppt"
+                        Response.ContentType = "application/vnd.ms-powerpoint"
+                    Case "pptx"
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                    Case "png"
+                        Response.ContentType = "image/png"
+                    Case "jpg"
+                        Response.ContentType = "image/jpg"
+                    Case "jpeg"
+                        Response.ContentType = "image/jpeg"
+                    Case "gif"
+                        Response.ContentType = "image/gif"
+                    Case Else
+                        Response.ContentType = "application/octet-stream"
+                End Select
+
+                'Response.WriteFile(arquivo.FullName)
+                Response.TransmitFile(arquivo.FullName)
+                'Response.Flush()
+                'Response.End()
+
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    Public Sub rptMateriais_ItemCommand(source As Object, e As RepeaterCommandEventArgs)
         Try
             If e.CommandName = "ExibirMaterial" Then
                 Dim Argument() As String = e.CommandArgument.Split(",")
@@ -212,54 +261,6 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                     Case Else
 
                 End Select
-            End If
-        Catch ex As Exception
-            L_Erro.Text = ex.Message
-            D_Erro.Visible = True
-        End Try
-    End Sub
-    Private Sub B_Download_Click(sender As Object, e As EventArgs) Handles B_Download.Click
-        Try
-            If Not Me.ViewState("Material_Selecionado") Is Nothing Then
-                Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
-
-                'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
-                Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
-                Dim arquivo As FileInfo = New FileInfo(Path)
-
-                Response.Clear()
-                Response.AddHeader("Content-Disposition", "attachment;filename=" + arquivo.Name)
-                Response.AddHeader("Content-Length", arquivo.Length.ToString())
-                Select Case arquivo.Extension
-                    Case "xls"
-                        Response.ContentType = "application/vnd.ms-excel"
-                    Case "xlsx"
-                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    Case "doc"
-                        Response.ContentType = "application/vnd.ms-word"
-                    Case "docx"
-                        Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    Case "ppt"
-                        Response.ContentType = "application/vnd.ms-powerpoint"
-                    Case "pptx"
-                        Response.ContentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                    Case "png"
-                        Response.ContentType = "image/png"
-                    Case "jpg"
-                        Response.ContentType = "image/jpg"
-                    Case "jpeg"
-                        Response.ContentType = "image/jpeg"
-                    Case "gif"
-                        Response.ContentType = "image/gif"
-                    Case Else
-                        Response.ContentType = "application/octet-stream"
-                End Select
-
-                'Response.WriteFile(arquivo.FullName)
-                Response.TransmitFile(arquivo.FullName)
-                'Response.Flush()
-                'Response.End()
-
             End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
