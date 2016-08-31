@@ -1,6 +1,5 @@
 ﻿Imports STV.Seguranca
 Imports STV.Entidades
-Imports System.Web.Services
 Partial Class Cadastros_Atividade : Inherits STV.Base.Page
 
     Dim _Atividade As Atividade
@@ -32,7 +31,6 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             Return _Usuario_Logado
         End Get
     End Property
-
     Private ReadOnly Property Cod_Atividade As Integer
         Get
             Return Request("Atv")

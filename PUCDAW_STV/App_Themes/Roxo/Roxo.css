@@ -2,7 +2,6 @@ body{
 background-color:#4fd8e8;
 background: linear-gradient(#D5D5D5, #B6B0D5, indigo);
 font-family:'Century Gothic' !important;
-
 }
 
 .conteudo {
@@ -31,8 +30,7 @@ font-family:'Century Gothic' !important;
 }
 
 .logo{
-    text-align:center;
-    
+    text-align:center;    
 }
 
 
@@ -108,5 +106,6 @@ footer#main{
 }
 
 .formlabel {
-font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+font-weight:bold;
 }

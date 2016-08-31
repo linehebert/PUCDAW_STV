@@ -4,17 +4,11 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="conteudo">
-
-
-
         <div class="grid">
             <h1>Cadastro de Departamentos</h1>
-            <br />
-            <hr />
-
+            <br /><hr />
 
             <div class="form-group">
-
                 <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                     <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
                 </div>

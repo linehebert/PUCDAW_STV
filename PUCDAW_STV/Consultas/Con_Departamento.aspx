@@ -6,12 +6,10 @@
     <div class="conteudo">
 
         <div class="grid">
-            <h1>Consulta de Departamentos</h1> <hr />
+            <h1> Consulta de Departamentos</h1>
+            <hr />
                 <asp:ImageButton ID="B_Novo" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Departamento" />
-            
             <br />
-            
-
             <div class="form-group">
                 <div class="row rr">
                     <div class="col-md-5">
@@ -27,12 +25,10 @@
                         <asp:Button ID="B_Filtrar" Text="BUSCAR" runat="server" class="btn btn-primary pull-right" ToolTip="Buscar Departamentos" />
                     </div>
                 </div>
-
-
+                <br />
                 <div class="panel panel-primary table-responsive">
                     <div class="panel-heading">Departamentos </div>
                     <div class="panel-body">
-
                         <asp:GridView ID="GV_Departamento" runat="server" AutoGenerateColumns="False" GridLines="None"
                             AllowPaging="true" PagerStyle-CssClass="pgr" CssClass="table table-striped table-hover table-condensed" AlternatingRowStyle-CssClass="alt"
                             PageSize="10">

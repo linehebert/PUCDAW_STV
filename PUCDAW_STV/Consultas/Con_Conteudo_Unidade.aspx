@@ -105,14 +105,12 @@
                                     </div>
                                     <asp:Repeater ID="rptAtividades" runat="server">
                                         <ItemTemplate>
-                                            <div class="row rr form-inline">
-                                                <div class="col-md-1  col-md-offset-3">
+                                            <div class="row rr form-inline"  style="padding: 10px; margin-top: 15px;">
+                                                <div class="col-md-1 col-md-offset-1">
                                                     <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Alterar Atividade" />
-                                                </div>
-                                                <div class="col-md-1">
                                                     <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />
-                                                </div>
-                                                <div class="col-md-7">
+                                                </DIV>
+                                                <div class="col-md-9">
                                                     <a href="../Cadastros/Cad_Atividade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>&Atv=<%# Container.DataItem("Cod_Atividade") %>">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
@@ -291,8 +289,8 @@
                 </div>
             </div>
         </div>
-   
-             <!--Modal Exibição-->
+
+        <!--Modal Exibição-->
         <div class="modal fade bs-example-modal-lg" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -321,7 +319,7 @@
                         <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

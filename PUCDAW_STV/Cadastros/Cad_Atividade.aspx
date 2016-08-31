@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
     <div class="grid">
-        <h1>Cadastro de Atividadessss</h1>
+        <h1>Cadastro de Atividades</h1>
         <hr />
 
         <div class="form-group">
@@ -23,37 +23,52 @@
                     </div>
                     <fieldset id="Info_Atividade" runat="server">
                         <div class="row rr">
-                            <div class="col-md-12">
-                                <asp:Label ID="Label1" runat="server" Text="Curso:"></asp:Label>
+                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                                <asp:Label ID="Label1" runat="server" Text="Curso:" CssClass="formlabel"></asp:Label>
+                            </div>
+                            <div class="col-md-9">
                                 <asp:Label ID="Curso" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-12">
-                                <asp:Label ID="Label7" runat="server" Text="Unidade:"></asp:Label>
+                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                                <asp:Label ID="Label7" runat="server" Text="Unidade:" CssClass="formlabel"></asp:Label>
+                            </div>
+                            <div class="col-md-9">
                                 <asp:Label ID="Unidade" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-12">
-                                <asp:Label ID="L_Titulo" runat="server" Text="Atividade:"></asp:Label>
+                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                                <asp:Label ID="L_Titulo" runat="server" Text="Atividade:" CssClass="formlabel"></asp:Label>
+                            </div>
+                            <div class="col-md-9">
                                 <asp:Label ID="Titulo" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-6">
-                                <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:"></asp:Label>
-                                <asp:Label ID="Dt_Abertura" runat="server" Text="Data de Abertura:"></asp:Label>
+                            <div class="col-md-3" style="text-align:right;">
+                                <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:" CssClass="formlabel"></asp:Label>
                             </div>
-                            <div class="col-md-6">
-                                <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:"></asp:Label>
-                                <asp:Label ID="Dt_Encerramento" runat="server" Text="Data de Encerramento:"></asp:Label>
+                            <div class="col-md-9">
+                                <asp:Label ID="Dt_Abertura" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-12">
-                                <asp:Label ID="L_Valor" runat="server" Text="Valor:"></asp:Label>
-                                <asp:Label ID="Valor" runat="server" Text="Valor:"></asp:Label>
+                            <div class="col-md-3" style="text-align:right;">
+                                <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:" CssClass="formlabel"></asp:Label>
+                            </div>
+                            <div class="col-md-9">
+                                <asp:Label ID="Dt_Encerramento" runat="server" Text=""></asp:Label>
+                            </div>
+
+                        </div>
+                        <div class="row rr">
+                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                                <asp:Label ID="L_Valor" runat="server" Text="Valor:" CssClass="formlabel"></asp:Label>
+                            </div>
+                            <div class="col-md-9">
+                                <asp:Label ID="Valor" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
                     </fieldset>
@@ -67,7 +82,7 @@
                         Conteúdo da Atividade
                     </div>
                     <div id="D_Info" class="alert alert-info rr" role="alert" runat="server" visible="false">
-                       <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
+                        <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
                     </div>
                     <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>

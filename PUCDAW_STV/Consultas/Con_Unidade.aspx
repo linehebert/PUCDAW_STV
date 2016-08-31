@@ -64,7 +64,7 @@
                                                 <div class="col-md-10 col-md-offset-1" style="padding: 10px; margin-top: 15px;">
                                                     <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Renomear Unidade" />
                                                     <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Excluir Unidade" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>">
+                                                    <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>" style="font-size:large">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
                                                 </div>

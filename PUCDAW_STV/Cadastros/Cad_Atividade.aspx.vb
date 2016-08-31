@@ -26,7 +26,6 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
             If Not Page.IsPostBack Then
-
                 If Not IsNothing(Cod_Atividade) Then
                     Cad_Questões.Visible = True
                     Monta_Dados()
@@ -34,19 +33,14 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
 
                     Dim atvpublicada As Boolean = Biblio.Pega_Valor_Boolean("SELECT Publica FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(Cod_Atividade), "Publica")
                     If atvpublicada = True Then
-
+                        'Desabilita os Botões de Alteração/Inclusão de Questão
                         B_Add_Questao.Attributes.Add("class", "btn btn-primary disabled")
                         B_Publicar.Attributes.Add("class", "btn btn-primary disabled")
                         B_Add_Questao.Attributes.Add("disabled", "true")
                         B_Publicar.Attributes.Add("disabled", "true")
-
                         Info_Questoes.Disabled = True
-
-
                         D_Info.Visible = True
                         L_Info.Text = "Atividade Publicada! Não é possível realizar alterações."
-                    Else
-
                     End If
                 End If
             End If
@@ -54,22 +48,9 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
         End Try
-
-
-        'If TB_Alternativa_A.Text = "" Then
-        '    Throw New ApplicationException("Alternativa A não pode ser vazia")
-        'End If
-
-        'Catch ex2 As ApplicationException
-        '    L_Erro.Text = ex2.Message
-        '    D_Erro.Visible = True
-        'Catch ex As Exception
-        '    L_Erro.Text = ex.Message
-        '    D_Erro.Visible = True
-        '    'Throw
-        'End Try
     End Sub
 
+#Region "Funções e Rotinas"
     Protected Sub Carrega_Questoes(Cod_Atividade As Integer)
         Try
             rptQuestoes.DataSource = Atividade.Carrega_Questoes(Cod_Atividade)
@@ -77,7 +58,6 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
         Catch ex As Exception
             Throw
         End Try
-
     End Sub
 
     Private Sub Monta_Dados()
@@ -108,48 +88,6 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             TB_Justificativa.Text = Dado.Justificativa
         Catch ex As Exception
             Throw
-        End Try
-    End Sub
-
-    Protected Sub B_Add_Questao_Click(sender As Object, e As EventArgs) Handles B_Add_Questao.Click
-        Try
-            Me.ViewState("Questao_Selecionada") = Nothing
-            Limpar_Cadastro()
-            RegistrarScript("$('#myModal').modal('show')")
-        Catch ex As Exception
-            L_Erro.Text = ex.Message
-            D_Erro.Visible = True
-        End Try
-    End Sub
-
-
-    Protected Sub B_Salvar_Questao_Click(sender As Object, e As EventArgs) Handles B_Salvar_Questao.Click
-        Try
-            Dim Dado As New Atividade.Dados
-
-            Dado.Enunciado = TB_Enunciado.Text
-            Dado.Alternativa_A = TB_Alternativa_A.Text
-            Dado.Alternativa_B = TB_Alternativa_B.Text
-            Dado.Alternativa_C = TB_Alternativa_C.Text
-            Dado.Alternativa_D = TB_Alternativa_D.Text
-            Dado.Alternativa_Correta = RBL_Alternativa_Correta.SelectedValue
-            Dado.Justificativa = TB_Justificativa.Text
-
-            If Me.ViewState("Questao_Selecionada") Is Nothing Then
-                Dado.Cod_Atividade = Cod_Atividade
-                Atividade.Inserir_Questao(Dado)
-            Else
-                Dado.Cod_Questao = CInt(Me.ViewState("Questao_Selecionada"))
-                Atividade.Alterar_Questao(Dado)
-                Me.ViewState("Questao_Selecionada") = Nothing
-            End If
-
-            Limpar_Cadastro()
-            Carrega_Questoes(Cod_Atividade)
-            RegistrarScript("$('#myModal').modal('hide')")
-        Catch ex As Exception
-            L_Erro.Text = ex.Message
-            D_Erro.Visible = True
         End Try
     End Sub
 
@@ -187,7 +125,49 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
+#End Region
 
+#Region "Botões e Eventos"
+
+    Protected Sub B_Add_Questao_Click(sender As Object, e As EventArgs) Handles B_Add_Questao.Click
+        Try
+            Me.ViewState("Questao_Selecionada") = Nothing
+            Limpar_Cadastro()
+            RegistrarScript("$('#myModal').modal('show')")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+    Protected Sub B_Salvar_Questao_Click(sender As Object, e As EventArgs) Handles B_Salvar_Questao.Click
+        Try
+            Dim Dado As New Atividade.Dados
+
+            Dado.Enunciado = TB_Enunciado.Text
+            Dado.Alternativa_A = TB_Alternativa_A.Text
+            Dado.Alternativa_B = TB_Alternativa_B.Text
+            Dado.Alternativa_C = TB_Alternativa_C.Text
+            Dado.Alternativa_D = TB_Alternativa_D.Text
+            Dado.Alternativa_Correta = RBL_Alternativa_Correta.SelectedValue
+            Dado.Justificativa = TB_Justificativa.Text
+
+            If Me.ViewState("Questao_Selecionada") Is Nothing Then
+                Dado.Cod_Atividade = Cod_Atividade
+                Atividade.Inserir_Questao(Dado)
+            Else
+                Dado.Cod_Questao = CInt(Me.ViewState("Questao_Selecionada"))
+                Atividade.Alterar_Questao(Dado)
+                Me.ViewState("Questao_Selecionada") = Nothing
+            End If
+
+            Limpar_Cadastro()
+            Carrega_Questoes(Cod_Atividade)
+            RegistrarScript("$('#myModal').modal('hide')")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
     Protected Sub B_Fecha_Exclusao_Click(sender As Object, e As EventArgs) Handles B_Fecha_Exclusao.Click
         Try
             Me.ViewState("Questao_Selecionada") = Nothing
@@ -198,7 +178,6 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
         End Try
 
     End Sub
-
     Protected Sub B_Fechar_Click(sender As Object, e As EventArgs) Handles B_Fechar.Click
         Try
             RegistrarScript("$('#myModal').modal('hide')")
@@ -207,7 +186,6 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
-
     Private Sub B_Confirma_Exclusao_Click(sender As Object, e As EventArgs) Handles B_Confirma_Exclusao.Click
         Try
             Dim Dado As New Atividade.Dados
@@ -255,4 +233,6 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
+
+#End Region
 End Class
