@@ -4,8 +4,8 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="grid">
-        <h1 id="Titulo_Page" runat="server">Consulta de Cursos </h1><hr />
+    <div class="grid"><br />
+        <h2 id="Titulo_Page" runat="server" class="text-primary">Consulta de Cursos </h2><hr />
         <asp:imagebutton id="B_Novo" imageurl="~/Images/add.png" runat="server" imagealign="Right" tooltip="Adicionar Curso" />
         <br />
         
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-
+        <br /><br />
         <div class="panel panel-primary table-responsive">
             <div class="panel-heading">Cursos</div>
             <div class="panel-body">
@@ -67,7 +67,7 @@
                                 <asp:TemplateField ControlStyle-Width="15px">
                                     <ItemTemplate>
                                         <asp:HyperLink ID="HL_Alterar" runat="server">
-                                     <asp:Image ImageUrl="~/Images/edit.png" runat="server" ToolTip="Editar Cadastro"/>
+                                     <asp:Image ImageUrl="~/Images/edit.png" runat="server" ToolTip="Editar Registro"/>
                                         </asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>

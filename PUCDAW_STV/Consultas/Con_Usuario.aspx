@@ -5,12 +5,11 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
 
-    <div class="grid">
-        <h1>Consulta de Usuários</h1><hr />
-                <asp:ImageButton ID="B_Novo" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Usuário" />
+    <div class="grid"><br />
+        <h2 class="text-primary">Gerenciar Usuários</h2><hr />
+        <asp:ImageButton ID="B_Novo" ImageUrl="~/Images/add.png" runat="server" ImageAlign="Right" ToolTip="Adicionar Usuário" />
         <br />
         
-
         <div class="form-group">
             <div class="row rr">
                 <div class="col-md-5">
@@ -33,7 +32,7 @@
                     <asp:Button ID="B_Filtrar" Text="BUSCAR" runat="server" class="btn btn-primary pull-right" ToolTip="Buscar Usuários" />
                 </div>
             </div>
-
+            <br /><br />
             <div class="panel panel-primary  table-responsive">
                 <div class="panel-heading">
                     Usuários
@@ -46,11 +45,11 @@
                                 <asp:TemplateField ControlStyle-Width="15px">
                                     <ItemTemplate>
                                         <asp:HyperLink ID="HL_Alterar" runat="server">
-                                     <asp:Image ImageUrl="~/Images/edit.png" runat="server"/>
+                                     <asp:Image ImageUrl="~/Images/edit.png" runat="server" ToolTip="Editar Registro"/>
                                         </asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Cod_Usuario" HeaderText="Código" ItemStyle-VerticalAlign="Middle" />
+                                <asp:BoundField DataField="Cod_Usuario" HeaderText="Código" ItemStyle-VerticalAlign="Middle" Visible="false" />
                                 <asp:BoundField DataField="Nome" HeaderText="Nome" ItemStyle-VerticalAlign="Middle" />
                                 <asp:BoundField DataField="CPF" HeaderText="CPF" ItemStyle-VerticalAlign="Middle" />
                                 <asp:BoundField DataField="Email" HeaderText="E-mail" ItemStyle-VerticalAlign="Middle" />

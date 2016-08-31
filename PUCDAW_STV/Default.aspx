@@ -5,9 +5,9 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
 
-    <div class="grid">
+    <div class="grid"><br />
         <asp:Label ID="Default" runat="server" Text=""></asp:Label>
-        <h1> Bem-Vindo ao STV! </h1><br />
-        <hr />
+        <h2 class="text-primary"> Bem-Vindo ao STV! </h2>
+        <hr /><br />
     </div>
 </asp:Content>

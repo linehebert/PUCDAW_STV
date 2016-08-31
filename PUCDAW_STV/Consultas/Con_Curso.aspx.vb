@@ -68,6 +68,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
 
                     GV_Curso.Columns(2).Visible = False
                     GV_Curso.Columns(3).Visible = False
+                    Titulo_Page.InnerText = "Gerenciar Cursos"
                 Else
 
 

@@ -3,10 +3,10 @@
 <asp:Content ID="C_Head" ContentPlaceHolderID="CPH_Head" runat="Server"></asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="conteudo">
-        <div class="grid">
-            <h1>Cadastro de Departamentos</h1>
-            <br /><hr />
+    
+        <div class="grid"><br />
+            <h2 class="text-primary" id="cad_departamento" runat="server">Cadastro/Alterações</h2>
+            <hr /><br />
 
             <div class="form-group">
                 <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
@@ -61,7 +61,7 @@
                 </fieldset>
             </div>
         </div>
-    </div>
+
 
 </asp:Content>
 

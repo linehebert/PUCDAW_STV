@@ -23,9 +23,11 @@ Partial Class Cadastros_Cad_Departamento : Inherits STV.Base.Page
             If Not Page.IsPostBack Then
                 If Request("Codigo") <> "" Then
                     Monta_Dados()
+                    cad_departamento.InnerText = "Alteração de Cadastro"
                 Else
                     L_Codigo.Visible = False
                     TB_Codigo.Visible = False
+                    cad_departamento.InnerText = "Novo Departamento"
                 End If
             End If
         Catch ex As Exception

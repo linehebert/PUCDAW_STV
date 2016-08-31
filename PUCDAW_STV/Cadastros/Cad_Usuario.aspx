@@ -4,9 +4,9 @@
 <asp:Content ID="C_Head" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
-    <div class="grid">
-        <h1>Cadastro de Usuários</h1>
-        <hr />
+    <div class="grid"><br />
+        <h2 class="text-primary" id="cad_usuario" runat="server">Cadastro de Usuários</h2>
+        <hr /><br />
 
         <div class="col-xs-12">
             <div class="form-group">

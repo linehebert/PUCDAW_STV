@@ -29,12 +29,14 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     Ok.Visible = True
                     B_Continuar.Visible = False
                     Complemento.Visible = True
+                    cad_usuario.InnerText = "Alteração de Cadastro"
 
                 ElseIf Cod_Usuario = Nothing Then
                     'Novo Cadastro
                     Complemento.Visible = False
                     B_Cancelar.Visible = False
                     B_Salvar.Visible = False
+                    cad_usuario.InnerText = "Novo Usuário"
                 End If
             End If
         Catch ex As Exception

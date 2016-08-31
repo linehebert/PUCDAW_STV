@@ -3,9 +3,9 @@
 <asp:Content ID="C_Head" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
-    <div class="grid">
-        <h1>Cadastro de Usuários</h1>
-        <hr />
+    <div class="grid"><br />
+        <h2 class="text-primary">Alteração de Dados de Acesso</h2>
+        <hr /><br />
 
         <div class="col-xs-12">
             <div class="form-group">
@@ -14,7 +14,7 @@
                 </div>
                 <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
                     <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
-                </div>
+                </div><br />
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>

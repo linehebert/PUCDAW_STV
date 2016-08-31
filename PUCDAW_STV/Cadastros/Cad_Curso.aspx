@@ -5,9 +5,9 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="grid">
-        <h1>Cadastro de Cursos</h1>
-        <hr />
+    <div class="grid"><br />
+        <h2 class="text-primary" id="cad_Curso" runat="server">Cadastro de Cursos</h2>
+        <hr /><br />
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">

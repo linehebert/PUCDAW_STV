@@ -5,10 +5,9 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="conteudo">
-        <div class="grid">
-            <h1>Alteração de Tema/Logotipo</h1>
-            <br />
-            <hr />
+        <div class="grid"> <br />
+            <h2 class="text-primary">Alteração de Tema/Logotipo</h2>
+            <hr /> <br />
 
             <div class="form-group">
 
@@ -18,7 +17,7 @@
                 <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
                     <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
                 </div>
-
+                 <br />
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">

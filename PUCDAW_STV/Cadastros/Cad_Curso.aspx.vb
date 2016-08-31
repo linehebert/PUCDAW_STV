@@ -75,13 +75,18 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
                 Preenche_DDL_Categorias()
 
                 If Cod_Curso <> 0 Then
+                    'Alteração de Cadastro
                     Monta_Dados()
                     Carrega_Lista("", False)
                     Preenche_Listas()
                     UP_Visibilidade.Update()
+                    cad_Curso.InnerText = "Alteração de Cadastro"
                 Else
+                    'Novo Curso
                     Carrega_Lista("", False)
                     UP_Visibilidade.Update()
+
+                    cad_Curso.InnerText = "Novo Curso"
                 End If
             End If
         Catch ex As Exception

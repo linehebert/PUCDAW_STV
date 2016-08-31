@@ -36,6 +36,7 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
         'Identifica usuário logado no cabeçalho
         If Usuario_Logado.Nome <> "" Then
             L_Usuario_Logado.Text = "Olá " + Usuario_Logado.Nome
+            dados_acesso.Visible = True
 
             'Identifica qual o tipo de usuário logado e libera as páginas de acordo com as permissões
             If Usuario_Logado.ADM = True Then
@@ -45,6 +46,7 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                 cursos_instrutor.Visible = False
                 meus_cursos.Visible = False
                 relatorio_usuarios.Visible = True
+
             Else
                 tema.Visible = False
                 If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) = True Then
