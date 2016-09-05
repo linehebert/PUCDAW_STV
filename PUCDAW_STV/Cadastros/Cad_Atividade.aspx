@@ -4,8 +4,9 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
     <div class="grid">
-        <h1>Cadastro de Atividades</h1>
-        <hr />
+        <br />
+        <h2 class="text-primary">Gerenciar Atividade </h2>
+        <hr /><br />
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
@@ -23,7 +24,7 @@
                     </div>
                     <fieldset id="Info_Atividade" runat="server">
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
                                 <asp:Label ID="Label1" runat="server" Text="Curso:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -31,7 +32,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
                                 <asp:Label ID="Label7" runat="server" Text="Unidade:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -39,7 +40,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
                                 <asp:Label ID="L_Titulo" runat="server" Text="Atividade:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -47,7 +48,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-3" style="text-align:right;">
+                            <div class="col-md-3" style="text-align: right;">
                                 <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -55,7 +56,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-3" style="text-align:right;">
+                            <div class="col-md-3" style="text-align: right;">
                                 <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -64,7 +65,7 @@
 
                         </div>
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align:right;">
+                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
                                 <asp:Label ID="L_Valor" runat="server" Text="Valor:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -97,6 +98,11 @@
                                         <ContentTemplate>
                                             <div class="row rr">
                                                 <div class="col-md-12">
+                                                    <div class="row rr" id="Nenhuma_Questao" visible="false" runat="server">
+                                                        <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                                            <asp:Label ID="Label9" runat="server" Text="Não há questões cadastradas para esta atividade."></asp:Label>
+                                                        </div>
+                                                    </div>
                                                     <asp:Repeater ID="rptQuestoes" runat="server">
                                                         <ItemTemplate>
                                                             <hr />

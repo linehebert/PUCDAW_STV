@@ -26,7 +26,7 @@ Namespace STV.Entidades
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo, D.descricao AS Departamento, cpf, email, U.Departamento AS Cod_Departamento, ADM")
             Sql.AppendLine(" FROM Usuario as U")
-            Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.cod_departamento")
+            Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.Cod_Departamento")
             Sql.AppendLine(" WHERE Cod_Usuario= " + Util.CString(Cod_Usuario))
             Sql.AppendLine(" ORDER BY Cod_Usuario")
 
@@ -54,7 +54,7 @@ Namespace STV.Entidades
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT cod_usuario, nome, senha, usuario_inativo,U.Departamento AS Cod_Departamento, D.descricao AS Departamento, cpf, email, ADM")
             Sql.AppendLine(" FROM Usuario as U")
-            Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.cod_departamento ")
+            Sql.AppendLine(" LEFT JOIN Departamento AS D ON U.departamento = D.Cod_Departamento ")
             Sql.AppendLine("WHERE 0 = 0 AND U.Cod_Usuario <> " + Util.Sql_String(UserLogado))
             If Not String.IsNullOrEmpty(Nome) Then Sql.AppendLine(" AND Nome LIKE " + Util.Sql_String("%" + Nome + "%"))
             If Inativo = False Then Sql.AppendLine(" AND Usuario_Inativo = 0 ")

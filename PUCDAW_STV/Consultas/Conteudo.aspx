@@ -119,7 +119,7 @@
                                             </FooterTemplate>
                                         </asp:Repeater>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:UpdatePanel><br /><br />
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>

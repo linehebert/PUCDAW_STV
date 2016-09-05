@@ -6,9 +6,9 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="grid">
-        <h1>Consulta de Unidades</h1>
-        <hr />
+    <div class="grid"><br /><br /><br />
+<%--        <h1>Consulta de Unidades</h1>
+        <hr />--%>
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
@@ -18,7 +18,7 @@
                 <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
             </div>
 
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
                     Informações Gerais
@@ -61,12 +61,13 @@
                                     <asp:Repeater ID="rptUnidades" runat="server">
                                         <ItemTemplate>
                                             <div class="row rr form-inline">
-                                                <div class="col-md-10 col-md-offset-1" style="padding: 10px; margin-top: 15px;">
+                                                <div class="col-md-10 col-md-offset-1" style="padding: 10px; margin-top: 10px;">
                                                     <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Renomear Unidade" />
                                                     <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Excluir Unidade" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>" style="font-size:large">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
+                                                    <br /><br />
                                                 </div>
                                             </div>
                                         </ItemTemplate>

@@ -29,7 +29,15 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
                 If Not IsNothing(Cod_Atividade) Then
                     Cad_Questões.Visible = True
                     Monta_Dados()
-                    Carrega_Questoes(Cod_Atividade)
+
+                    Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Atividade")
+                    If qntd_questao = "" Then
+                        Nenhuma_Questao.Visible = True
+                    Else
+                        Nenhuma_Questao.Visible = False
+                        Carrega_Questoes(Cod_Atividade)
+                    End If
+
 
                     Dim atvpublicada As Boolean = Biblio.Pega_Valor_Boolean("SELECT Publica FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(Cod_Atividade), "Publica")
                     If atvpublicada = True Then
@@ -161,6 +169,7 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             End If
 
             Limpar_Cadastro()
+            Nenhuma_Questao.Visible = False
             Carrega_Questoes(Cod_Atividade)
             RegistrarScript("$('#myModal').modal('hide')")
         Catch ex As Exception

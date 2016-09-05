@@ -18,7 +18,7 @@ Namespace STV.Entidades
             Sql.AppendLine("SELECT Cod_Departamento, Descricao, Departamento_Inativo")
             Sql.AppendLine(" FROM Departamento")
             Sql.AppendLine(" WHERE Cod_Departamento= " + Util.CString(Cod_Departamento))
-            Sql.AppendLine(" ORDER BY Cod_departamento")
+            Sql.AppendLine(" ORDER BY Cod_Departamento")
 
 
             Dim Query = Biblio.Executar_Query(Sql.ToString)
@@ -41,7 +41,7 @@ Namespace STV.Entidades
             Sql.AppendLine("WHERE 0 = 0")
             If Not String.IsNullOrEmpty(Descricao) Then Sql.AppendLine("AND Descricao LIKE " + Util.Sql_String("%" + Descricao + "%"))
             If Inativo = False Then Sql.AppendLine("AND Departamento_Inativo = 0 ")
-            Sql.AppendLine("ORDER BY Cod_departamento")
+            Sql.AppendLine("ORDER BY Cod_Departamento")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function

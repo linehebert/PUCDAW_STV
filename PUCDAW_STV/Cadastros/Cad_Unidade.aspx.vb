@@ -49,7 +49,7 @@ Partial Class Cadastros_Cad_Unidade : Inherits STV.Base.Page
     '    If Request("Codigo") <> "" Then
     '        Dim Dados As New Departamento.Dados
 
-    '        Dados.Cod_Departamento = TB_Codigo.Text
+    '        Dados.Cod_Categoria = TB_Codigo.Text
     '        Dados.Descricao = TB_Descr.Text.ToUpper()
     '        Dados.Departamento_Inativo = CB_Inativos.Checked
 

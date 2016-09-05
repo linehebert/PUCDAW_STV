@@ -62,8 +62,8 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             Curso.Text = Dado.Curso
 
             Titulo.Text = Dado.Titulo
-            Dt_Abertura.Text = Dado.Dt_Abertura.ToString("yyyy-MM-dd")
-            Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("yyyy-MM-dd")
+            Dt_Abertura.Text = Dado.Dt_Abertura.ToString("dd/MM/yyyy")
+            Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("dd/MM/yyyy")
             Valor.Text = Dado.Valor
         Catch ex As Exception
             Throw
@@ -75,11 +75,11 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
 
             Me.ViewState("Cod_Questao") = Dado.Cod_Questao
             L_Questao.Text = Dado.Enunciado
-            L_A.Text = Dado.Alternativa_A
-            L_B.Text = Dado.Alternativa_B
-            L_C.Text = Dado.Alternativa_C
-            L_D.Text = Dado.Alternativa_D
-            L_Justificativa.Text = Dado.Justificativa
+            L_A.Text = "A: " & Dado.Alternativa_A
+            L_B.Text = "B: " & Dado.Alternativa_B
+            L_C.Text = "C: " & Dado.Alternativa_C
+            L_D.Text = "D: " & Dado.Alternativa_D
+            L_Justificativa.Text = "Justificativa: " & Dado.Justificativa
 
             Dim Resposta As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
             If Resposta = "A" Then RB_A.Checked = True
@@ -137,10 +137,10 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
 
                 Me.ViewState("Cod_Questao") = Dado.Cod_Questao
                 L_Questao.Text = Dado.Enunciado
-                L_A.Text = Dado.Alternativa_A
-                L_B.Text = Dado.Alternativa_B
-                L_C.Text = Dado.Alternativa_C
-                L_D.Text = Dado.Alternativa_D
+                L_A.Text = "A: " & Dado.Alternativa_A
+                L_B.Text = "B: " & Dado.Alternativa_B
+                L_C.Text = "C: " & Dado.Alternativa_C
+                L_D.Text = "D: " & Dado.Alternativa_D
 
                 'verifica se é a ultima questao
                 Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "ASC")
@@ -199,10 +199,10 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
 
                 Me.ViewState("Cod_Questao") = Dado.Cod_Questao
                 L_Questao.Text = Dado.Enunciado
-                L_A.Text = Dado.Alternativa_A
-                L_B.Text = Dado.Alternativa_B
-                L_C.Text = Dado.Alternativa_C
-                L_D.Text = Dado.Alternativa_D
+                L_A.Text = "A: " & Dado.Alternativa_A
+                L_B.Text = "B: " & Dado.Alternativa_B
+                L_C.Text = "C: " & Dado.Alternativa_C
+                L_D.Text = "D: " & Dado.Alternativa_D
 
                 Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "DESC")
                 If Proxima.Cod_Questao = Nothing Then

@@ -107,14 +107,15 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Try
             Dim Dado = Unidade.Carrega_Unidade(Cod_Unidade)
             L_Titulo.Text = Dado.Titulo
-            L_Curso_Unidade.Text = Dado.Curso
+            L_Curso_Unidade.InnerText = "Curso: " & Dado.Curso
         Catch ex As Exception
             Throw
         End Try
     End Sub
     Protected Sub B_Voltar_Click(sender As Object, e As System.EventArgs) Handles B_Voltar.Click
         Try
-            Response.Redirect("../Consultas/Con_Curso.aspx")
+            Dim Cod_Curso As String = Biblio.Pega_Valor("SELECT Cod_Curso FROM Unidade WHERE Cod_Unidade= " + Util.CString(Cod_Unidade), "Cod_Curso")
+            Response.Redirect("../Consultas/Con_Unidade.aspx?INST=S&Cod=" & Util.CString(Cod_Curso))
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -156,9 +157,19 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 If Me.ViewState("Atividade_Selecionada") Is Nothing Then
                     Dados.Cod_Unidade = Cod_Unidade
                     Atividade.Inserir_Atividade(Dados)
+
+                    Nenhuma_Atividade.Visible = False
+                    D_Aviso.Visible = True
+                    L_Aviso.Visible = True
+                    L_Aviso.Text = "Atividade cadastrada com sucesso!"
                 Else
                     Dados.Cod_Atividade = CInt(Me.ViewState("Atividade_Selecionada"))
                     Atividade.Alterar_Atividade(Dados)
+
+                    Nenhuma_Atividade.Visible = False
+                    D_Aviso.Visible = True
+                    L_Aviso.Visible = True
+                    L_Aviso.Text = "Alterações realizadas com sucesso!"
                 End If
 
                 Limpa_Dados_Modal()
@@ -205,6 +216,14 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
     Protected Sub Carrega_Modal_Exclusao(sender As Object, e As CommandEventArgs)
         Try
+            D_Aviso.Visible = False
+            L_Aviso.Visible = False
+
+            L_Titulo_Modal_E.InnerText = "Excluir Atividade:"
+            L_Titulo_E.InnerText = "Tem certeza que deseja excluir esta atividade, bem como todo o seu conteúdo?"
+            B_Confirma_Exclusao.Visible = True
+            B_Confirma_Exclusao_Mat.Visible = False
+
             Me.ViewState("Atividade_Selecionada") = e.CommandArgument.ToString()
             RegistrarScript("$('#myModalE').modal('show')")
         Catch ex As Exception
@@ -212,6 +231,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
+
+
 
     Protected Sub B_Fecha_Exclusao_Click(sender As Object, e As EventArgs) Handles B_Fecha_Exclusao.Click
         Try
@@ -237,6 +258,14 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Dado.Cod_Atividade = CInt(Me.ViewState("Atividade_Selecionada"))
             Atividade.Excluir_Conteudo_Atividade(Dado)
             Atividade.Excluir_Atividade(Dado)
+
+
+            Dim qnt_atv As String = Biblio.Pega_Valor("SELECT Cod_Atividade FROM Atividade WHERE Cod_Unidade =" + Util.Sql_String(Cod_Unidade), "Cod_Atividade")
+            If qnt_atv = "" Then
+                Nenhuma_Atividade.Visible = True
+            Else
+                Nenhuma_Atividade.Visible = False
+            End If
 
             Carrega_Atividades(Cod_Unidade)
             RegistrarScript("$('#myModalE').modal('hide')")
@@ -264,6 +293,47 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             Throw
         End Try
     End Sub
+
+    Protected Sub Carrega_Modal_Exclusao_Mat(sender As Object, e As CommandEventArgs)
+        Try
+            D_Aviso.Visible = False
+            L_Aviso.Visible = False
+
+            L_Titulo_Modal_E.InnerText = "Excluir Material:"
+            L_Titulo_E.InnerText = "Tem certeza que deseja excluir este material?"
+            B_Confirma_Exclusao.Visible = False
+            B_Confirma_Exclusao_Mat.Visible = True
+
+            Me.ViewState("Material_Selecionado") = e.CommandArgument.ToString()
+            RegistrarScript("$('#myModalE').modal('show')")
+
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+    Private Sub B_Confirma_Exclusao_Mat_Click(sender As Object, e As EventArgs) Handles B_Confirma_Exclusao_Mat.Click
+        Try
+            Dim Dado As New Material.Dados
+            Dado.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
+            Material.Excluir_Material(Dado)
+
+            Dim qnt_mat As String = Biblio.Pega_Valor("SELECT Cod_Material FROM Materiais WHERE Cod_Unidade =" + Util.Sql_String(Cod_Unidade), "Cod_Material")
+            If qnt_mat = "" Then
+                Nenhum_Material.Visible = True
+            Else
+                Nenhum_Material.Visible = False
+
+            End If
+
+            Carrega_Materiais(Cod_Unidade)
+            RegistrarScript("$('#myModalE').modal('hide')")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
     Protected Sub B_Novo_Material_Click(sender As Object, e As System.EventArgs) Handles B_Novo_Material.Click
         Try
             Preenche_DDL_Tipo_Material()
@@ -294,9 +364,12 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             ElseIf DDL_Tipo.SelectedValue = 1 Or DDL_Tipo.SelectedValue = 2 Then
                 Dados.Material = TB_Link.Text
                 Material.Inserir_Material(Dados)
+
+                Nenhum_Material.Visible = False
             Else
                 'Salvar arquivo
                 Salvar_Material(Dados)
+                Nenhum_Material.Visible = False
             End If
 
             Limpa_Dados_Modal_Material()
@@ -356,9 +429,10 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Caminho = Request.PhysicalApplicationPath
                 FU_Arquivo.SaveAs(Caminho + "\Anexos\" + FU_Arquivo.FileName)
 
+                Nenhum_Material.Visible = False
                 D_Aviso.Visible = True
                 L_Aviso.Visible = True
-                L_Aviso.Text = "Alterações realizadas com sucesso!"
+                L_Aviso.Text = "Material cadastrado com sucesso!"
             Else
                 D_Erro.Visible = True
                 L_Erro.Visible = True
@@ -412,22 +486,34 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         LIT_Video.Visible = True
 
                         Dim SB As New StringBuilder
-                        SB.Append("<iframe width = '420' height='315'")
+                        SB.Append("<iframe width = '868px' height='568px'")
                         SB.Append("src = '" + Conteudo_Material + "' >")
                         SB.Append("</iframe>")
 
                         LIT_Video.Text = SB.ToString
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
+                        B_Download.Visible = False
                     Case "2"
                         'Abrir link para outros sites
 
+                        LIT_Video.Visible = True
+
+                        Dim SB As New StringBuilder
+                        SB.Append("<br /><center><h4>Este material contém um link de acesso a site de terceiros.<br />")
+                        SB.Append("Para continuar e ser redirecionado a este link ")
+                        SB.Append("<a target='_blank' href='" + Conteudo_Material + "'> clique aqui </a></h4></center>")
+
+                        LIT_Video.Text = SB.ToString
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                        B_Download.Visible = False
                     Case "3"
                         'Abrir modal para mostrar o vídeo
                         LIT_Video.Visible = True
 
                         Dim SB As New StringBuilder
-                        SB.Append("<video width='320' height='240' controls>")
+                        SB.Append("<video width='868px' height='568px' controls>")
                         SB.Append("<source src='http://" + URL + "' type='video/mp4'>")
                         SB.Append("<source src='http://" + URL + "' type='video/webm'>")
                         SB.Append(" Seu navegador não suporte HTML5 ")
@@ -436,8 +522,12 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         LIT_Video.Text = SB.ToString
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
+                        B_Download.Visible = True
+
                     Case "4"
                         'Abrir pdf em nova guia
+
+                        B_Download.Visible = True
                     Case "5"
                         'Fazer download do arquivo
                         LIT_Video.Visible = False
@@ -448,6 +538,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         LB_Material_Download.Text = Conteudo_Material.Replace("/Anexos/", "")
 
                         RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                        B_Download.Visible = True
 
                     Case "6"
                         'Abrir modal para mostrar a imagem
@@ -462,6 +554,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         Me.ViewState("Material_Selecionado") = Cod_Material
+
+                        B_Download.Visible = True
                     Case Else
 
                 End Select

@@ -213,21 +213,37 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                 Select Case Cod_Tipo
                     Case "1"
                         'Exibir vídeo com URL de terceiros
+                        LIT_Video.Visible = True
+
                         Dim SB As New StringBuilder
-                        SB.Append("<iframe width = '420' height='315'")
+                        SB.Append("<iframe width = '868px' height='568px'")
                         SB.Append("src = '" + Conteudo_Material + "' >")
                         SB.Append("</iframe>")
 
                         LIT_Video.Text = SB.ToString
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
+                        B_Download.Visible = False
                     Case "2"
                         'Abrir link para outros sites
 
+                        LIT_Video.Visible = True
+
+                        Dim SB As New StringBuilder
+                        SB.Append("<br /><center><h4>Este material contém um link de acesso a site de terceiros.<br />")
+                        SB.Append("Para continuar e ser redirecionado a este link ")
+                        SB.Append("<a target='_blank' href='" + Conteudo_Material + "'> clique aqui </a></h4></center>")
+
+                        LIT_Video.Text = SB.ToString
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                        B_Download.Visible = False
                     Case "3"
                         'Abrir modal para mostrar o vídeo
+                        LIT_Video.Visible = True
+
                         Dim SB As New StringBuilder
-                        SB.Append("<video width='320' height='240' controls>")
+                        SB.Append("<video width='868px' height='568px' controls>")
                         SB.Append("<source src='http://" + URL + "' type='video/mp4'>")
                         SB.Append("<source src='http://" + URL + "' type='video/webm'>")
                         SB.Append(" Seu navegador não suporte HTML5 ")
@@ -236,10 +252,16 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         LIT_Video.Text = SB.ToString
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
+                        B_Download.Visible = True
+
                     Case "4"
                         'Abrir pdf em nova guia
+
+                        B_Download.Visible = True
                     Case "5"
                         'Fazer download do arquivo
+                        LIT_Video.Visible = False
+
                         Me.ViewState("Material_Selecionado") = Cod_Material
                         LB_Download.Visible = True
                         LB_Material_Download.Visible = True
@@ -247,8 +269,12 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
+                        B_Download.Visible = True
+
                     Case "6"
                         'Abrir modal para mostrar a imagem
+                        LIT_Video.Visible = True
+
                         Dim SB As New StringBuilder
                         SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
 
@@ -258,6 +284,8 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         Me.ViewState("Material_Selecionado") = Cod_Material
+
+                        B_Download.Visible = True
                     Case Else
 
                 End Select

@@ -176,9 +176,9 @@ Namespace STV.Entidades
 
         Public Function Carrega_Visibilidade(Cod_Curso As String) As DataTable
             Dim Sql As New StringBuilder
-            Sql.AppendLine("select cd.cod_departamento, d.descricao,  cd.cod_curso  ")
+            Sql.AppendLine("select cd.Cod_Departamento, d.descricao,  cd.cod_curso  ")
             Sql.AppendLine("from cursoXdepartamento as cd")
-            Sql.AppendLine("left join Departamento AS D ON D.cod_departamento = cd.Cod_Departamento")
+            Sql.AppendLine("left join Departamento AS D ON D.Cod_Departamento = cd.Cod_Departamento")
             Sql.AppendLine("where cod_curso=" + Util.CString(Cod_Curso))
 
             Return Biblio.Retorna_DataTable(Sql.ToString())

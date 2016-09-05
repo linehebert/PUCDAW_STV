@@ -58,8 +58,11 @@ Namespace STV.Entidades
 
         Public Sub Excluir_Unidade(Registro As Dados)
             Dim Sql As New StringBuilder
-            Sql.AppendLine("DELETE FROM Unidade")
-            Sql.AppendLine("WHERE Cod_Unidade = " + Util.Sql_String(Registro.Cod_Unidade))
+            Sql.AppendLine("DELETE FROM MATERIAIS WHERE Cod_Unidade = " + Util.Sql_String(Registro.Cod_Unidade))
+            Sql.AppendLine("DELETE FROM UsuarioXRespostas WHERE Cod_Atividade IN (SELECT COD_ATIVIDADE FROM ATIVIDADE WHERE COD_UNIDADE=" + Util.Sql_String(Registro.Cod_Unidade) + ")")
+            Sql.AppendLine("DELETE FROM QUESTAO WHERE Cod_Atividade IN (SELECT COD_ATIVIDADE FROM ATIVIDADE WHERE COD_UNIDADE=" + Util.Sql_String(Registro.Cod_Unidade) + ")")
+            Sql.AppendLine("DELETE FROM ATIVIDADE WHERE COD_UNIDADE=" + Util.Sql_String(Registro.Cod_Unidade))
+            Sql.AppendLine("DELETE FROM Unidade WHERE Cod_Unidade = " + Util.Sql_String(Registro.Cod_Unidade))
 
             Biblio.Executar_Sql(Sql.ToString())
         End Sub

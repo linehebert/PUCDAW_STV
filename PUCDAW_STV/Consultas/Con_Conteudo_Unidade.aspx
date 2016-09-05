@@ -6,12 +6,11 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="grid">
-        <h1>Visualizar Unidade</h1>
+        <br />
+
+        <h2 class="text-primary" ID="L_Curso_Unidade" runat="server"></h2>
         <hr />
-        <div>
-            <asp:Label ID="curso" runat="server" Text="Curso:"></asp:Label>
-            <asp:Label ID="L_Curso_Unidade" runat="server" Text=""></asp:Label>
-        </div>
+
         <br />
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
@@ -58,14 +57,11 @@
                                     </div>
                                     <asp:Repeater ID="rptMateriais" runat="server">
                                         <ItemTemplate>
-                                            <div class="row rr form-inline">
-                                                <div class="col-md-1">
-                                                    <%--<asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Alterar Atividade" />--%>
+                                            <div class="row rr form-inline" style="padding: 10px; margin-top: 10px;">
+                                                <div class="col-md-1 col-md-offset-1">
+                                                    <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao_Mat" CommandArgument='<%# Container.DataItem("Cod_Material").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Material" />
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <%--<asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />--%>
-                                                </div>
-                                                <div class="col-md-7">
+                                                <div class="col-md-9">
                                                     <asp:LinkButton ID="lnk_Material" runat="server" CommandArgument='<%# Container.DataItem("Cod_Tipo").ToString() + "," + Container.DataItem("Cod_Material").ToString() %>' CommandName="ExibirMaterial">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </asp:LinkButton>
@@ -75,6 +71,7 @@
                                     </asp:Repeater>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
+                            <br />
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
@@ -105,13 +102,13 @@
                                     </div>
                                     <asp:Repeater ID="rptAtividades" runat="server">
                                         <ItemTemplate>
-                                            <div class="row rr form-inline"  style="padding: 10px; margin-top: 15px;">
+                                            <div class="row rr form-inline" style="padding: 10px; margin-top: 10px;">
                                                 <div class="col-md-1 col-md-offset-1">
                                                     <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Alterar Atividade" />
                                                     <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />
-                                                </DIV>
+                                                </div>
                                                 <div class="col-md-9">
-                                                    <a href="../Cadastros/Cad_Atividade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>&Atv=<%# Container.DataItem("Cod_Atividade") %>">
+                                                    <a  href="../Cadastros/Cad_Atividade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>&Atv=<%# Container.DataItem("Cod_Atividade") %>">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
                                                 </div>
@@ -120,6 +117,7 @@
                                     </asp:Repeater>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
+                            <br />
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
@@ -270,18 +268,19 @@
                         <ContentTemplate>
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="L_Titulo_MOdal_E">Excluir Atividade:</h4>
+                                <h4 class="modal-title" id="L_Titulo_Modal_E" runat="server">Excluir:</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row rr">
                                     <div class="col-md-12">
-                                        <h4 class="modal-title" id="L_Titulo_E">Tem certeza que deseja excluir esta atividade bem como todo o seu conteúdo?</h4>
+                                        <h4 class="modal-title" id="L_Titulo_E" runat="server">Tem certeza que deseja excluir este registro bem como todo o seu conteúdo?</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão da Questão" />
-                                <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Questão" runat="server" class="btn btn-primary" ToolTip="Excluir Questão" />
+                                <asp:Button ID="B_Fecha_Exclusao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Exclusão" />
+                                <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Atividade" runat="server" class="btn btn-primary" ToolTip="Excluir Atividade" Visible="false" />
+                                <asp:Button ID="B_Confirma_Exclusao_Mat" Text="Confirmar Exclusão do Material" runat="server" class="btn btn-primary" ToolTip="Excluir Material" Visible="false" />
                             </div>
                             </div>
                         </ContentTemplate>
