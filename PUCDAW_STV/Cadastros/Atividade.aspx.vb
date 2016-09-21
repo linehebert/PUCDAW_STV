@@ -107,12 +107,12 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                 If Resposta = "B" Then RB_B.Checked = True
                 If Resposta = "C" Then RB_C.Checked = True
                 If Resposta = "D" Then RB_D.Checked = True
-                If Resposta = Nothing Then
-                    RB_A.Checked = False
-                    RB_B.Checked = False
-                    RB_C.Checked = False
-                    RB_D.Checked = False
-                End If
+                'If Resposta = Nothing Then
+                '    RB_A.Checked = False
+                '    RB_B.Checked = False
+                '    RB_C.Checked = False
+                '    RB_D.Checked = False
+                'End If
 
                 'Guarda os dados para inserir na tabela de usuarioxrespostas
                 Dim Registro As New Atividade.Dados
@@ -124,6 +124,12 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                 If RB_B.Checked Then Registro.Resposta = "B"
                 If RB_C.Checked Then Registro.Resposta = "C"
                 If RB_D.Checked Then Registro.Resposta = "D"
+
+                If Registro.Resposta = Resposta Then
+                    Registro.Correta = 1
+                Else
+                    Registro.Correta = 0
+                End If
 
                 'verifica se é insert ou alteração
                 If Resposta = Nothing Then

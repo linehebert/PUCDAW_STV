@@ -524,11 +524,11 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
                         B_Download.Visible = True
 
-                    Case "4"
-                        'Abrir pdf em nova guia
+                    'Case "4"
+                    '    'Abrir pdf em nova guia
 
-                        B_Download.Visible = True
-                    Case "5"
+                    '    B_Download.Visible = True
+                    Case "5", "4"
                         'Fazer download do arquivo
                         LIT_Video.Visible = False
 
@@ -620,6 +620,26 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Limpa_Dados_Modal_Material()
         Link.Visible = False
         Arquivo.Visible = False
+    End Sub
+
+    Private Sub B_Abrir_Click(sender As Object, e As EventArgs) Handles B_Abrir.Click
+        Try
+            If Not Me.ViewState("Material_Selecionado") Is Nothing Then
+                Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
+
+                'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
+                Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
+                Dim arquivo As FileInfo = New FileInfo(Path)
+
+                Session("ArquivoPDF") = arquivo
+
+                Response.Redirect("ExibirMaterial.aspx")
+
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
     End Sub
 
 

@@ -23,6 +23,7 @@ Namespace STV.Entidades
             Public Cod_Questao As Integer
             Public Cod_Usuario As Integer
             Public Resposta As String
+            Public Correta As Boolean
 
         End Class
 
@@ -260,6 +261,7 @@ Namespace STV.Entidades
             Sql.AppendLine(",cod_atividade = " + Util.Sql_String(Registro.Cod_Atividade))
             Sql.AppendLine(",cod_questao = " + Util.Sql_String(Registro.Cod_Questao))
             Sql.AppendLine(",resposta = " + Util.Sql_String(Registro.Resposta))
+            Sql.AppendLine(",correta = " + Util.Sql_String(Registro.Correta))
             Sql.AppendLine("WHERE Cod_Usuario = " + Util.Sql_String(Registro.Cod_Usuario))
             Sql.AppendLine("AND Cod_Questao = " + Util.Sql_String(Registro.Cod_Questao))
             Sql.AppendLine("AND Cod_Atividade = " + Util.Sql_String(Registro.Cod_Atividade))
@@ -269,12 +271,13 @@ Namespace STV.Entidades
 
         Public Sub Inserir_Resposta(Registro As Dados)
             Dim Sql As New StringBuilder
-            Sql.AppendLine("INSERT INTO Usuarioxrespostas (cod_usuario, cod_atividade, cod_questao, resposta)")
+            Sql.AppendLine("INSERT INTO Usuarioxrespostas (cod_usuario, cod_atividade, cod_questao, resposta, correta)")
             Sql.AppendLine("VALUES(")
             Sql.AppendLine(Util.Sql_String(Registro.Cod_Usuario))
             Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Atividade))
             Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Questao))
             Sql.AppendLine("," + Util.Sql_String(Registro.Resposta))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Correta))
             Sql.AppendLine(")")
 
             Biblio.Executar_Sql(Sql.ToString())

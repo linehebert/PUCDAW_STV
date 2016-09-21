@@ -30,7 +30,7 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
                     Cad_Questões.Visible = True
                     Monta_Dados()
 
-                    Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Atividade")
+                    Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Questao")
                     If qntd_questao = "" Then
                         Nenhuma_Questao.Visible = True
                     Else

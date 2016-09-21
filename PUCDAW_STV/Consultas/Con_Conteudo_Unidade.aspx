@@ -316,6 +316,8 @@
                     <div class="modal-footer">
                         <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
                         <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
+                        <asp:LinkButton ID="B_Abrir" Text="Abrir" runat="server" class="btn btn-primary" ToolTip="Abrir Arquivo" Target="_blank" />
+
                     </div>
                 </div>
 

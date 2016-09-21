@@ -22,11 +22,12 @@ Namespace STV.Entidades
             Dim Retorno As New Dados
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT C.cod_curso, C.titulo, C.dt_inicio, C.dt_termino, C.palavras_chave,")
-            Sql.AppendLine("C.instrutor as cod_user, U.nome as Instrutor, C.departamento, C.categoria as cod_categoria, Cat.descricao as categoria, C.curso_inativo ")
+            Sql.AppendLine("C.instrutor as cod_user, U.nome as Instrutor, C.categoria as cod_categoria, Cat.descricao as categoria, C.curso_inativo ")
             Sql.AppendLine("FROM curso AS C ")
             Sql.AppendLine("LEFT JOIN Usuario AS U ON U.cod_usuario = C.instrutor ")
             Sql.AppendLine("LEFT JOIN Categoria AS Cat ON Cat.cod_categoria = C.categoria ")
-            Sql.AppendLine("WHERE Cod_Curso=" + Util.CString(Cod_Curso))
+            Sql.AppendLine("LEFT JOIN CURSOxDEPARTAMENTO AS CD ON CD.Cod_Curso = C.Cod_Curso")
+            Sql.AppendLine("WHERE C.Cod_Curso=" + Util.CString(Cod_Curso))
 
             Dim Query = Biblio.Executar_Query(Sql.ToString)
 
@@ -48,14 +49,15 @@ Namespace STV.Entidades
 
         Public Function Carrega_Cursos(Titulo As String, Departamento As Integer, Instrutor As Integer, Inativo As Boolean, Outros As Boolean) As DataTable
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT C.cod_curso, C.titulo, C.dt_inicio, C.dt_termino, C.palavras_chave,")
-            Sql.AppendLine("C.instrutor as cod_user, U.nome as Instrutor, C.departamento, C.categoria as cod_categoria, Cat.descricao as categoria, C.curso_inativo ")
+            Sql.AppendLine("SELECT DISTINCT C.cod_curso, C.titulo, C.dt_inicio, C.dt_termino, C.palavras_chave,")
+            Sql.AppendLine("C.instrutor as cod_user, U.nome as Instrutor,  C.categoria as cod_categoria, Cat.descricao as categoria, C.curso_inativo ")
             Sql.AppendLine("FROM curso AS C ")
             Sql.AppendLine("LEFT JOIN Usuario AS U ON U.cod_usuario = C.instrutor ")
             Sql.AppendLine("LEFT JOIN Categoria AS Cat ON Cat.cod_categoria = C.categoria ")
+            Sql.AppendLine("LEFT JOIN CURSOxDEPARTAMENTO AS CD ON CD.Cod_Curso = C.Cod_Curso")
             Sql.AppendLine("WHERE 0 = 0")
             If Not String.IsNullOrEmpty(Titulo) Then Sql.AppendLine("AND C.Titulo LIKE " + Util.Sql_String("%" + Titulo + "%"))
-            If Departamento <> 0 Then Sql.AppendLine("AND C.Departamento = " + Util.Sql_String(Departamento))
+            If Departamento <> 0 Then Sql.AppendLine("AND CD.Cod_Departamento = " + Util.Sql_String(Departamento))
             If Instrutor <> 0 And Outros = False Then Sql.AppendLine("AND Instrutor = " + Util.Sql_String(Instrutor))
             If Instrutor <> 0 And Outros = True Then Sql.AppendLine("AND Instrutor <> " + Util.Sql_String(Instrutor))
             If Inativo = False Then Sql.AppendLine("AND C.Curso_Inativo = 0 ")
