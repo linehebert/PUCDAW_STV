@@ -37,7 +37,6 @@ Namespace STV
             End Get
         End Property
 
-
         Public Function Executar_Query(Sql As String) As IDataReader
             FechaConexao()
             Dim Query As New SqlCommand(Sql, Conexao)
@@ -111,7 +110,6 @@ Namespace STV
         Public Function Pega_Valor_Boolean(Sql As String, Campo As String) As Boolean
             Return Util.CBoolean(Pega_Valor(Sql, Campo))
         End Function
-
 
         Public Sub FechaConexao()
             Conexao.Close()

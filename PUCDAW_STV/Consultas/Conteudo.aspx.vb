@@ -68,11 +68,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         End Get
     End Property
 
-
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
             Page.Form.Attributes.Add("enctype", "multipart/form-data")
             If Not Page.IsPostBack() Then
+                If Verifica_Aprovacao(Cod_Curso) = True Then
+                    B_Gerar_Certificado.Visible = True
+                Else
+                    B_Gerar_Certificado.Visible = False
+                End If
                 Monta_Dados()
 
                 Dim qntd_unidade As String = Biblio.Pega_Valor("SELECT Cod_Unidade FROM Unidade WHERE Cod_Curso=" + Cod_Curso, "Cod_Unidade")
@@ -90,10 +94,42 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         End Try
     End Sub
 
+    Private Function Verifica_Aprovacao(Cod_Curso As Integer) As Boolean
+        'Verifica se o curso já encerrou
+        Dim Dado = Curso.Carrega_Curso(Cod_Curso)
+        If Dado.Dt_Termino < Date.Today Then
+            Dim NotaMaxima As Double = Curso.Nota_Maxima(Cod_Curso)
+            Dim NotaAluno As Double = Curso.Nota_Aluno(Cod_Curso, Usuario_Logado.Cod_Usuario)
+
+            If (NotaAluno * 100) / NotaMaxima < 70 Then
+                Return False
+            Else
+                'Verificar se visualizou todos os materiais
+                Dim TotalMateriais As Integer = Curso.Quantidade_Materiais(Cod_Curso)
+                Dim TotalVisualizados As Integer = Curso.Quantidade_Visualizados(Cod_Curso, Usuario_Logado.Cod_Usuario)
+
+                If TotalMateriais = TotalVisualizados Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End If
+        Else
+            'Curso nao encerrado
+            Return False
+        End If
+
+
+
+    End Function
+
     Private Sub Monta_Dados()
         Try
             Dim Dado = Curso.Carrega_Curso(Cod_Curso)
             L_Curso_Unidade.Text = Dado.Titulo
+
+            L_Dt_Inicio.Text = Dado.Dt_Inicio.ToString("dd/MM/yyyy")
+            L_Dt_Termino.Text = Dado.Dt_Termino.ToString("dd/MM/yyyy")
         Catch ex As Exception
             Throw
         End Try
@@ -107,23 +143,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
             Throw
         End Try
     End Sub
-    'Private Sub Carrega_Atividades(Cod_Unidade As Integer)
-    '    Try
-    '        rptUnidades.DataSource = Atividade.Carrega_Atividades(Cod_Unidade, True)
-    '        rptUnidades.DataBind()
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Sub
 
-    'Private Sub Carrega_Materiais(Cod_Unidade As Integer)
-    '    Try
-    '        rptMateriais.DataSource = Material.Carrega_Materiais(Cod_Unidade)
-    '        rptMateriais.DataBind()
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Sub
 
     Private Sub rptUnidades_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptUnidades.ItemDataBound
         If e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.AlternatingItem Then
@@ -160,6 +180,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                 'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
                 Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
                 Dim arquivo As FileInfo = New FileInfo(Path)
+
+                'Grava a visualização do material
+                Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Me.ViewState("Material_Selecionado")), "Cod_Material")
+                If existe = Nothing Then
+                    Dim Dados As New Material.Dados
+                    Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                    Dados.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
+                    Material.Visualiza_Material(Dados)
+                End If
 
                 Response.Clear()
                 Response.AddHeader("Content-Disposition", "attachment;filename=" + arquivo.Name)
@@ -214,6 +243,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                     Case "1"
                         'Exibir vídeo com URL de terceiros
                         LIT_Video.Visible = True
+                        LB_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<iframe width = '868px' height='568px'")
@@ -224,10 +254,20 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = False
+
+                        'Grava a visualização do material
+                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                        If existe = Nothing Then
+                            Dim Dados As New Material.Dados
+                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                            Dados.Cod_Material = Cod_Material
+                            Material.Visualiza_Material(Dados)
+                        End If
                     Case "2"
                         'Abrir link para outros sites
-
+                        LB_Download.Visible = False
                         LIT_Video.Visible = True
+                        LB_Material_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<br /><center><h4>Este material contém um link de acesso a site de terceiros.<br />")
@@ -238,9 +278,19 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = False
+
+                        'Grava a visualização do material
+                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                        If existe = Nothing Then
+                            Dim Dados As New Material.Dados
+                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                            Dados.Cod_Material = Cod_Material
+                            Material.Visualiza_Material(Dados)
+                        End If
                     Case "3"
                         'Abrir modal para mostrar o vídeo
                         LIT_Video.Visible = True
+                        LB_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<video width='868px' height='568px' controls>")
@@ -254,12 +304,31 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         B_Download.Visible = True
 
+                        'Grava a visualização do material
+                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                        If existe = Nothing Then
+                            Dim Dados As New Material.Dados
+                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                            Dados.Cod_Material = Cod_Material
+                            Material.Visualiza_Material(Dados)
+                        End If
                     Case "4"
                         'Abrir pdf em nova guia
+                        B_Abrir.Visible = True
+                        LIT_Video.Visible = False
+
+                        Me.ViewState("Material_Selecionado") = Cod_Material
+                        LB_Download.Visible = True
+                        LB_Material_Download.Visible = True
+                        LB_Material_Download.Text = Conteudo_Material.Replace("/Anexos/", "")
+
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = True
+                        B_Abrir.Visible = True
                     Case "5"
                         'Fazer download do arquivo
+                        B_Abrir.Visible = False
                         LIT_Video.Visible = False
 
                         Me.ViewState("Material_Selecionado") = Cod_Material
@@ -274,6 +343,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                     Case "6"
                         'Abrir modal para mostrar a imagem
                         LIT_Video.Visible = True
+                        LB_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
@@ -286,6 +356,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         Me.ViewState("Material_Selecionado") = Cod_Material
 
                         B_Download.Visible = True
+
+                        'Grava a visualização do material
+                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                        If existe = Nothing Then
+                            Dim Dados As New Material.Dados
+                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                            Dados.Cod_Material = Cod_Material
+                            Material.Visualiza_Material(Dados)
+                        End If
                     Case Else
 
                 End Select
@@ -296,11 +375,38 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         End Try
     End Sub
 
-    'Private Sub Cancelar_Material_Click(sender As Object, e As EventArgs) Handles Cancelar_Material.Click
-    '    'D_Alerta.Visible = False
-    '    'Limpa_Dados_Modal_Material()
-    '    'Link.Visible = False
-    '    'Arquivo.Visible = False
-    'End Sub
+    Private Sub B_Abrir_Click(sender As Object, e As EventArgs) Handles B_Abrir.Click
+        Try
+            If Not Me.ViewState("Material_Selecionado") Is Nothing Then
+                'Grava a visualização do material
+                Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Me.ViewState("Material_Selecionado")), "Cod_Material")
+                If existe = Nothing Then
+                    Dim Dados As New Material.Dados
+                    Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                    Dados.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
+                    Material.Visualiza_Material(Dados)
+                End If
+
+                Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
+
+                'Dim mt As Material.Dados = CType(Me.ViewState("Material_Dados"), Material.Dados)
+                Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
+                Dim arquivo As FileInfo = New FileInfo(Path)
+
+                Session("ArquivoPDF") = arquivo
+                RegistrarScript(String.Format("window.open('{0}','_blank')", ResolveUrl("ExibirMaterial.aspx")))
+
+            End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    Private Sub B_Gerar_Certificado_Click(sender As Object, e As ImageClickEventArgs) Handles B_Gerar_Certificado.Click
+        Response.Redirect("../Relatorios/Certificado.aspx?Curso=" & Criptografia.Encryptdata(Cod_Curso))
+    End Sub
+
+
 #End Region
 End Class

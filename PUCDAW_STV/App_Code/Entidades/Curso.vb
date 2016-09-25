@@ -17,6 +17,62 @@ Namespace STV.Entidades
             Public Curso_Inativo As Boolean
         End Class
 
+        'Calcula a nota máxima do curso
+        Public Function Nota_Maxima(Cod_Curso As Integer) As Double
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT SUM(A.Valor) AS TOTAL FROM ATIVIDADE AS A ")
+            Sql.AppendLine("LEFT JOIN  unidade AS u ON u.Cod_Unidade = A.Cod_Unidade ")
+            Sql.AppendLine("LEFT JOIN curso AS c ON c.Cod_Curso = u.Cod_Curso ")
+            Sql.AppendLine("WHERE c.cod_curso=" + Util.CString(Cod_Curso))
+
+            Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
+            Return Util.CDouble(dt.Rows(0).Item("TOTAL"))
+        End Function
+
+        'Calcula a nota total do aluno nas atividades
+        Public Function Nota_Aluno(Cod_Curso As Integer, Cod_Usuario As Integer) As Double
+            Dim SQL As New StringBuilder
+            SQL.AppendLine("SELECT SUM(N.Pontos) AS PONTOS FROM NOTAS AS N")
+            SQL.AppendLine(" LEFT JOIN ATIVIDADE AS A ON A.Cod_Atividade = N.Cod_Atividade")
+            SQL.AppendLine(" LEFT JOIN UNIDADE AS U ON U.Cod_Unidade = A.Cod_Unidade")
+            SQL.AppendLine(" LEFT JOIN CURSO AS C ON C.Cod_Curso = U.Cod_Curso")
+            SQL.AppendLine(" LEFT JOIN USUARIO AS US ON US.Cod_Usuario = N.Cod_Usuario")
+            SQL.AppendLine(" WHERE 0=0")
+            SQL.AppendLine(" AND C.Cod_Curso =" + Util.CString(Cod_Curso))
+            SQL.AppendLine(" AND US.Cod_Usuario =" + Util.CString(Cod_Usuario))
+
+            Dim dt As DataTable = Biblio.Retorna_DataTable(SQL.ToString())
+            Return Util.CDouble(dt.Rows(0).Item("PONTOS"))
+        End Function
+
+        'Calcula total de materiais do curso
+        Public Function Quantidade_Materiais(Cod_Curso As Integer) As Integer
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT COUNT(*) AS TOTALM FROM MATERIAIS AS M ")
+            Sql.AppendLine("LEFT JOIN  unidade AS u ON u.Cod_Unidade = M.Cod_Unidade ")
+            Sql.AppendLine("LEFT JOIN curso AS c ON c.Cod_Curso = u.Cod_Curso ")
+            Sql.AppendLine("WHERE c.cod_curso=" + Util.CString(Cod_Curso))
+
+            Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
+            Return Util.CInteger(dt.Rows(0).Item("TOTALM"))
+        End Function
+
+        'Calcula quantidade de materiais visualizados
+        Public Function Quantidade_Visualizados(Cod_Curso As Integer, Cod_Usuario As Integer) As Integer
+            Dim SQL As New StringBuilder
+            SQL.AppendLine("SELECT count(*) AS VISUALIZADOS FROM MATERIAISxUSUARIO AS MU")
+            SQL.AppendLine(" LEFT JOIN MATERIAIS AS M ON MU.Cod_Material = M.Cod_Material")
+            SQL.AppendLine(" LEFT JOIN UNIDADE AS U ON U.Cod_Unidade = M.Cod_Unidade")
+            SQL.AppendLine(" LEFT JOIN CURSO AS C ON C.Cod_Curso = U.Cod_Curso")
+            SQL.AppendLine(" LEFT JOIN USUARIO AS US ON US.Cod_Usuario = MU.Cod_Usuario")
+            SQL.AppendLine(" WHERE 0=0")
+            SQL.AppendLine(" AND C.Cod_Curso =" + Util.CString(Cod_Curso))
+            SQL.AppendLine(" AND US.Cod_Usuario =" + Util.CString(Cod_Usuario))
+
+            Dim dt As DataTable = Biblio.Retorna_DataTable(SQL.ToString())
+            Return Util.CInteger(dt.Rows(0).Item("VISUALIZADOS"))
+        End Function
+
         Public Function Carrega_Curso(Cod_Curso As String) As Dados
 
             Dim Retorno As New Dados
@@ -46,7 +102,7 @@ Namespace STV.Entidades
 
             Return Retorno
         End Function
-
+        'Carrega todos os cursos
         Public Function Carrega_Cursos(Titulo As String, Departamento As Integer, Instrutor As Integer, Inativo As Boolean, Outros As Boolean) As DataTable
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT DISTINCT C.cod_curso, C.titulo, C.dt_inicio, C.dt_termino, C.palavras_chave,")
@@ -65,7 +121,7 @@ Namespace STV.Entidades
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
-
+        'Carrega os cursos disponíveis para o aluno se inscrever
         Public Function Carrega_Cursos_Aluno(Departamento As Integer, Instrutor As Integer, Titulo As String) As DataTable
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT CD.Cod_Departamento, CD.Cod_Curso, C.titulo, C.Cod_Curso, C.dt_inicio, ")
@@ -83,7 +139,7 @@ Namespace STV.Entidades
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
-
+        'Carrega os cursos em que o aluno já está inscrito
         Public Function Carrega_Meus_Cursos(Instrutor As Integer, Titulo As String, Cod_Usuario As Integer) As DataTable
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT C.Titulo, C.Instrutor as Cod_Instrutor, C.Dt_Inicio, C.Dt_Termino, C.Cod_Curso, U.nome AS Instrutor, U.cod_usuario, C.CUrso_Inativo ")

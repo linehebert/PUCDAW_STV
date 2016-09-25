@@ -63,6 +63,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
     End Property
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
+            B_Abrir.Visible = False
             Page.Form.Attributes.Add("enctype", "multipart/form-data")
             If Not Page.IsPostBack() Then
                 Monta_Dados_Unidade()
@@ -351,7 +352,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         End Try
     End Sub
 
-    Private Sub B_Salvar_Material_Click(sender As Object, e As EventArgs) Handles B_Salvar_Material.Click
+    Protected Sub B_Salvar_Material_Click(sender As Object, e As EventArgs) Handles B_Salvar_Material.Click
         Try
             Dim Dados As New Material.Dados
             Dados.Titulo = TB_Descricao.Text
@@ -484,6 +485,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                     Case "1"
                         'Exibir vídeo com URL de terceiros
                         LIT_Video.Visible = True
+                        LB_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<iframe width = '868px' height='568px'")
@@ -496,7 +498,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                         B_Download.Visible = False
                     Case "2"
                         'Abrir link para outros sites
-
+                        LB_Download.Visible = False
                         LIT_Video.Visible = True
 
                         Dim SB As New StringBuilder
@@ -511,6 +513,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                     Case "3"
                         'Abrir modal para mostrar o vídeo
                         LIT_Video.Visible = True
+                        LB_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<video width='868px' height='568px' controls>")
@@ -524,11 +527,20 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
                         B_Download.Visible = True
 
-                    'Case "4"
-                    '    'Abrir pdf em nova guia
+                    Case "4"
+                        'Abrir pdf em nova guia
+                        LIT_Video.Visible = False
 
-                    '    B_Download.Visible = True
-                    Case "5", "4"
+                        Me.ViewState("Material_Selecionado") = Cod_Material
+                        LB_Download.Visible = True
+                        LB_Material_Download.Visible = True
+                        LB_Material_Download.Text = Conteudo_Material.Replace("/Anexos/", "")
+
+                        RegistrarScript("$('#myModalExibicao').modal('show')")
+
+                        B_Download.Visible = True
+                        B_Abrir.Visible = True
+                    Case "5"
                         'Fazer download do arquivo
                         LIT_Video.Visible = False
 
@@ -544,6 +556,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                     Case "6"
                         'Abrir modal para mostrar a imagem
                         LIT_Video.Visible = True
+                        LB_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
@@ -632,9 +645,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Dim arquivo As FileInfo = New FileInfo(Path)
 
                 Session("ArquivoPDF") = arquivo
-
-                Response.Redirect("ExibirMaterial.aspx")
-
+                RegistrarScript(String.Format("window.open('{0}','_blank')", ResolveUrl("ExibirMaterial.aspx")))
             End If
         Catch ex As Exception
             L_Erro.Text = ex.Message

@@ -6,9 +6,11 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="grid">
-        <h1>Visualizar Unidade</h1>
-        <hr />
         <br />
+        <br />
+        <br />
+        <asp:ImageButton ID="B_Gerar_Certificado" ImageUrl="~/Images/certify.png" runat="server" ImageAlign="Right" ToolTip="Gerar Certificado" />
+        <br /><br /><br /><br />
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
@@ -25,6 +27,15 @@
                 <div class="row rr">
                     <div class="col-md-10 col-md-offset-1 table-responsive" style="text-align: center">
                         <asp:Label CssClass="Titulo_Curso" ID="L_Curso_Unidade" runat="server" Text=""></asp:Label>
+                    </div>
+                </div>
+                <div class="row rr form-inline">
+                    <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 15px">
+                        <asp:Label ID="Dt_Inicio" runat="server" Text="Data de Início:"></asp:Label>
+                        <asp:Label ID="L_Dt_Inicio" runat="server" Text="1"></asp:Label>
+                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                        <asp:Label ID="Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
+                        <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
             </div>
@@ -119,7 +130,9 @@
                                             </FooterTemplate>
                                         </asp:Repeater>
                                     </ContentTemplate>
-                                </asp:UpdatePanel><br /><br />
+                                </asp:UpdatePanel>
+                                <br />
+                                <br />
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
@@ -152,6 +165,7 @@
                         <div class="modal-footer">
                             <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
                             <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
+                            <asp:Button ID="B_Abrir" Text="Abrir" runat="server" class="btn btn-primary" ToolTip="Abrir Arquivo" Visible="false" />
                         </div>
 
                     </div>

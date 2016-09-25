@@ -31,10 +31,10 @@
                 <div class="row rr form-inline">
                     <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 15px">
                         <asp:Label ID="Dt_Inicio" runat="server" Text="Data de Início:"></asp:Label>
-                        <asp:Label ID="L_Dt_Inicio" runat="server" Text="10/10/2010"></asp:Label>
+                        <asp:Label ID="L_Dt_Inicio" runat="server" Text=""></asp:Label>
                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                         <asp:Label ID="Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
-                        <asp:Label ID="L_Dt_Termino" runat="server" Text="10/10/2020"></asp:Label>
+                        <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
             </div>

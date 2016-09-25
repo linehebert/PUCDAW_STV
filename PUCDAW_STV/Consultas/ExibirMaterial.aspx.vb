@@ -1,5 +1,6 @@
 ﻿
 Imports System.IO
+Imports STV.Entidades
 
 Partial Class Consultas_ExibirMaterial : Inherits STV.Base.Page
 
@@ -8,14 +9,14 @@ Partial Class Consultas_ExibirMaterial : Inherits STV.Base.Page
             If Session("ArquivoPDF") Is Nothing Then Exit Sub
 
             Dim arquivo As FileInfo = Session("ArquivoPDF")
+            Session("ArquivoPDF") = Nothing
 
             Response.Clear()
-            Response.AddHeader("Content-Disposition", "attachment;filename=" + arquivo.Name)
+            Response.AddHeader("Content-Disposition", "inline;filename=" + arquivo.Name)
             Response.AddHeader("Content-Length", arquivo.Length.ToString())
-            Response.ContentType = "application/pdf"
+            Response.ContentType = "Application/pdf"
             'Response.WriteFile(arquivo.FullName)
             Response.TransmitFile(arquivo.FullName)
-            Response.Flush()
             Response.End()
         Catch ex As Exception
 

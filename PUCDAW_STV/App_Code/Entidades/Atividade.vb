@@ -23,7 +23,8 @@ Namespace STV.Entidades
             Public Cod_Questao As Integer
             Public Cod_Usuario As Integer
             Public Resposta As String
-            Public Correta As Boolean
+            Public Correta As Integer
+            Public Pontos As Double
 
         End Class
 
@@ -61,6 +62,18 @@ Namespace STV.Entidades
             If Cod_Unidade <> 0 Then Sql.AppendLine("AND Cod_Unidade = " + Util.CString(Cod_Unidade))
             If Publica = True Then Sql.AppendLine("AND Publica = 1")
             Sql.AppendLine("ORDER BY Cod_Unidade ASC")
+
+            Return Biblio.Retorna_DataTable(Sql.ToString())
+        End Function
+        'Carrega a atividade resolvida e finalizada pelo aluno
+        Public Function Carrega_Atividade_Aluno(Cod_Atividade As Integer) As DataTable
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT  q.cod_questao, q.Enunciado, q.Alternativa_A, q.Alternativa_B, q.Alternativa_C, q.Alternativa_D, q.Justificativa, q.Alternativa_Correta, ur.resposta ")
+            Sql.AppendLine(" FROM Questao as q")
+            Sql.AppendLine("left join USUARIOxRESPOSTAS as UR on q.Cod_Questao = ur.Cod_Questao")
+            Sql.AppendLine(" WHERE 0 = 0")
+            If Cod_Atividade <> 0 Then Sql.AppendLine("AND q.Cod_Atividade = " + Util.CString(Cod_Atividade))
+            Sql.AppendLine(" ORDER BY q.Cod_Questao ASC")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
@@ -252,7 +265,6 @@ Namespace STV.Entidades
         End Sub
 
 
-
         Public Sub Alterar_Resposta(Registro As Dados)
 
             Dim Sql As New StringBuilder
@@ -282,6 +294,19 @@ Namespace STV.Entidades
 
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
+
+        Public Sub Inserir_Notas(Registro As Dados)
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("INSERT INTO NOTAS (Cod_Atividade, Cod_Usuario, Pontos)")
+            Sql.AppendLine("VALUES(")
+            Sql.AppendLine(Util.Sql_String(Registro.Cod_Atividade))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Usuario))
+            Sql.AppendLine("," + Util.Sql_Numero(Registro.Pontos))
+            Sql.AppendLine(")")
+
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
+
     End Class
 
 End Namespace
