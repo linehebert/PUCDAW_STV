@@ -7,7 +7,7 @@
 
     <div class="grid"><br />
         <asp:Label ID="Default" runat="server" Text=""></asp:Label>
-        <h2 class="text-primary"> Bem-Vindo ao STV! </h2>
+        <h2 class="text-primary"> Bem-Vindo ao STV Web! </h2>
         <hr /><br />
     </div>
 </asp:Content>

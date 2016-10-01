@@ -2,7 +2,6 @@
 Imports System.Data
 
 Namespace STV.Entidades
-
     Public Class Usuario : Inherits STV.Base.ClasseBase
 
         Public Class Dados
@@ -62,6 +61,16 @@ Namespace STV.Entidades
             If CarregarAdm = False Then Sql.AppendLine(" AND U.ADM = 0 ")
             Sql.AppendLine(" ORDER BY Cod_Usuario")
 
+            Return Biblio.Retorna_DataTable(Sql.ToString())
+        End Function
+
+        Public Function Carrega_User_Relatorios(Cod_Usuario As Integer) As DataTable
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT DISTINCT CU.Cod_Usuario, U.Nome FROM CURSOxUSUARIO AS CU")
+            Sql.AppendLine(" LEFT JOIN USUARIO AS U ON U.Cod_Usuario = CU.Cod_Usuario")
+            Sql.AppendLine("WHERE 0 = 0 ")
+            If Cod_Usuario <> 0 Then Sql.AppendLine("And U.Cod_Usuario = " + Util.Sql_String(Cod_Usuario))
+            Sql.AppendLine(" ORDER BY U.Nome")
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
 

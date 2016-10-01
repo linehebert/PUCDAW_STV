@@ -6,9 +6,11 @@
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="grid"> <br />
-        <h2 class="text-primary">Relatório de Usuarios</h2>
-        <hr /><br />
+    <div class="grid">
+        <br />
+        <center><h2 class="text-primary">Relatório de Usuarios</h2></center>
+        <hr />
+
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
@@ -20,19 +22,23 @@
 
             <div class="row rr">
                 <div class="col-md-10">
-                    <asp:Label ID="L_Nome" runat="server" Text="Nome:"></asp:Label>
+                    <asp:Label ID="L_Usuario" runat="server" Text="Usuário:"></asp:Label>
                     <div class="form-inline">
-                        <asp:TextBox ID="TB_Nome" runat="server" class="form-control" Width="250px" ToolTip="Busca por nome do usuario"></asp:TextBox>
+                                <asp:DropDownList ID="DDL_Usuario" runat="server" DataValueField="Cod_Usuario" class="form-control" DataTextField="Nome" >
+                                </asp:DropDownList>
                         <asp:Button ID="B_Filtrar_Aluno" Text="BUSCAR" runat="server" class="btn btn-primary" ToolTip="Buscar Cursos" />
                     </div>
                 </div>
             </div>
-        </div>
-        <rsweb:ReportViewer ID="RV" runat="server" Font-Names="Arial" Font-Size="12pt" SizeToReportContent="True"
-            AsyncRendering="False" Visible="false">
-            <localreport reportpath="Relatorios\Relatorio_Usuarios.rdlc" enablehyperlinks="True" enableexternalimages="True"></localreport>
-        </rsweb:ReportViewer>
-    </div>
+            <br /></div>
+            <div class="table-responsive">
+                <center>
+            
+            <rsweb:ReportViewer ID="RV" runat="server" Font-Names="Arial" Font-Size="12pt" SizeToReportContent="True"
+                AsyncRendering="False" Visible="false">
+                <LocalReport ReportPath="Relatorios\Relatorio_Usuarios.rdlc" EnableHyperlinks="True" EnableExternalImages="True"></LocalReport>
+            </rsweb:ReportViewer></center></div>
+        
     </div>
 
 
