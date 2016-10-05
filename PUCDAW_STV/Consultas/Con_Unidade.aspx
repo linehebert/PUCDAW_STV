@@ -1,13 +1,13 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Con_Unidade.aspx.vb" Inherits="Consultas_Con_Unidade" %>
-
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
-    <div class="grid"><br /><br /><br />
-<%--        <h1>Consulta de Unidades</h1>
+    <div class="grid">
+        <br />
+        <br />
+        <br />
+        <%--        <h1>Consulta de Unidades</h1>
         <hr />--%>
 
         <div class="form-group">
@@ -17,11 +17,11 @@
             <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
             </div>
-
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
                     Informações Gerais
+                    <asp:Image ImageUrl="~/Images/encerrado.png" runat="server" CssClass="pull-right" ID="Div_Finalizado" Width="150px" />
                 </div>
                 <div class="row rr">
                     <div class="col-md-10 col-md-offset-1 table-responsive" style="text-align: center">
@@ -36,6 +36,7 @@
                         <asp:Label ID="Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
                         <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
                     </div>
+                    
                 </div>
             </div>
 
@@ -62,12 +63,16 @@
                                         <ItemTemplate>
                                             <div class="row rr form-inline">
                                                 <div class="col-md-10 col-md-offset-1" style="padding: 10px; margin-top: 10px;">
-                                                    <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Renomear Unidade" />
-                                                    <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Excluir Unidade" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>" style="font-size:large">
+                                                    
+                                                        <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Renomear Unidade" />
+                                                        <asp:ImageButton ID="Excluir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Excluir Unidade" />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    
+                                                    <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>" style="font-size: large">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
-                                                    <br /><br />
+                                                    <br />
+                                                    <br />
                                                 </div>
                                             </div>
                                         </ItemTemplate>
@@ -102,8 +107,8 @@
                                             <asp:Label ID="L_Titulo_Unidade" runat="server" Text="Título:"></asp:Label>
                                             <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Título da Unidade"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Titulo" runat="server" ControlToValidate="TB_Titulo"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                    class="validation">* Informe um título para esta unidade</asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                                class="validation">* Informe um título para esta unidade</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>

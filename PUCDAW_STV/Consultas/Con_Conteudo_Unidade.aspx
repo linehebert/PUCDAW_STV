@@ -7,17 +7,17 @@
 
     <div class="grid">
         <br />
-
-        <h2 class="text-primary" ID="L_Curso_Unidade" runat="server"></h2>
-        <hr />
-
+        <asp:image imageurl="~/Images/encerrado.png" runat="server" cssclass="pull-right" id="Div_Finalizado" width="150px" />
         <br />
+        <h2 class="text-primary" id="L_Curso_Unidade" runat="server"></h2>
+        <br />
+
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
-                <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
+                <asp:label id="L_Erro" runat="server" skinid="Skin_label_error" text=""></asp:label>
             </div>
             <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
-                <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
+                <asp:label id="L_Aviso" runat="server" text=""></asp:label>
             </div>
 
             <div class="panel panel-primary">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="row rr">
                     <div class="col-md-10 col-md-offset-1" style="text-align: center">
-                        <asp:Label ID="L_Titulo" runat="server" Text="Unidade" CssClass="Titulo_Curso"></asp:Label>
+                        <asp:label id="L_Titulo" runat="server" text="Unidade" cssclass="Titulo_Curso"></asp:label>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         </a>
                     </span>
                 </div>
-                <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                <asp:updatepanel id="UpdatePanel4" runat="server" updatemode="Conditional" childrenastriggers="false">
                     <ContentTemplate>
                         <div id="MateriaisPanel" class="panel-collapse collapse in">
                             <div class="row rr form-inline">
@@ -74,7 +74,7 @@
                             <br />
                         </div>
                     </ContentTemplate>
-                </asp:UpdatePanel>
+                </asp:updatepanel>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading expandir" id="Atividades">
@@ -85,7 +85,7 @@
                         </a>
                     </span>
                 </div>
-                <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                <asp:updatepanel id="UP_Atividade" runat="server" updatemode="Conditional" childrenastriggers="false">
                     <ContentTemplate>
                         <div id="AtividadesPanel" class="panel-collapse collapse in">
                             <div class="row rr form-inline">
@@ -108,7 +108,7 @@
                                                     <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <a  href="../Cadastros/Cad_Atividade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>&Atv=<%# Container.DataItem("Cod_Atividade") %>">
+                                                    <a href="../Cadastros/Cad_Atividade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>&Atv=<%# Container.DataItem("Cod_Atividade") %>">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
                                                 </div>
@@ -120,12 +120,12 @@
                             <br />
                         </div>
                     </ContentTemplate>
-                </asp:UpdatePanel>
+                </asp:updatepanel>
             </div>
             <fieldset>
                 <div class="row">
                     <div class="col-md-12">
-                        <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
+                        <asp:button id="B_Voltar" text="VOLTAR" runat="server" class="btn btn-default" tooltip="Voltar" />
                     </div>
                 </div>
             </fieldset>
@@ -134,7 +134,7 @@
             <div class="modal fade" id="myModalMat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <asp:UpdatePanel ID="UP_Geral" runat="server">
+                        <asp:updatepanel id="UP_Geral" runat="server">
                             <ContentTemplate>
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -161,7 +161,7 @@
                                             <asp:DropDownList ID="DDL_Tipo" runat="server" DataValueField="Cod_Tipo" class="form-control" DataTextField="Descricao" AutoPostBack="true" OnSelectedIndexChanged="DDL_Tipo_SelectedIndexChanged">
                                             </asp:DropDownList>
                                             <asp:RequiredFieldValidator ID="RFV_DDL_Tipo" runat="server" ControlToValidate="DDL_Tipo"
-                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
+                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B" InitialValue="0"
                                                 Class="validation">* Informe qual o tipo de material</asp:RequiredFieldValidator>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                         <div class="col-md-12">
                                             <asp:Label ID="Label4" runat="server" SkinID="Skin_label" Text="Link do Material:"></asp:Label>
                                             <asp:TextBox ID="TB_Link" runat="server" class="form-control" ToolTip="Descrição do MAterial"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TB_Descricao"
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TB_Link"
                                                 Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
                                                 class="validation">* Preencha com o link do material</asp:RequiredFieldValidator>
                                             <asp:RegularExpressionValidator ControlToValidate="TB_Link" class="validation" Text="* Campo Incorreto" ValidationGroup="B"
@@ -190,10 +190,10 @@
                             <Triggers>
                                 <asp:PostBackTrigger ControlID="B_Salvar_Material" runat="server" />
                             </Triggers>
-                        </asp:UpdatePanel>
+                        </asp:updatepanel>
                         <div class="modal-footer">
-                            <asp:Button ID="Cancelar_Material" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
-                            <asp:Button ID="B_Salvar_Material" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="B" OnClick="B_Salvar_Material_Click" />
+                            <asp:button id="Cancelar_Material" text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" tooltip="Cancelar" />
+                            <asp:button id="B_Salvar_Material" text="SALVAR" runat="server" class="btn btn-primary" tooltip="Salvar Atividade" causesvalidation="true" validationgroup="B" onclick="B_Salvar_Material_Click" />
                         </div>
                     </div>
                 </div>
@@ -203,15 +203,16 @@
             <div class="modal fade" id="myModalI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <asp:UpdatePanel ID="UP_Modal" runat="server">
+                        <asp:updatepanel id="UP_Modal" runat="server">
                             <ContentTemplate>
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <h4 class="modal-title" id="L_TItulo_Modal" runat="server">Nova Atividade:</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <asp:Label ID="L_Info" runat="server" Text=""></asp:Label>
-
+                                     <div id="Div_Info_Modal" class="alert alert-danger" role="alert" runat="server" visible="false">
+                                         <asp:Label ID="L_Info" runat="server" Text="" SkinID="Skin_label_error" ></asp:Label>
+                                     </div>
                                     <div class="row rr">
                                         <div class="col-md-12">
                                             <asp:Label ID="Label1" runat="server" Text="Título:"></asp:Label>
@@ -222,13 +223,13 @@
                                         </div>
                                     </div>
                                     <div class="row rr">
-                                        <div class="col-md-6">
+                                        <%--<div class="col-md-6">
                                             <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:"></asp:Label>
                                             <asp:TextBox ID="TB_Dt_Abertura" runat="server" class="form-control" ToolTip="Data de Abertura da Atividade" type="Date"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RFV_TB_Dt_Abertura" runat="server" ControlToValidate="TB_Dt_Abertura"
                                                 Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
                                                 class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
-                                        </div>
+                                        </div>--%>
                                         <div class="col-md-6">
                                             <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:"></asp:Label>
                                             <asp:TextBox ID="TB_Dt_Encerramento" runat="server" class="form-control" ToolTip="Data de Fechamento da Atividade" type="Date"></asp:TextBox>
@@ -236,8 +237,6 @@
                                                 Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
                                                 class="validation">* Campo Obrigatório</asp:RequiredFieldValidator>
                                         </div>
-                                    </div>
-                                    <div class="row rr">
                                         <div class="col-md-6">
                                             <asp:Label ID="L_Valor" runat="server" Text="Valor:"></asp:Label>
                                             <asp:TextBox ID="TB_Valor" runat="server" class="form-control" ToolTip="Valor Total da Atividade"></asp:TextBox>
@@ -247,12 +246,13 @@
                                         </div>
                                     </div>
 
+
                                 </div>
                             </ContentTemplate>
-                        </asp:UpdatePanel>
+                        </asp:updatepanel>
                         <div class="modal-footer">
-                            <asp:Button ID="B_Fechar" Text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar" />
-                            <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary" ToolTip="Salvar Atividade" CausesValidation="true" ValidationGroup="A" />
+                            <asp:button id="B_Fechar" text="CANCELAR" runat="server" data-dismiss="modal" class="btn btn-default" tooltip="Cancelar" />
+                            <asp:button id="B_Salvar" text="SALVAR" runat="server" class="btn btn-primary" tooltip="Salvar Atividade" causesvalidation="true" validationgroup="A" />
                         </div>
                     </div>
 
@@ -264,7 +264,7 @@
         <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                    <asp:updatepanel id="UpdatePanel2" runat="server">
                         <ContentTemplate>
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -282,47 +282,47 @@
                                 <asp:Button ID="B_Confirma_Exclusao" Text="Confirmar Exclusão da Atividade" runat="server" class="btn btn-primary" ToolTip="Excluir Atividade" Visible="false" />
                                 <asp:Button ID="B_Confirma_Exclusao_Mat" Text="Confirmar Exclusão do Material" runat="server" class="btn btn-primary" ToolTip="Excluir Material" Visible="false" />
                             </div>
-                            </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
                 </div>
+                </ContentTemplate>
+                    </asp:UpdatePanel>
             </div>
         </div>
+    </div>
 
-        <!--Modal Exibição-->
-        <div class="modal fade bs-example-modal-lg" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
+    <!--Modal Exibição-->
+    <div class="modal fade bs-example-modal-lg" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
                             <ContentTemplate>--%>
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
-                    </div>
-                    <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
+                </div>
+                <div class="modal-body">
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <asp:Literal ID="LIT_Video" runat="server" Visible="false"></asp:Literal>
-                                <asp:Label Visible="false" ID="LB_Download" runat="server" Text='Este material contém um arquivo para download:'></asp:Label>
-                                <br />
-                                <br />
-                                <asp:Label Visible="false" ID="LB_Material_Download" runat="server" Text=''></asp:Label>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <asp:literal id="LIT_Video" runat="server" visible="false"></asp:literal>
+                            <asp:label visible="false" id="LB_Download" runat="server" text='Este material contém um arquivo para download:'></asp:label>
+                            <br />
+                            <br />
+                            <asp:label visible="false" id="LB_Material_Download" runat="server" text=''></asp:label>
                         </div>
                     </div>
-                    <%-- </ContentTemplate>
-                        </asp:UpdatePanel>--%>
-                    <div class="modal-footer">
-                        <asp:Button ID="B_Fechar_Exibicao" Text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Fechar Exibição" />
-                        <asp:Button ID="B_Download" Text="Download" runat="server" class="btn btn-primary" ToolTip="Baixar Arquivo" />
-                        <asp:Button ID="B_Abrir" Text="Abrir" runat="server" class="btn btn-primary" ToolTip="Abrir Arquivo" Visible="false" />
-
-                    </div>
                 </div>
+                <%-- </ContentTemplate>
+                        </asp:UpdatePanel>--%>
+                <div class="modal-footer">
+                    <asp:button id="B_Fechar_Exibicao" text="Fechar" runat="server" data-dismiss="modal" class="btn btn-default" tooltip="Fechar Exibição" />
+                    <asp:button id="B_Download" text="Download" runat="server" class="btn btn-primary" tooltip="Baixar Arquivo" />
+                    <asp:button id="B_Abrir" text="Abrir" runat="server" class="btn btn-primary" tooltip="Abrir Arquivo" visible="false" />
 
+                </div>
             </div>
+
         </div>
+    </div>
     </div>
 
 

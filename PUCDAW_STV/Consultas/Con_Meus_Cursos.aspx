@@ -6,58 +6,93 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="grid">
-        <h1 id="Titulo_Page" runat="server">Meus Cursos
-        </h1>
         <br />
+        <h2 class="text-primary" id="Titulo_Page" runat="server">Meus Cursos </h2>
         <hr />
+        <br />
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
-                <asp:label id="L_Erro" runat="server" skinid="Skin_label_error" text=""></asp:label>
+                <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
             </div>
             <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
-                <asp:label id="L_Aviso" runat="server" text=""></asp:label>
+                <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
+            </div>
+
+            <div class="vote">
+                <label>
+                    <input type="radio" name="fb" value="1" />
+                    <i class="fa"></i>
+                </label>
+                <label>
+                    <input type="radio" name="fb" value="2" />
+                    <i class="fa"></i>
+                </label>
+                <label>
+                    <input type="radio" name="fb" value="3" />
+                    <i class="fa"></i>
+                </label>
+                <label>
+                    <input type="radio" name="fb" value="4" />
+                    <i class="fa"></i>
+                </label>
+                <label>
+                    <input type="radio" name="fb" value="5" />
+                    <i class="fa"></i>
+                </label>
+                </div>
+
+                <div id="voto" style="color:aqua">
             </div>
 
             <div class="row rr">
                 <div class="col-md-5">
-                    <asp:label id="L_Titulo" runat="server" text="Título:"></asp:label>
-                    <asp:textbox id="TB_Titulo" runat="server" class="form-control" tooltip="Busca por descrição do curso"></asp:textbox>
+                    <asp:Label ID="L_Titulo" runat="server" Text="Título:"></asp:Label>
+                    <asp:TextBox ID="TB_Titulo" runat="server" class="form-control" ToolTip="Busca por descrição do curso"></asp:TextBox>
                 </div>
 
             </div>
             <div class="row rr">
                 <div class="col-md-5">
-                    <asp:label id="L_Usuario" runat="server" text="Instrutor:"></asp:label>
-                    <asp:dropdownlist id="DDL_Usuario" runat="server" datavaluefield="Cod_Usuario" datatextfield="Nome" class="form-control">
-                    </asp:dropdownlist>
+                    <asp:Label ID="L_Usuario" runat="server" Text="Instrutor:"></asp:Label>
+                    <asp:DropDownList ID="DDL_Usuario" runat="server" DataValueField="Cod_Usuario" DataTextField="Nome" class="form-control">
+                    </asp:DropDownList>
                 </div>
-                <asp:button id="B_Filtrar_Aluno" text="BUSCAR" runat="server" class="btn btn-primary" tooltip="Buscar Cursos" visible="false" />
+                <asp:Button ID="B_Filtrar_Aluno" Text="BUSCAR" runat="server" class="btn btn-primary" ToolTip="Buscar Cursos" Visible="false" />
             </div>
             <div class="row rr" id="filtro_inativo" runat="server">
                 <div class="col-md-5">
-                    <asp:button id="B_Filtrar" text="BUSCAR" runat="server" class="btn btn-primary pull-right" tooltip="Buscar Cursos" />
+                    <asp:Button ID="B_Filtrar" Text="BUSCAR" runat="server" class="btn btn-primary pull-right" ToolTip="Buscar Cursos" />
                 </div>
             </div>
         </div>
 
+
         <div class="panel panel-primary table-responsive">
             <div class="panel-heading">Cursos</div>
             <div class="panel-body">
-                <asp:updatepanel id="UpdatePanel1" runat="server">
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
                         <asp:GridView ID="GV_Curso" runat="server" AutoGenerateColumns="False" GridLines="None"
                             AllowPaging="true" PagerStyle-CssClass="pagination" CssClass="table table-striped table-hover table-condensed" AlternatingRowStyle-CssClass="alt"
                             PageSize="10">
                             <Columns>
-                                <asp:TemplateField ControlStyle-Width="15px">
+                                <asp:TemplateField>
+                                     <headertemplate>Curso
+                                             </headertemplate>
+                                    <ItemTemplate>
+                                        <asp:HyperLink ID="HL_Visualizar" runat="server" Text='<%# Container.DataItem("Titulo").ToString.ToUpper %>' Target="_blank" > 
+                                        </asp:HyperLink>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+<%--                                <asp:TemplateField ControlStyle-Width="15px">
                                     <ItemTemplate>
                                         <asp:HyperLink ID="HL_Visualizar" runat="server">
                                         <asp:Image ImageUrl="~/Images/visualizar.png" runat="server" ToolTip="Visualizar Conteúdo" />
                                         </asp:HyperLink>
                                     </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Titulo" HeaderText="Titulo" ItemStyle-VerticalAlign="Middle" />
+                                </asp:TemplateField>--%>
+                                <%--<asp:BoundField DataField="Titulo" HeaderText="Titulo" ItemStyle-VerticalAlign="Middle" />--%>
                                 <asp:BoundField DataField="Instrutor" HeaderText="Instrutor" ItemStyle-VerticalAlign="Middle" />
                                 <asp:BoundField DataField="Dt_Inicio" HeaderText="Data Início" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:BoundField DataField="Dt_Termino" HeaderText="Data Término" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:dd/MM/yyyy}" />
@@ -70,14 +105,14 @@
                             </EmptyDataTemplate>
                         </asp:GridView>
                     </ContentTemplate>
-                </asp:updatepanel>
+                </asp:UpdatePanel>
             </div>
 
             <!--Modal Confirmãção-->
             <div class="modal fade" id="myModalMC" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <asp:updatepanel id="UpdatePanel2" runat="server">
+                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -85,13 +120,13 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row rr">
-                                        <div class="col-md-12"> 
+                                        <div class="col-md-12">
                                             <asp:Label ID="L_Titulo_U" runat="server" Text="Olá"></asp:Label><br />
                                             <p>
-                                             <asp:Label ID="Label2" runat="server" Text="Por favor, confirme sua inscrição para participar do curso"></asp:Label>
-                                            <asp:Label ID="L_Titulo_C" runat="server" Text="" style="font-weight:bold"></asp:Label>
+                                                <asp:Label ID="Label2" runat="server" Text="Por favor, confirme sua inscrição para participar do curso"></asp:Label>
+                                                <asp:Label ID="L_Titulo_C" runat="server" Text="" Style="font-weight: bold"></asp:Label>
                                             </p>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -99,16 +134,58 @@
                                     <asp:Button ID="B_Fecha_Inscricao" Text="Cancelar" runat="server" data-dismiss="modal" class="btn btn-default" ToolTip="Cancelar Inscrição em Curso" />
                                     <asp:Button ID="B_Confirma_Inscricao" Text="Confirmar Minha Inscrição" runat="server" class="btn btn-primary" ToolTip="Confirmar Inscrição no Curso" />
                                 </div>
-                    </div>
-                    </ContentTemplate>
+                                </div>
+                            </ContentTemplate>
                         </asp:UpdatePanel>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
+    <script>
+        $('.vote label i.fa').on('click mouseover', function () {
+            // remove classe ativa de todas as estrelas
+            $('.vote label i.fa').removeClass('active');
+            // pegar o valor do input da estrela clicada
+            var val = $(this).prev('input').val();
+            //percorrer todas as estrelas
+            $('.vote label i.fa').each(function () {
+                /* checar de o valor clicado é menor ou igual do input atual
+                *  se sim, adicionar classe active
+                */
+                var $input = $(this).prev('input');
+                if ($input.val() <= val) {
+                    $(this).addClass('active');
+                }
+            });
+            $("#voto").html(val); // somente para teste
+        });
+        //Ao sair da div vote
+        $('.vote').mouseleave(function () {
+            //pegar o valor clicado
+            var val = $(this).find('input:checked').val();
+            //se nenhum foi clicado remover classe de todos
+            if (val == undefined) {
+                $('.vote label i.fa').removeClass('active');
+            } else {
+                //percorrer todas as estrelas
+                $('.vote label i.fa').each(function () {
+                    /* Testar o input atual do laço com o valor clicado
+                    *  se maior, remover classe, senão adicionar classe
+                    */
+                    var $input = $(this).prev('input');
+                    if ($input.val() > val) {
+                        $(this).removeClass('active');
+                    } else {
+                        $(this).addClass('active');
+                    }
+                });
+            }
+            $("#voto").html(val); // somente para teste
+        });
 
+    </script>
 </asp:Content>
 
 

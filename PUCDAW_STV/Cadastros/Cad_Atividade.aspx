@@ -47,14 +47,14 @@
                                 <asp:Label ID="Titulo" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
-                        <div class="row rr">
-                            <div class="col-md-3" style="text-align: right;">
+   <%--                        <div class="row rr">
+                         <div class="col-md-3" style="text-align: right;">
                                 <asp:Label ID="L_Dt_Abertura" runat="server" Text="Data de Abertura:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
                                 <asp:Label ID="Dt_Abertura" runat="server" Text=""></asp:Label>
                             </div>
-                        </div>
+                        </div>--%>
                         <div class="row rr">
                             <div class="col-md-3" style="text-align: right;">
                                 <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:" CssClass="formlabel"></asp:Label>

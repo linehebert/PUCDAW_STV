@@ -10,13 +10,14 @@ Namespace STV.Entidades
             Public Titulo As String
             Public Cod_Curso As Integer
             Public Curso As String
+            Public Dt_Termino As Date
         End Class
 
         Public Function Carrega_Unidade(Cod_Unidade As Integer) As Dados
 
             Dim Retorno As New Dados
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT U.Cod_Unidade, U.Titulo, U.Cod_Curso, C.titulo AS Curso")
+            Sql.AppendLine("SELECT U.Cod_Unidade, U.Titulo, U.Cod_Curso, C.titulo AS Curso, C.Dt_Termino")
             Sql.AppendLine("FROM Unidade AS U")
             Sql.AppendLine("LEFT JOIN Curso as C ON C.cod_curso = U.Cod_Curso")
             Sql.AppendLine(" WHERE Cod_Unidade= " + Util.CString(Cod_Unidade))
@@ -28,6 +29,7 @@ Namespace STV.Entidades
                 Retorno.Titulo = Util.CString(Query("Titulo"))
                 Retorno.Cod_Curso = Util.CInteger(Query("Cod_Curso"))
                 Retorno.Curso = Util.CString(Query("Curso"))
+                Retorno.Dt_Termino = Util.CDateTime(Query("Dt_Termino"))
             End If
             Biblio.FechaConexao()
 

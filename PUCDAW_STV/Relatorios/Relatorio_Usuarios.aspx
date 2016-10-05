@@ -24,21 +24,32 @@
                 <div class="col-md-10">
                     <asp:Label ID="L_Usuario" runat="server" Text="Usuário:"></asp:Label>
                     <div class="form-inline">
-                                <asp:DropDownList ID="DDL_Usuario" runat="server" DataValueField="Cod_Usuario" class="form-control" DataTextField="Nome" >
-                                </asp:DropDownList>
-                        <asp:Button ID="B_Filtrar_Aluno" Text="BUSCAR" runat="server" class="btn btn-primary" ToolTip="Buscar Cursos" />
+                        <asp:DropDownList ID="DDL_Usuario" runat="server" DataValueField="Cod_Usuario" class="form-control" DataTextField="Nome">
+                        </asp:DropDownList>
+
+                        <asp:Button ID="B_Filtrar_Aluno" Text="Gerar Relatório" runat="server" class="btn btn-primary" ToolTip="Gerar Relatório Do Usuário Selecionado" CausesValidation="true" ValidationGroup="A" />
                     </div>
+
                 </div>
             </div>
-            <br /></div>
-            <div class="table-responsive">
-                <center>
+            <div class="row">
+                
+                    <asp:RequiredFieldValidator ID="RF_DDL_Usuario" runat="server" ControlToValidate="DDL_Usuario"
+                        Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" InitialValue="0" ValidationGroup="A"
+                        class="validation">* Informe o usuário que deseja gerar o relatório</asp:RequiredFieldValidator>
+                
+            </div>
+            <br />
+        </div>
+        <div class="table-responsive">
+            <center>
             
             <rsweb:ReportViewer ID="RV" runat="server" Font-Names="Arial" Font-Size="12pt" SizeToReportContent="True"
                 AsyncRendering="False" Visible="false">
                 <LocalReport ReportPath="Relatorios\Relatorio_Usuarios.rdlc" EnableHyperlinks="True" EnableExternalImages="True"></LocalReport>
-            </rsweb:ReportViewer></center></div>
-        
+            </rsweb:ReportViewer></center>
+        </div>
+
     </div>
 
 

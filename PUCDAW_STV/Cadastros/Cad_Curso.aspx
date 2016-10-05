@@ -21,10 +21,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
-                        Informações Gerais
+                        Informações Gerais 
                     </div>
 
                     <fieldset class="rr" runat="server">
+                        
                         <div class="row rr">
                             <div class="col-md-6 col-md-offset-3">
                                 <asp:Label ID="L_Titulo" runat="server" Text="Título:"></asp:Label>
@@ -56,7 +57,7 @@
                                 <asp:DropDownList ID="DDL_Usuario" runat="server" DataValueField="Cod_Usuario" class="form-control" DataTextField="Nome">
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RFV_DDL_Usuario" runat="server" ControlToValidate="DDL_Usuario"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" InitialValue="0" ValidationGroup="A"
                                     Class="validation">* Informe qual o instrutor deste curso</asp:RequiredFieldValidator>
                             </div>
                         </div>
@@ -66,14 +67,18 @@
                                 <asp:DropDownList ID="DDL_Categoria" runat="server" DataValueField="Cod_Categoria" class="form-control" DataTextField="Descricao" Value="0">
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RFV_DDL_Categoria" runat="server" ControlToValidate="DDL_Categoria"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" InitialValue="0" ValidationGroup="A"
                                     Class="validation">* Informe qual a categoria deste curso</asp:RequiredFieldValidator>
+                                
                             </div>
                         </div>
                         <div class="row rr">
                             <div class="col-md-6 col-md-offset-3">
                                 <asp:Label ID="L_palavra_chave" runat="server" Text="Palavras-Chaves:"></asp:Label>
                                 <asp:TextBox ID="TB_palavra_chave" runat="server" TextMode="MultiLine" ToolTip="Palavras-Chaves" Columns="50" Rows="5" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RFV_Pavras_Chave" runat="server" ControlToValidate="TB_palavra_chave"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
+                                    class="validation">* Informe as palavras-chave desse curso.</asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row rr">

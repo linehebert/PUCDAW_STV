@@ -31,13 +31,13 @@ Partial Class Relatorios_Relatorio_Usuarios : Inherits STV.Base.Page
         Dim SQL As New StringBuilder
         With SQL
             .Clear()
-            .AppendLine("SELECT U.Cod_Usuario, U.NOME AS NOME, C.Cod_Curso, C.Titulo AS CURSO, '' AS APROVACAO, 0.0 AS VIDEOS, 0.0 AS NOTAMAXIMA, 0.0 AS TOTALNOTA, 0.0 AS NOTAALUNO, UN.Titulo AS UNIDADE, A.Valor, A.Cod_Atividade, A.Titulo AS ATIVIDADE, N.Pontos AS NOTA FROM USUARIO AS U")
+            .AppendLine("SELECT U.Cod_Usuario, U.NOME AS NOME,C.Dt_Termino, C.Cod_Curso, C.Titulo AS CURSO, '' AS APROVACAO, 0.0 AS VIDEOS, 0.0 AS NOTAMAXIMA, 0.0 AS TOTALNOTA, 0.0 AS NOTAALUNO, UN.Titulo AS UNIDADE, A.Valor, A.Cod_Atividade, A.Titulo AS ATIVIDADE, N.Pontos AS NOTA FROM USUARIO AS U")
             .AppendLine(" LEFT JOIN CURSOxUSUARIO AS CU ON CU.Cod_Usuario = U.Cod_Usuario")
             .AppendLine(" LEFT JOIN CURSO AS C ON C.Cod_Curso = CU.Cod_Curso")
             .AppendLine(" LEFT JOIN UNIDADE AS UN ON UN.Cod_Curso = C.Cod_Curso")
             .AppendLine(" LEFT JOIN ATIVIDADE AS A ON A.Cod_Unidade = UN.Cod_Unidade")
             .AppendLine(" LEFT JOIN NOTAS AS N ON N.Cod_Atividade = A.Cod_Atividade")
-            .AppendLine("WHERE 0 = 0")
+            .AppendLine("WHERE 0 = 0 ")
             .AppendLine(" AND U.Cod_Usuario = " + DDL_Usuario.SelectedValue)
         End With
 
@@ -49,6 +49,7 @@ Partial Class Relatorios_Relatorio_Usuarios : Inherits STV.Base.Page
         Dim DT = Biblio.Retorna_DataTable(Retorna_SQL)
 
         For i As Integer = 0 To DT.Rows.Count - 1
+
             DT.Rows(i)("Videos") = Videos_Assistidos(Util.CInteger(DT.Rows(i)("Cod_Curso")), Util.CInteger(DT.Rows(i)("Cod_Usuario")))
             DT.Rows(i)("NOTAMAXIMA") = Curso.Nota_Maxima(Util.CInteger(DT.Rows(i)("Cod_Curso")))
             DT.Rows(i)("NOTAALUNO") = Curso.Nota_Aluno(Util.CInteger(DT.Rows(i)("Cod_Curso")), Util.CInteger(DT.Rows(i)("Cod_Usuario")))
@@ -87,14 +88,14 @@ Partial Class Relatorios_Relatorio_Usuarios : Inherits STV.Base.Page
         D_Erro.Visible = False
         L_Erro.Text = ""
         L_Erro.Visible = False
+        Monta_Relatorio()
+        'If DDL_Usuario.SelectedValue <> 0 Then
 
-        If DDL_Usuario.SelectedValue <> 0 Then
-            Monta_Relatorio()
-        Else
-            D_Erro.Visible = True
-            L_Erro.Visible = True
-            L_Erro.Text = "Selecione um usuário para emitir o relatório"
-        End If
+        'Else
+        '    D_Erro.Visible = True
+        '    L_Erro.Visible = True
+        '    L_Erro.Text = "Selecione um usuário para emitir o relatório"
+        'End If
 
 
     End Sub

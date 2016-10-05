@@ -72,8 +72,10 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
 
     Private Sub Carrega_Unidades(Cod_Curso As Integer)
         Try
+
             rptUnidades.DataSource = Unidade.Carrega_Unidades(Cod_Curso)
             rptUnidades.DataBind()
+
         Catch ex As Exception
             Throw
         End Try
@@ -86,6 +88,16 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
             L_Titulo.Text = Dado.Titulo
             L_Dt_Inicio.Text = Dado.Dt_Inicio.ToString("dd/MM/yyyy")
             L_Dt_Termino.Text = Dado.Dt_Termino.ToString("dd/MM/yyyy")
+
+            If Dado.Dt_Termino < Date.Today() Then
+                B_Nova_Unidade.Enabled = False
+                Div_Finalizado.Visible = True
+                Me.ViewState("Enable") = False
+            Else
+                B_Nova_Unidade.Enabled = True
+                Div_Finalizado.Visible = False
+                Me.ViewState("Enable") = True
+            End If
         Catch ex As Exception
             Throw
         End Try
@@ -206,5 +218,18 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
 
+    End Sub
+
+    'Desabilita os itens de edição da unidade pois o curso já está encerrado.
+    Private Sub rptUnidades_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptUnidades.ItemDataBound
+        Try
+            Dim Editar As ImageButton = CType(e.Item.FindControl("Editar"), ImageButton)
+            Dim Excluir_Unidade As ImageButton = CType(e.Item.FindControl("Excluir_Unidade"), ImageButton)
+            Editar.Enabled = Me.ViewState("Enable")
+            Excluir_Unidade.Enabled = Me.ViewState("Enable")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
     End Sub
 End Class

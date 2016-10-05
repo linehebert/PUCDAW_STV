@@ -18,6 +18,10 @@
             <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
             </div>
+           
+            <h2><asp:Label class="text-primary" Text="PARABÉNS!" runat="server"></asp:Label></h2> <BR />
+            <h4 runat="server" Text="O curso foi finalizado e você atingiu a média de aproveitamento."> </h4><BR />
+            <h4 runat="server" text="Para gerar seu certificado clique no ícone ao lado"></h4>
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -35,10 +39,12 @@
                         <asp:Label ID="L_Dt_Inicio" runat="server" Text="1"></asp:Label>
                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                         <asp:Label ID="Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
-                        <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
+                        <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label> 
+                        <%--<asp:Label ID="Label2" runat="server" Text="Finalizado" Style="Color:red"></asp:Label>--%>
                     </div>
                 </div>
             </div>
+            
             <div class="panel panel-default" id="Nenhuma_Unidade" visible="false" runat="server">
                 <div class="row rr">
                     <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">

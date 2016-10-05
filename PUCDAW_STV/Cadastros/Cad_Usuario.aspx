@@ -71,7 +71,7 @@
                                 <asp:DropDownList ID="DDL_Departamento" class="form-control" runat="server" DataValueField="Cod_Departamento" DataTextField="Descricao">
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RF_DDL_Departamento" runat="server" ControlToValidate="DDL_Departamento"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
+                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" InitialValue="0" ValidationGroup="B"
                                     class="validation">* Informe o departamento deste usuário</asp:RequiredFieldValidator>
                             </div>
                         </div>

@@ -63,6 +63,9 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
     End Property
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
+            Div_Info_Modal.Visible = False
+            L_Info.Visible = False
+
             B_Abrir.Visible = False
             Page.Form.Attributes.Add("enctype", "multipart/form-data")
             If Not Page.IsPostBack() Then
@@ -108,7 +111,18 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Try
             Dim Dado = Unidade.Carrega_Unidade(Cod_Unidade)
             L_Titulo.Text = Dado.Titulo
-            L_Curso_Unidade.InnerText = "Curso: " & Dado.Curso
+            If Dado.Dt_Termino < Date.Today() Then
+                L_Curso_Unidade.InnerText = "Curso: " & Dado.Curso
+                Div_Finalizado.Visible = True
+                B_Nova_Atividade.Enabled = False
+                B_Novo_Material.Enabled = False
+            Else
+                L_Curso_Unidade.InnerText = "Curso: " & Dado.Curso
+                Div_Finalizado.Visible = False
+                B_Nova_Atividade.Enabled = True
+                B_Novo_Material.Enabled = True
+            End If
+
         Catch ex As Exception
             Throw
         End Try
@@ -138,7 +152,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
     Private Sub Limpa_Dados_Modal()
         Try
             TB_Titulo.Text = ""
-            TB_Dt_Abertura.Text = ""
+            'TB_Dt_Abertura.Text = ""
             TB_Dt_Encerramento.Text = ""
             TB_Valor.Text = ""
         Catch ex As Exception
@@ -148,10 +162,12 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
     Private Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
         Try
-            If TB_Dt_Encerramento.Text >= Today Then
+            Dim cod_curso As Integer = Biblio.Pega_Valor_Integer("SELECT Cod_Curso FROM UNIDADE Where Cod_Unidade = " + Util.CString(Cod_Unidade), "Cod_Curso")
+            Dim dt_encerra_curso As String = Biblio.Pega_Valor("SELECT Dt_Termino FROM CURSO WHERE Cod_Curso = " + Util.CString(cod_curso), "Dt_Termino")
+            If CDate(TB_Dt_Encerramento.Text) < CDate(dt_encerra_curso) Then
                 Dim Dados As New Atividade.Dados
                 Dados.Titulo = TB_Titulo.Text
-                Dados.Dt_Abertura = TB_Dt_Abertura.Text
+                'Dados.Dt_Abertura = TB_Dt_Abertura.Text
                 Dados.Dt_Fechamento = TB_Dt_Encerramento.Text
                 Dados.Valor = TB_Valor.Text
 
@@ -177,7 +193,10 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Carrega_Atividades(Cod_Unidade)
                 RegistrarScript("$('#myModalI').modal('hide')")
             Else
-                L_Info.Text = "A data de término do curso não pode ser inferior a data atual, informe uma nova data de término."
+                RegistrarScript("$('#myModalI').modal('show')")
+                Div_Info_Modal.Visible = True
+                L_Info.Visible = True
+                L_Info.Text = "A data de fechamento da atividade não pode ser superior a data de encerramento do curso."
             End If
 
         Catch ex As Exception
@@ -202,7 +221,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Try
             Dim Dado = Atividade.Carrega_Atividade(e.CommandArgument.ToString)
             TB_Titulo.Text = Dado.Titulo
-            TB_Dt_Abertura.Text = Dado.Dt_Abertura.ToString("yyyy-MM-dd")
+            'TB_Dt_Abertura.Text = Dado.Dt_Abertura.ToString("yyyy-MM-dd")
             TB_Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("yyyy-MM-dd")
             TB_Valor.Text = Dado.Valor
             L_TItulo_Modal.InnerText = "Alterar Atividade:"

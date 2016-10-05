@@ -94,7 +94,7 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
             D_Erro.Visible = True
         End Try
     End Sub
-#Region "Fuñções e Rotinas"
+#Region "Funções e Rotinas"
     Private Sub Monta_Dados()
         Try
             Dim Dado = Curso.Carrega_Curso(Cod_Curso)
@@ -122,35 +122,41 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
             If LB_Incluidos.Items.Count > 0 Then
                 If TB_Dt_Termino.Text >= Today Then
                     If Cod_Curso <> 0 Then
-                        'Alterar Informações do Curso
-                        Dim Dados As New Curso.Dados
+                        'Verifica se há atividade superior a data de término informada
+                        Dim verifica_atv As String = Biblio.Pega_Valor("select dt_fechamento from atividade where Dt_Fechamento > '" + TB_Dt_Termino.Text + "'", "Dt_Fechamento")
+                        If verifica_atv = "" Then
+                            'Alterar Informações do Curso
+                            Dim Dados As New Curso.Dados
 
-                        Dados.Cod_Curso = Cod_Curso
-                        Dados.Titulo = TB_Titulo.Text
-                        Dados.Dt_Inicio = TB_Dt_Inicio.Text
-                        Dados.Dt_Termino = TB_Dt_Termino.Text
-                        Dados.Palavras_Chave = TB_palavra_chave.Text
-                        Dados.Instrutor = DDL_Usuario.SelectedValue
-                        Dados.Categoria = DDL_Categoria.SelectedValue
-                        Dados.Curso_Inativo = CB_Inativos.Checked
+                            Dados.Cod_Curso = Cod_Curso
+                            Dados.Titulo = TB_Titulo.Text
+                            Dados.Dt_Inicio = TB_Dt_Inicio.Text
+                            Dados.Dt_Termino = TB_Dt_Termino.Text
+                            Dados.Palavras_Chave = TB_palavra_chave.Text
+                            Dados.Instrutor = DDL_Usuario.SelectedValue
+                            Dados.Categoria = DDL_Categoria.SelectedValue
+                            Dados.Curso_Inativo = CB_Inativos.Checked
 
-                        Curso.Alterar(Dados)
+                            Curso.Alterar(Dados)
 
-                        'Excluir Visibilidades Anteriores
-                        Curso.Delete(Cod_Curso)
+                            'Excluir Visibilidades Anteriores
+                            Curso.Delete(Cod_Curso)
 
-                        'Insere novamente a visibilidade correta
-                        Dim listaSelecionados As New ListItemCollection
-                        For Each item As ListItem In LB_Incluidos.Items
-                            listaSelecionados.Add(item)
-                        Next
+                            'Insere novamente a visibilidade correta
+                            Dim listaSelecionados As New ListItemCollection
+                            For Each item As ListItem In LB_Incluidos.Items
+                                listaSelecionados.Add(item)
+                            Next
 
-                        For Each item As ListItem In listaSelecionados
-                            Curso.Inserir_Visibilidade(item.Value, Cod_Curso)
-                        Next
-                        UP_Visibilidade.Update()
-                        Voltar()
-
+                            For Each item As ListItem In listaSelecionados
+                                Curso.Inserir_Visibilidade(item.Value, Cod_Curso)
+                            Next
+                            UP_Visibilidade.Update()
+                            Voltar()
+                        Else
+                            L_Info.Text = "A data de término do curso não pode ser inferior a data de encerramento de nenhuma atividade."
+                            RegistrarScript("$('#myModalInfo').modal('show')")
+                        End If
                     Else
                         'INserir informações do curso
                         Dim Dados As New Curso.Dados

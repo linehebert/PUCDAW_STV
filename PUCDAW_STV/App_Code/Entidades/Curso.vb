@@ -23,7 +23,7 @@ Namespace STV.Entidades
             Sql.AppendLine("SELECT SUM(A.Valor) AS TOTAL FROM ATIVIDADE AS A ")
             Sql.AppendLine("LEFT JOIN  unidade AS u ON u.Cod_Unidade = A.Cod_Unidade ")
             Sql.AppendLine("LEFT JOIN curso AS c ON c.Cod_Curso = u.Cod_Curso ")
-            Sql.AppendLine("WHERE c.cod_curso=" + Util.CString(Cod_Curso))
+            Sql.AppendLine("WHERE c.cod_curso=" + Util.CString(Cod_Curso) + " AND A.publica=1")
 
             Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
             Return Util.CDouble(dt.Rows(0).Item("TOTAL"))
@@ -115,8 +115,9 @@ Namespace STV.Entidades
             If Not String.IsNullOrEmpty(Titulo) Then Sql.AppendLine("AND C.Titulo LIKE " + Util.Sql_String("%" + Titulo + "%"))
             If Departamento <> 0 Then Sql.AppendLine("AND CD.Cod_Departamento = " + Util.Sql_String(Departamento))
             If Instrutor <> 0 And Outros = False Then Sql.AppendLine("AND Instrutor = " + Util.Sql_String(Instrutor))
-            If Instrutor <> 0 And Outros = True Then Sql.AppendLine("AND Instrutor <> " + Util.Sql_String(Instrutor))
-            If Inativo = False Then Sql.AppendLine("AND C.Curso_Inativo = 0 ")
+            If Instrutor <> 0 And Outros = True Then Sql.AppendLine(" AND C.Dt_Termino > '" + Date.Today() + "' AND Instrutor <> " + Util.Sql_String(Instrutor))
+
+            If Inativo = False Then Sql.AppendLine(" AND C.Curso_Inativo = 0 ")
             Sql.AppendLine("ORDER BY Cod_Curso")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())

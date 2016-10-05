@@ -38,9 +38,9 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
                         Carrega_Questoes(Cod_Atividade)
                     End If
 
-
                     Dim atvpublicada As Boolean = Biblio.Pega_Valor_Boolean("SELECT Publica FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(Cod_Atividade), "Publica")
-                    If atvpublicada = True Then
+                    Dim dt_encerramento As Date = Biblio.Pega_Valor("SELECT Dt_Fechamento FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(Cod_Atividade), "Dt_Fechamento")
+                    If atvpublicada = True Or dt_encerramento < Date.Today() Then
                         'Desabilita os Botões de Alteração/Inclusão de Questão
                         B_Add_Questao.Attributes.Add("class", "btn btn-primary disabled")
                         B_Publicar.Attributes.Add("class", "btn btn-primary disabled")
@@ -48,7 +48,7 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
                         B_Publicar.Attributes.Add("disabled", "true")
                         Info_Questoes.Disabled = True
                         D_Info.Visible = True
-                        L_Info.Text = "Atividade Publicada! Não é possível realizar alterações."
+                        L_Info.Text = "Atividade Publicada ou Encerrada! Não é possível realizar alterações."
                     End If
                 End If
             End If
@@ -75,7 +75,7 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             Curso.Text = Dado.Curso
 
             Titulo.Text = Dado.Titulo
-            Dt_Abertura.Text = Dado.Dt_Abertura.ToString("dd/MM/yyyy")
+            'Dt_Abertura.Text = Dado.Dt_Abertura.ToString("dd/MM/yyyy")
             Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("dd/MM/yyyy")
             Valor.Text = Dado.Valor
         Catch ex As Exception
