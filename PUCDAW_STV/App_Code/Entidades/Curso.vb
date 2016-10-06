@@ -17,6 +17,27 @@ Namespace STV.Entidades
             Public Curso_Inativo As Boolean
         End Class
 
+        'Verifica se tem atividade em aberto para o curso
+        Public Function Verifica_Atividade_Aberta(Cod_Curso As Integer, Dt_Fecha As String) As String
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT A.Dt_Fechamento as FECHAMENTO, C.Dt_Termino FROM ATIVIDADE AS A ")
+            Sql.AppendLine("LEFT JOIN UNIDADE AS U ON U.Cod_Unidade = a.Cod_Unidade ")
+            Sql.AppendLine(" LEFT JOIN CURSO AS C ON C.Cod_Curso = U.Cod_Curso")
+            Sql.AppendLine("WHERE U.cod_curso=" + Util.CString(Cod_Curso))
+            If Dt_Fecha = "" Then
+                Sql.AppendLine(" And A.Dt_Fechamento >" + Date.Today())
+            Else
+                Sql.AppendLine(" And A.Dt_Fechamento >" + Util.Sql_String(Dt_Fecha))
+            End If
+
+            Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
+            If dt.Rows.Count > 0 Then
+                Return Util.CDouble(dt.Rows(0).Item("FECHAMENTO"))
+            Else
+                Return ""
+            End If
+        End Function
+
         'Calcula a nota máxima do curso
         Public Function Nota_Maxima(Cod_Curso As Integer) As Double
             Dim Sql As New StringBuilder

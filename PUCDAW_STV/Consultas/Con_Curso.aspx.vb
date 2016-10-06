@@ -66,8 +66,9 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                     B_Novo.Visible = True
                     Carrega_Grid("", 0, 0, False, False)
 
+                    GV_Curso.Columns(0).Visible = False
                     GV_Curso.Columns(2).Visible = False
-                    GV_Curso.Columns(3).Visible = False
+                    GV_Curso.Columns(4).Visible = False
                     Titulo_Page.InnerText = "Gerenciar Cursos"
                 Else
 
@@ -78,7 +79,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                         Preenche_DDL_Departamento()
                         B_Novo.Visible = False
                         CB_Inativos.Visible = False
-                        GV_Curso.Columns(0).Visible = False
+                        GV_Curso.Columns(1).Visible = False
 
 
                         If Request("INST") = "S" Then
@@ -86,16 +87,21 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                             Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, False)
                             DDL_Usuario.Visible = False
                             L_Usuario.Visible = False
+                            GV_Curso.Columns(0).Visible = False
+                            GV_Curso.Columns(1).Visible = False
                             GV_Curso.Columns(2).Visible = False
-                            GV_Curso.Columns(3).Visible = False
+                            GV_Curso.Columns(4).Visible = False
+                            GV_Curso.Columns(5).Visible = False
+                            GV_Curso.Columns(9).Visible = False
 
                         Else
                             'Cursos Disponíveis/Papel de Aluno
                             Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, True)
-                            GV_Curso.Columns(0).Visible = False
-                            GV_Curso.Columns(1).Visible = False
+                            GV_Curso.Columns(2).Visible = False
                             GV_Curso.Columns(3).Visible = False
                             filtro_departamento.Visible = False
+                            GV_Curso.Columns(9).Visible = False
+
                         End If
                     Else
 
@@ -108,8 +114,8 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                         B_Novo.Visible = False
                         filtro_departamento.Visible = False
                         filtro_inativo.Visible = False
-                        GV_Curso.Columns(0).Visible = False
                         GV_Curso.Columns(1).Visible = False
+                        GV_Curso.Columns(2).Visible = False
                         GV_Curso.Columns(3).Visible = False
                         GV_Curso.Columns(9).Visible = False
                     End If
@@ -171,7 +177,6 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                     CType(e.Row.FindControl("B_Inscrito"), Button).Visible = True
                     CType(e.Row.FindControl("B_Inscrever"), Button).Visible = False
                 End If
-
             End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
@@ -221,13 +226,11 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
     Protected Sub GV_Curso_PageIndexChanging(sender As Object, e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles GV_Curso.PageIndexChanging
         Try
             GV_Curso.PageIndex = e.NewPageIndex
-
             If Request("INST") = "S" Then
                 Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked, False)
             Else
                 Carrega_Grid(TB_Titulo.Text, DDL_Departamento.SelectedValue, DDL_Usuario.SelectedValue, CB_Inativos.Checked, True)
             End If
-
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

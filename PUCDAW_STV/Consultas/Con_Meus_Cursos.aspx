@@ -78,8 +78,7 @@
                             PageSize="10">
                             <Columns>
                                 <asp:TemplateField>
-                                     <headertemplate>Curso
-                                             </headertemplate>
+                                    <headertemplate>Curso</headertemplate>
                                     <ItemTemplate>
                                         <asp:HyperLink ID="HL_Visualizar" runat="server" Text='<%# Container.DataItem("Titulo").ToString.ToUpper %>' Target="_blank" > 
                                         </asp:HyperLink>

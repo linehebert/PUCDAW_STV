@@ -164,7 +164,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Try
             Dim cod_curso As Integer = Biblio.Pega_Valor_Integer("SELECT Cod_Curso FROM UNIDADE Where Cod_Unidade = " + Util.CString(Cod_Unidade), "Cod_Curso")
             Dim dt_encerra_curso As String = Biblio.Pega_Valor("SELECT Dt_Termino FROM CURSO WHERE Cod_Curso = " + Util.CString(cod_curso), "Dt_Termino")
-            If CDate(TB_Dt_Encerramento.Text) < CDate(dt_encerra_curso) Then
+            If CDate(TB_Dt_Encerramento.Text) < CDate(dt_encerra_curso) And CDate(TB_Dt_Encerramento.Text) >= Date.Today() Then
                 Dim Dados As New Atividade.Dados
                 Dados.Titulo = TB_Titulo.Text
                 'Dados.Dt_Abertura = TB_Dt_Abertura.Text

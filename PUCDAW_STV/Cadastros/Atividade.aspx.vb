@@ -92,7 +92,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
         Try
             Dim Dado = Atividade.Carrega_Questao_Inicial(Cod_Atividade)
 
-            Me.ViewState("Cod_Questao") = Dado.Cod_Questao
+            Me.ViewState("Cod_Questao_Origem") = Dado.Cod_Questao
             L_Questao.Text = Dado.Enunciado
             L_A.Text = "A: " & Dado.Alternativa_A
             L_B.Text = "B: " & Dado.Alternativa_B
@@ -100,11 +100,20 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             L_D.Text = "D: " & Dado.Alternativa_D
             L_Justificativa.Text = "Justificativa: " & Dado.Justificativa
 
-            Dim Resposta As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
+            Dim Resposta As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao_Origem")), "Resposta")
             If Resposta = "A" Then RB_A.Checked = True
             If Resposta = "B" Then RB_B.Checked = True
             If Resposta = "C" Then RB_C.Checked = True
             If Resposta = "D" Then RB_D.Checked = True
+
+            'Verifica se é a ultima questao
+            Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao_Origem")), "ASC")
+            If Proxima.Cod_Questao = Nothing Then
+                B_Proximo.Visible = False
+                B_Finalizar.Visible = True
+            Else
+                Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
+            End If
 
             B_Anterior.Visible = False
         Catch ex As Exception
@@ -129,20 +138,14 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             'Verifica se pelo menos uma alternativa foi selecionada
             If RB_A.Checked OrElse RB_B.Checked OrElse RB_C.Checked OrElse RB_D.Checked Then
 
-                'Verifica se já existe resposta cadastrada para a questão atual
-                'Dim Resposta As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
-                'If Resposta = "A" Then RB_A.Checked = True
-                'If Resposta = "B" Then RB_B.Checked = True
-                'If Resposta = "C" Then RB_C.Checked = True
-                'If Resposta = "D" Then RB_D.Checked = True
-                Dim Resposta As String = Biblio.Pega_Valor("SELECT Alternativa_Correta FROM Questao WHERE Cod_Questao=" + Util.Sql_String(CInt(Me.ViewState("Cod_Questao"))), "Alternativa_Correta")
-                Dim Resposta_Usuario As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
+                Dim Resposta As String = Biblio.Pega_Valor("SELECT Alternativa_Correta FROM Questao WHERE Cod_Questao=" + Util.Sql_String(CInt(Me.ViewState("Cod_Questao_Origem"))), "Alternativa_Correta")
+                Dim Resposta_Usuario As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao_Origem")), "Resposta")
 
                 'Guarda os dados para inserir na tabela de usuarioxrespostas
                 Dim Registro As New Atividade.Dados
                 Registro.Cod_Usuario = Usuario_Logado.Cod_Usuario
                 Registro.Cod_Atividade = Cod_Atividade
-                Registro.Cod_Questao = CInt(Me.ViewState("Cod_Questao"))
+                Registro.Cod_Questao = CInt(Me.ViewState("Cod_Questao_Origem"))
 
                 If RB_A.Checked Then Registro.Resposta = "A"
                 If RB_B.Checked Then Registro.Resposta = "B"
@@ -162,24 +165,48 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Atividade.Alterar_Resposta(Registro)
                 End If
 
-                'Carregar a próxima questão
-                Dim Dado = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "ASC")
-
-                Me.ViewState("Cod_Questao") = Dado.Cod_Questao
-                L_Questao.Text = Dado.Enunciado
-                L_A.Text = "A: " & Dado.Alternativa_A
-                L_B.Text = "B: " & Dado.Alternativa_B
-                L_C.Text = "C: " & Dado.Alternativa_C
-                L_D.Text = "D: " & Dado.Alternativa_D
-
-                'verifica se é a ultima questao
-                Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "ASC")
+                'Verifica se é a ultima questao
+                Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao_Origem")), "ASC")
                 If Proxima.Cod_Questao = Nothing Then
                     B_Proximo.Visible = False
                     B_Finalizar.Visible = True
-                End If
-                B_Anterior.Visible = True
+                    Me.ViewState("Cod_Questao_Destino") = Me.ViewState("Cod_Questao_Origem")
+                Else
+                    'Carregar a próxima questão
+                    Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
+                    L_Questao.Text = Proxima.Enunciado
+                    L_A.Text = "A: " & Proxima.Alternativa_A
+                    L_B.Text = "B: " & Proxima.Alternativa_B
+                    L_C.Text = "C: " & Proxima.Alternativa_C
+                    L_D.Text = "D: " & Proxima.Alternativa_D
 
+                    'Verifica se já existe resposta cadastrada para a questão atual
+                    Dim Resposta_Usu As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao_Destino")), "Resposta")
+                    RB_A.Checked = False
+                    RB_B.Checked = False
+                    RB_C.Checked = False
+                    RB_D.Checked = False
+                    If Resposta_Usu IsNot Nothing Then
+                        If Resposta_Usu = "A" Then RB_A.Checked = True
+                        If Resposta_Usu = "B" Then RB_B.Checked = True
+                        If Resposta_Usu = "C" Then RB_C.Checked = True
+                        If Resposta_Usu = "D" Then RB_D.Checked = True
+                    End If
+
+                    'Verifica se é a ultima questao
+                    Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao_Destino")), "ASC")
+                    If Proxima.Cod_Questao = Nothing Then
+                        B_Proximo.Visible = False
+                        B_Finalizar.Visible = True
+                        Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
+                    Else
+                        Me.ViewState("Cod_Questao_Origem") = Proxima.Cod_Questao
+                    End If
+
+                End If
+
+
+                B_Anterior.Visible = True
                 UP_Atividade.Update()
             Else
                 L_Modal_Info.InnerText = "Esta questão ainda não foi respondida. Selecione a alternativa que julga correta para esta questão."
@@ -196,31 +223,25 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             'Verifica se pelo menos uma alternativa foi selecionada
             If RB_A.Checked OrElse RB_B.Checked OrElse RB_C.Checked OrElse RB_D.Checked Then
 
-                'Verifica se já existe resposta cadastrada para a questão atual
-                'Dim Resposta As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
-                'If Resposta = "A" Then RB_A.Checked = True
-                'If Resposta = "B" Then RB_B.Checked = True
-                'If Resposta = "C" Then RB_C.Checked = True
-                'If Resposta = "D" Then RB_D.Checked = True
-                'If Resposta = Nothing Then
-                '    RB_A.Checked = False
-                '    RB_B.Checked = False
-                '    RB_C.Checked = False
-                '    RB_D.Checked = False
-                'End If
-                Dim Resposta As String = Biblio.Pega_Valor("SELECT Alternativa_Correta FROM Questao WHERE Cod_Questao=" + Util.Sql_String(CInt(Me.ViewState("Cod_Questao"))), "Alternativa_Correta")
-                Dim Resposta_Usuario As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
+                Dim Resposta_Correta As String = Biblio.Pega_Valor("SELECT Alternativa_Correta FROM Questao WHERE Cod_Questao=" + Util.Sql_String(CInt(Me.ViewState("Cod_Questao_Origem"))), "Alternativa_Correta")
+                Dim Resposta_Usuario As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao_Origem")), "Resposta")
 
                 'Guarda os dados para inserir na tabela de usuarioxrespostas
                 Dim Registro As New Atividade.Dados
                 Registro.Cod_Usuario = Usuario_Logado.Cod_Usuario
                 Registro.Cod_Atividade = Cod_Atividade
-                Registro.Cod_Questao = CInt(Me.ViewState("Cod_Questao"))
+                Registro.Cod_Questao = CInt(Me.ViewState("Cod_Questao_Origem"))
 
                 If RB_A.Checked Then Registro.Resposta = "A"
                 If RB_B.Checked Then Registro.Resposta = "B"
                 If RB_C.Checked Then Registro.Resposta = "C"
                 If RB_D.Checked Then Registro.Resposta = "D"
+
+                If Registro.Resposta = Resposta_Correta Then
+                    Registro.Correta = 1
+                Else
+                    Registro.Correta = 0
+                End If
 
                 'verifica se é insert ou alteração
                 If Resposta_Usuario = Nothing Then
@@ -229,19 +250,46 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Atividade.Alterar_Resposta(Registro)
                 End If
 
-                Dim Dado = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "DESC")
-
-                Me.ViewState("Cod_Questao") = Dado.Cod_Questao
-                L_Questao.Text = Dado.Enunciado
-                L_A.Text = "A: " & Dado.Alternativa_A
-                L_B.Text = "B: " & Dado.Alternativa_B
-                L_C.Text = "C: " & Dado.Alternativa_C
-                L_D.Text = "D: " & Dado.Alternativa_D
-
-                Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao")), "DESC")
+                'Verifica qual é a próxima questão
+                Dim Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao_Origem")), "DESC")
                 If Proxima.Cod_Questao = Nothing Then
                     B_Anterior.Visible = False
+                    Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
+                Else
+                    Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
+                    L_Questao.Text = Proxima.Enunciado
+                    L_A.Text = "A: " & Proxima.Alternativa_A
+                    L_B.Text = "B: " & Proxima.Alternativa_B
+                    L_C.Text = "C: " & Proxima.Alternativa_C
+                    L_D.Text = "D: " & Proxima.Alternativa_D
+
+                    'Verifica se já existe resposta cadastrada para a questão atual
+                    Dim Resposta As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao_Destino")), "Resposta")
+                    RB_A.Checked = False
+                    RB_B.Checked = False
+                    RB_C.Checked = False
+                    RB_D.Checked = False
+                    If Resposta IsNot Nothing Then
+                        If Resposta = "A" Then
+                            RB_A.Checked = True
+                        ElseIf Resposta = "B" Then
+                            RB_B.Checked = True
+                        ElseIf Resposta = "C" Then
+                            RB_C.Checked = True
+                        ElseIf Resposta = "D" Then
+                            RB_D.Checked = True
+                        End If
+                    End If
+
+                    Proxima = Atividade.Proxima_Questao(Cod_Atividade, CInt(Me.ViewState("Cod_Questao_Destino")), "DESC")
+                    If Proxima.Cod_Questao = Nothing Then
+                        B_Anterior.Visible = False
+                        Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
+                    Else
+                        Me.ViewState("Cod_Questao_Origem") = Proxima.Cod_Questao
+                    End If
                 End If
+
                 B_Proximo.Visible = True
                 B_Finalizar.Visible = False
 

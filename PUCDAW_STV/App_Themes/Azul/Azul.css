@@ -1,12 +1,18 @@
+/*Títulos e Temas*/
 body{
 background-color:#4fd8e8;
 background: linear-gradient(#335987,#EEE9DE, #EEE9DE, #335987);
 font-family:'Century Gothic' !important;
 }
-
 h2{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
 }
+.Titulo_Curso{
+    font-size:3em;
+    text-align:center;
+}
+
+/*Votação com Estrelas*/
 .vote label {
     cursor:pointer;
 }
@@ -32,6 +38,8 @@ h2{
 .vote label i.active {
     color:gold;
 }
+
+/*Estrutura da Página*/
 .conteudo {
     border: 3px solid #ddd;
     border-radius: 6px;
@@ -44,8 +52,6 @@ h2{
     margin-right:10%;
     align-content:center;
    }
-
-
 .head{
     border: 12px solid #ddd;
     border-bottom-color:#170B3B;
@@ -56,12 +62,9 @@ h2{
     margin-bottom: 0px;
     background-color:white;
 }
-
 .logo{
     text-align:center;    
 }
-
-
 footer#main{
 	position:relative;
 	left:0;
@@ -73,13 +76,13 @@ footer#main{
 }
 
 /*login*/
-
 .form-signin {
   max-width: 300px;
   padding: 15px;
   margin: 0 auto;
   border: 2px solid #ddd;
   margin-top:10%;
+  margin-bottom:10%;
   border-bottom: 7px solid gray;
   border-right: 7px solid gray;
   border-radius: 10px;
@@ -115,6 +118,7 @@ footer#main{
   border-top-right-radius: 0;
 }  
 
+/*Estrutura do Conteúdo*/
 .rr { 
     display: block;
     padding-top: 0.35em;
@@ -122,17 +126,9 @@ footer#main{
     padding-left: 0.75em;
     padding-right: 0.75em;
 }
-
-.Titulo_Curso{
-    font-size:3em;
-    text-align:center;
-}
-
 .validation{
     color:red;
 }
-
 .formlabel {
-
-font-weight:bold;
+    font-weight:bold;
 }

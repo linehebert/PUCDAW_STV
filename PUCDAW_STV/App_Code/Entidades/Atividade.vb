@@ -65,6 +65,8 @@ Namespace STV.Entidades
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function
+
+
         'Carrega a atividade resolvida e finalizada pelo aluno
         Public Function Carrega_Atividade_Aluno(Cod_Atividade As Integer) As DataTable
             Dim Sql As New StringBuilder

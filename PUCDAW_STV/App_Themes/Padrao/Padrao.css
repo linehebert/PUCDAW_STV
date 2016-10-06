@@ -1,3 +1,4 @@
+/*Titulos e Tema*/
 body{
 background-color:#4fd8e8;
 background: linear-gradient(#DADEE0, #EEE9DE, #EEE9DE, gray);
@@ -7,10 +8,43 @@ font-family:'Century Gothic' !important;
 h2{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
 }
+.Titulo_Curso{
+    font-size:3em;
+    text-align:center;
+}
+
+/*Votação com Estrelas*/
+.vote label {
+    cursor:pointer;
+}
+.vote label input{
+    display:none;
+}
+.vote label i {
+    font-family:FontAwesome;
+    font-size:18px;
+    -webkit-transition-property:color, text;
+    -webkit-transition-duration: .2s, .2s;
+    -webkit-transition-timing-function: linear, ease-in;
+    -moz-transition-property:color, text;
+    -moz-transition-duration:.2s;
+    -moz-transition-timing-function: linear, ease-in;
+    -o-transition-property:color, text;
+    -o-transition-duration:.2s;
+    -o-transition-timing-function: linear, ease-in;
+}
+.vote label i:before {
+    content:'\f005';
+}
+.vote label i.active {
+    color:gold;
+}
+
+/*Estrutura da Página*/
 .conteudo {
     border: 3px solid #ddd;
     border-radius: 6px;
-    height:1500px;
+    height:auto;
     background-color:white;
 }
 
@@ -18,9 +52,7 @@ h2{
     margin-left:10%;
     margin-right:10%;
     align-content:center;
-}
-
-
+   }
 .head{
     border: 12px solid #ddd;
     border-bottom-color:#170B3B;
@@ -31,12 +63,9 @@ h2{
     margin-bottom: 0px;
     background-color:white;
 }
-
 .logo{
     text-align:center;    
 }
-
-
 footer#main{
 	position:relative;
 	left:0;
@@ -48,13 +77,13 @@ footer#main{
 }
 
 /*login*/
-
 .form-signin {
   max-width: 300px;
   padding: 15px;
   margin: 0 auto;
   border: 2px solid #ddd;
   margin-top:10%;
+  margin-bottom:10%;
   border-bottom: 7px solid gray;
   border-right: 7px solid gray;
   border-radius: 10px;
@@ -90,25 +119,17 @@ footer#main{
   border-top-right-radius: 0;
 }  
 
+/*Estrutura do Conteúdo*/
 .rr { 
     display: block;
     padding-top: 0.35em;
     padding-bottom: 0.625em;
     padding-left: 0.75em;
     padding-right: 0.75em;
-    /*border:2px solid green;*/
 }
-
-.Titulo_Curso{
-    font-size:3em;
-    text-align:center;
-}
-
 .validation{
     color:red;
 }
-
 .formlabel {
-
-font-weight:bold;
+    font-weight:bold;
 }

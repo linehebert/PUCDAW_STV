@@ -119,12 +119,20 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
 
     Protected Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
         Try
+            'Verifica se foi alterada a data de término do curso
+            'Dim Fecha_Curso As String = Biblio.Pega_Valor("SELECT DT_Termino FROM CURSO WHERE Cod_Curso=" + Util.CString(Cod_Curso), "DT_Termino")
+            'And Fecha_Curso = TB_Dt_Termino.Text
             If LB_Incluidos.Items.Count > 0 Then
-                If TB_Dt_Termino.Text >= Today Then
-                    If Cod_Curso <> 0 Then
+                'If TB_Dt_Termino.Text >= Date.Today() Then
+                If Cod_Curso <> 0 Then
                         'Verifica se há atividade superior a data de término informada
-                        Dim verifica_atv As String = Biblio.Pega_Valor("select dt_fechamento from atividade where Dt_Fechamento > '" + TB_Dt_Termino.Text + "'", "Dt_Fechamento")
-                        If verifica_atv = "" Then
+                        Dim Dt_Fechamento_Valida As String = Curso.Verifica_Atividade_Aberta(Cod_Curso, TB_Dt_Termino.Text)
+                        If Dt_Fechamento_Valida = "" Then
+
+                            'Verifica se não há atividades pendentes antes de inativar o curso
+                            'Dim Libera_Inativar As String = Curso.Verifica_Atividade_Aberta(Cod_Curso, "")
+                            'If Libera_Inativar = "" Then
+
                             'Alterar Informações do Curso
                             Dim Dados As New Curso.Dados
 
@@ -153,8 +161,13 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
                             Next
                             UP_Visibilidade.Update()
                             Voltar()
+
+                            'Else
+                            '    L_Info.Text = "Data de inativoooo do curso não pode ser inferior a data de término de suas atividades."
+                            '    RegistrarScript("$('#myModalInfo').modal('show')")
+                            'End If
                         Else
-                            L_Info.Text = "A data de término do curso não pode ser inferior a data de encerramento de nenhuma atividade."
+                            L_Info.Text = "Data de encerramento do curso não pode ser inferior a data de término de suas atividades."
                             RegistrarScript("$('#myModalInfo').modal('show')")
                         End If
                     Else
@@ -183,10 +196,10 @@ Partial Class Cadastros_Cad_Curso : Inherits STV.Base.Page
                         UP_Visibilidade.Update()
                         Voltar()
                     End If
-                Else
-                    L_Info.Text = "A data de término do curso não pode ser inferior a data atual, informe uma nova data de término."
-                    RegistrarScript("$('#myModalInfo').modal('show')")
-                End If
+                'Else
+                '    L_Info.Text = "A data de término do curso não pode ser inferior a data atual, informe uma nova data de término."
+                '    RegistrarScript("$('#myModalInfo').modal('show')")
+                'End If
             Else
                 L_Info.Text = "É preciso definir a visibilidade deste curso para concluir, selecione quais os departamentos terão acesso a este curso."
                 RegistrarScript("$('#myModalInfo').modal('show')")
