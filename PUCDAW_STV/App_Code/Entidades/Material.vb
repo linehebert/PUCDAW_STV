@@ -92,9 +92,11 @@ Namespace STV.Entidades
 
         Public Sub Excluir_Material(Registro As Dados)
             Dim Sql As New StringBuilder
-            Sql.AppendLine("DELETE FROM Materiais ")
+            Sql.AppendLine("DELETE FROM MATERIAISxUSUARIO ")
             Sql.AppendLine("WHERE Cod_Material = " + Util.Sql_String(Registro.Cod_Material))
 
+            Sql.AppendLine("DELETE FROM Materiais ")
+            Sql.AppendLine("WHERE Cod_Material = " + Util.Sql_String(Registro.Cod_Material))
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
 

@@ -7,9 +7,6 @@
         <br />
         <br />
         <br />
-        <%--        <h1>Consulta de Unidades</h1>
-        <hr />--%>
-
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
@@ -20,23 +17,22 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
-                    Informações Gerais
-                    <asp:Image ImageUrl="~/Images/encerrado.png" runat="server" CssClass="pull-right" ID="Div_Finalizado" Width="150px" />
+                    Curso
+                    <asp:Image ImageUrl="~/Images/encerrado.png" runat="server" CssClass="pull-right" ID="Div_Finalizado" Width="100px" />
                 </div>
+
                 <div class="row rr">
-                    <div class="col-md-10 col-md-offset-1 table-responsive" style="text-align: center">
-                        <asp:Label ID="L_Titulo" runat="server" Text="Curso SS" CssClass="Titulo_Curso"></asp:Label>
+                    <div class="col-md-12 table-responsive" style="text-align: center">
+                        <br /><asp:Label ID="L_Titulo" runat="server" Text="Curso SS" CssClass="Titulo_Curso"></asp:Label>
                     </div>
                 </div>
                 <div class="row rr form-inline">
-                    <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 15px">
-                        <asp:Label ID="Dt_Inicio" runat="server" Text="Data de Início:"></asp:Label>
-                        <asp:Label ID="L_Dt_Inicio" runat="server" Text=""></asp:Label>
-                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                        <asp:Label ID="Dt_Termino" runat="server" Text="Data de Término:"></asp:Label>
+                    <div class="col-md-12" style="text-align: center; margin-top: 15px">
+                        <asp:Label ID="Dt_Inicio" runat="server" Text="Início:"></asp:Label>
+                        <asp:Label ID="L_Dt_Inicio" runat="server" Text=""></asp:Label>|
+                        <asp:Label ID="Dt_Termino" runat="server" Text="Término:"></asp:Label>
                         <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
                     </div>
-                    
                 </div>
             </div>
 

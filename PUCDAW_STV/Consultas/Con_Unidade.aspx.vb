@@ -93,10 +93,17 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
                 B_Nova_Unidade.Enabled = False
                 Div_Finalizado.Visible = True
                 Me.ViewState("Enable") = False
+                B_Nova_Unidade.ToolTip = "Não é possível cadastrar unidades para um curso encerrado!"
+                Me.ViewState("EditarTT") = "Não é possível editar unidades de um curso encerrado!"
+                Me.ViewState("ExcluirTT") = "Não é possível excluir unidades de um curso encerrado!"
             Else
                 B_Nova_Unidade.Enabled = True
                 Div_Finalizado.Visible = False
                 Me.ViewState("Enable") = True
+                B_Nova_Unidade.ToolTip = "Cadastrar Nova Unidade"
+                Me.ViewState("EditarTT") = "Editar esta unidade"
+                Me.ViewState("ExcluirTT") = "Excluir esta unidade"
+
             End If
         Catch ex As Exception
             Throw
@@ -227,6 +234,10 @@ Partial Class Consultas_Con_Unidade : Inherits STV.Base.Page
             Dim Excluir_Unidade As ImageButton = CType(e.Item.FindControl("Excluir_Unidade"), ImageButton)
             Editar.Enabled = Me.ViewState("Enable")
             Excluir_Unidade.Enabled = Me.ViewState("Enable")
+
+            Editar.ToolTip = Me.ViewState("EditarTT")
+            Excluir_Unidade.ToolTip = Me.ViewState("ExcluirTT")
+
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

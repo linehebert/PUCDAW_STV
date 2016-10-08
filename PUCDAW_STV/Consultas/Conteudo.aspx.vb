@@ -72,10 +72,13 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
         Try
             Page.Form.Attributes.Add("enctype", "multipart/form-data")
             If Not Page.IsPostBack() Then
+
                 If Verifica_Aprovacao(Cod_Curso) = True Then
                     B_Gerar_Certificado.Visible = True
+                    Certificado.Visible = True
                 Else
                     B_Gerar_Certificado.Visible = False
+                    Certificado.Visible = False
                 End If
                 Monta_Dados()
 
@@ -130,6 +133,12 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
             L_Dt_Inicio.Text = Dado.Dt_Inicio.ToString("dd/MM/yyyy")
             L_Dt_Termino.Text = Dado.Dt_Termino.ToString("dd/MM/yyyy")
+
+            If Dado.Dt_Termino < Date.Today Then
+                Div_Finalizado.Visible = True
+            Else
+                Div_Finalizado.Visible = False
+            End If
         Catch ex As Exception
             Throw
         End Try
@@ -181,13 +190,17 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                 Dim Path As String = Mid(Request.PhysicalApplicationPath, 1, Request.PhysicalApplicationPath.Length - 1) + mt.Material.Replace("/", "\")
                 Dim arquivo As FileInfo = New FileInfo(Path)
 
-                'Grava a visualização do material
-                Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Me.ViewState("Material_Selecionado")), "Cod_Material")
-                If existe = Nothing Then
-                    Dim Dados As New Material.Dados
-                    Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-                    Dados.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
-                    Material.Visualiza_Material(Dados)
+                'Verifica se o curso já encerrou
+                Dim Dado = Curso.Carrega_Curso(Cod_Curso)
+                If Dado.Dt_Termino > Date.Today Then
+                    'Grava a visualização do material
+                    Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Me.ViewState("Material_Selecionado")), "Cod_Material")
+                    If existe = Nothing Then
+                        Dim Dados As New Material.Dados
+                        Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                        Dados.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
+                        Material.Visualiza_Material(Dados)
+                    End If
                 End If
 
                 Response.Clear()
@@ -239,6 +252,9 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                 Dim Conteudo_Material As String = Biblio.Pega_Valor("SELECT Material FROM Materiais WHERE Cod_Material =" + Cod_Material, "Material")
                 Dim URL As String = HttpContext.Current.Request.Url.Authority + Conteudo_Material
 
+                'Verifica se o curso já encerrou
+                Dim Dado = Curso.Carrega_Curso(Cod_Curso)
+
                 Select Case Cod_Tipo
                     Case "1"
                         'Exibir vídeo com URL de terceiros
@@ -255,13 +271,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         B_Download.Visible = False
 
-                        'Grava a visualização do material
-                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
-                        If existe = Nothing Then
-                            Dim Dados As New Material.Dados
-                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-                            Dados.Cod_Material = Cod_Material
-                            Material.Visualiza_Material(Dados)
+                        If Dado.Dt_Termino > Date.Today Then
+                            'Grava a visualização do material
+                            Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                            If existe = Nothing Then
+                                Dim Dados As New Material.Dados
+                                Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                                Dados.Cod_Material = Cod_Material
+                                Material.Visualiza_Material(Dados)
+                            End If
                         End If
                     Case "2"
                         'Abrir link para outros sites
@@ -279,13 +297,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         B_Download.Visible = False
 
-                        'Grava a visualização do material
-                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
-                        If existe = Nothing Then
-                            Dim Dados As New Material.Dados
-                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-                            Dados.Cod_Material = Cod_Material
-                            Material.Visualiza_Material(Dados)
+                        If Dado.Dt_Termino > Date.Today Then
+                            'Grava a visualização do material
+                            Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                            If existe = Nothing Then
+                                Dim Dados As New Material.Dados
+                                Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                                Dados.Cod_Material = Cod_Material
+                                Material.Visualiza_Material(Dados)
+                            End If
                         End If
                     Case "3"
                         'Abrir modal para mostrar o vídeo
@@ -304,13 +324,15 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         B_Download.Visible = True
 
-                        'Grava a visualização do material
-                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
-                        If existe = Nothing Then
-                            Dim Dados As New Material.Dados
-                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-                            Dados.Cod_Material = Cod_Material
-                            Material.Visualiza_Material(Dados)
+                        If Dado.Dt_Termino > Date.Today Then
+                            'Grava a visualização do material
+                            Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                            If existe = Nothing Then
+                                Dim Dados As New Material.Dados
+                                Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                                Dados.Cod_Material = Cod_Material
+                                Material.Visualiza_Material(Dados)
+                            End If
                         End If
                     Case "4"
                         'Abrir pdf em nova guia
@@ -357,13 +379,18 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         B_Download.Visible = True
 
-                        'Grava a visualização do material
-                        Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
-                        If existe = Nothing Then
-                            Dim Dados As New Material.Dados
-                            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-                            Dados.Cod_Material = Cod_Material
-                            Material.Visualiza_Material(Dados)
+
+                        If Dado.Dt_Termino > Date.Today Then
+
+                            'Grava a visualização do material
+                            Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Cod_Material), "Cod_Material")
+                            If existe = Nothing Then
+                                Dim Dados As New Material.Dados
+                                Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                                Dados.Cod_Material = Cod_Material
+                                Material.Visualiza_Material(Dados)
+                            End If
+
                         End If
                     Case Else
 
@@ -378,13 +405,18 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
     Private Sub B_Abrir_Click(sender As Object, e As EventArgs) Handles B_Abrir.Click
         Try
             If Not Me.ViewState("Material_Selecionado") Is Nothing Then
-                'Grava a visualização do material
-                Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Me.ViewState("Material_Selecionado")), "Cod_Material")
-                If existe = Nothing Then
-                    Dim Dados As New Material.Dados
-                    Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-                    Dados.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
-                    Material.Visualiza_Material(Dados)
+
+                'Verifica se o curso já encerrou
+                Dim Dado = Curso.Carrega_Curso(Cod_Curso)
+                If Dado.Dt_Termino > Date.Today Then
+                    'Grava a visualização do material
+                    Dim existe As String = Biblio.Pega_Valor("SELECT Cod_Material FROM MATERIAISxUSUARIO WHERE Cod_Usuario=" + Util.Sql_Numero(Usuario_Logado.Cod_Usuario) + "AND Cod_Material=" + Util.Sql_Numero(Me.ViewState("Material_Selecionado")), "Cod_Material")
+                    If existe = Nothing Then
+                        Dim Dados As New Material.Dados
+                        Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                        Dados.Cod_Material = CInt(Me.ViewState("Material_Selecionado"))
+                        Material.Visualiza_Material(Dados)
+                    End If
                 End If
 
                 Dim mt As Material.Dados = Material.Carrega_Material(CInt(Me.ViewState("Material_Selecionado")))
@@ -405,6 +437,48 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
     Private Sub B_Gerar_Certificado_Click(sender As Object, e As ImageClickEventArgs) Handles B_Gerar_Certificado.Click
         Response.Redirect("../Relatorios/Certificado.aspx?Curso=" & Criptografia.Encryptdata(Cod_Curso))
+    End Sub
+
+    Private Sub B_Voltar_Click(sender As Object, e As EventArgs) Handles B_Voltar.Click
+        Response.Redirect("../Consultas/Con_Meus_Cursos.aspx")
+    End Sub
+
+    'Avaliar Curso
+    Private Sub B_Avaliar_Click(sender As Object, e As EventArgs) Handles B_Avaliar.Click
+
+        'Verificar se já tem registro no banco e trazer na modal para update.************************
+
+        RegistrarScript("$('#myModalAv').modal('show')")
+    End Sub
+    'Salvar Avaliação
+    Private Sub B_Confirma_Avaliacao_Click(sender As Object, e As EventArgs) Handles B_Confirma_Avaliacao.Click
+        Try
+            Dim Dados As New Curso.Dados
+            Dados.Cod_Curso = Cod_Curso
+            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+            Dados.Comentario = TB_Comentario.Text
+
+            If um.Checked = True Then
+                Dados.Avaliacao = 1
+            ElseIf dois.Checked = True Then
+                Dados.Avaliacao = 2
+            ElseIf tres.Checked = True Then
+                Dados.Avaliacao = 3
+            ElseIf quatro.Checked = True Then
+                Dados.Avaliacao = 4
+            ElseIf cinco.Checked = True Then
+                Dados.Avaliacao = 5
+            End If
+
+            'Verificar se já tem avaliação e dar update ************** IF e Criar Função de update.
+            Curso.Inserir_Avaliacao(Dados)
+
+            TB_Comentario.Text = ""
+            RegistrarScript("$('#myModalAv').modal('hide')")
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
     End Sub
 
 

@@ -6,6 +6,7 @@ Namespace STV.Entidades
 
         Public Class Dados
             Public Cod_Atividade As Integer
+            Public Cod_Curso As Integer
             Public Titulo As String
             Public Dt_Abertura As Date
             Public Dt_Fechamento As Date
@@ -32,7 +33,7 @@ Namespace STV.Entidades
 
             Dim Retorno As New Dados
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT A.Cod_Atividade, A.Titulo, A.Dt_Abertura, A.Dt_Fechamento, A.Valor, A.Cod_Unidade, U.titulo AS Unidade, C.titulo AS Curso")
+            Sql.AppendLine("SELECT A.Cod_Atividade, A.Titulo, A.Dt_Abertura, A.Dt_Fechamento, A.Valor, A.Cod_Unidade, U.titulo AS Unidade, C.titulo AS Curso, C.Cod_Curso")
             Sql.AppendLine("FROM Atividade AS A")
             Sql.AppendLine("LEFT JOIN Unidade AS U ON U.Cod_Unidade = A.Cod_Unidade")
             Sql.AppendLine("LEFT JOIN Curso AS C ON C.cod_curso = U.Cod_Curso")
@@ -48,6 +49,7 @@ Namespace STV.Entidades
                 Retorno.Cod_Unidade = Util.CString(Query("Cod_Unidade"))
                 Retorno.Unidade = Util.CString(Query("Unidade"))
                 Retorno.Curso = Util.CString(Query("Curso"))
+                Retorno.Cod_Curso = Util.CString(Query("Cod_Curso"))
             End If
             Biblio.FechaConexao()
 

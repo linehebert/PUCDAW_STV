@@ -15,7 +15,24 @@ Namespace STV.Entidades
             Public Instrutor As Integer
             Public Departamento As Integer
             Public Curso_Inativo As Boolean
+            Public Comentario As String
+            Public Avaliacao As Integer
+            Public Cod_Usuario As Integer
         End Class
+
+        'Grava Avaliação
+        Public Sub Inserir_Avaliacao(Registro As Dados)
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("INSERT INTO AVALIACAO (Cod_Curso, Cod_Usuario, Comentario, Avaliacao)")
+            Sql.AppendLine("VALUES(")
+            Sql.AppendLine(Util.Sql_String(Registro.Cod_Curso))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Usuario))
+            Sql.AppendLine("," + Util.Sql_String(Registro.Comentario))
+            Sql.AppendLine("," + Util.Sql_Numero(Registro.Avaliacao))
+            Sql.AppendLine(")")
+
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
 
         'Verifica se tem atividade em aberto para o curso
         Public Function Verifica_Atividade_Aberta(Cod_Curso As Integer, Dt_Fecha As String) As String

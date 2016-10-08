@@ -402,6 +402,11 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
         RegistrarScript("$('#myModalInfo').modal('hide')")
     End Sub
 
+    Private Sub B_Voltar_Click(sender As Object, e As EventArgs) Handles B_Voltar.Click
+        Dim Dado = Atividade.Carrega_Atividade(Cod_Atividade)
+        Response.Redirect("../Consultas/Conteudo.aspx?Cod=" + Criptografia.Encryptdata(Util.CInteger(Dado.Cod_Curso)))
+    End Sub
+
 
 
 #End Region

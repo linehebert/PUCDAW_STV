@@ -32,13 +32,13 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading expandir" id="Materiais">
+                <div class="panel-heading" id="Materiais">
                     <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>Materiais Didáticos
-                    <span class="pull-right">
+<%--                    <span class="pull-right">
                         <a data-toggle="collapse" data-parent="#panel-quote-group" href="#MateriaisPanel">
                             <span class="toggle-icon glyphicon glyphicon-minus"></span>
                         </a>
-                    </span>
+                    </span>--%>
                 </div>
                 <asp:updatepanel id="UpdatePanel4" runat="server" updatemode="Conditional" childrenastriggers="false">
                     <ContentTemplate>
@@ -59,7 +59,7 @@
                                         <ItemTemplate>
                                             <div class="row rr form-inline" style="padding: 10px; margin-top: 10px;">
                                                 <div class="col-md-1 col-md-offset-1">
-                                                    <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao_Mat" CommandArgument='<%# Container.DataItem("Cod_Material").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Material" />
+                                                    <asp:ImageButton ID="Excluir_Material" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao_Mat" CommandArgument='<%# Container.DataItem("Cod_Material").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Material" />
                                                 </div>
                                                 <div class="col-md-9">
                                                     <asp:LinkButton ID="lnk_Material" runat="server" CommandArgument='<%# Container.DataItem("Cod_Tipo").ToString() + "," + Container.DataItem("Cod_Material").ToString() %>' CommandName="ExibirMaterial">
@@ -77,13 +77,13 @@
                 </asp:updatepanel>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading expandir" id="Atividades">
+                <div class="panel-heading" id="Atividades">
                     <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>Atividades Avaliativas
-                    <span class="pull-right">
+                   <%-- <span class="pull-right">
                         <a data-toggle="collapse" data-parent="#panel-quote-group" href="#AtividadesPanel">
                             <span class="toggle-icon glyphicon glyphicon-minus"></span>
                         </a>
-                    </span>
+                    </span>--%>
                 </div>
                 <asp:updatepanel id="UP_Atividade" runat="server" updatemode="Conditional" childrenastriggers="false">
                     <ContentTemplate>
@@ -105,7 +105,7 @@
                                             <div class="row rr form-inline" style="padding: 10px; margin-top: 10px;">
                                                 <div class="col-md-1 col-md-offset-1">
                                                     <asp:ImageButton ID="Editar" ImageUrl="~/Images/edit.png" OnCommand="Carrega_Modal_Alteracao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Alterar Atividade" />
-                                                    <asp:ImageButton ID="Excuir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />
+                                                    <asp:ImageButton ID="Excluir_Atividade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Atividade").ToString.ToUpper %>' runat="server" ImageAlign="Left" ToolTip="Excluir Atividade" />
                                                 </div>
                                                 <div class="col-md-9">
                                                     <a href="../Cadastros/Cad_Atividade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>&Atv=<%# Container.DataItem("Cod_Atividade") %>">

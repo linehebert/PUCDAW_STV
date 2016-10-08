@@ -89,26 +89,6 @@
                             </div>
                         </div>
                     </div>
-                    <%--                    <div class="row rr">
-                        <div class="col-md-3 col-md-offset-3">
-                            <div id="Campo_Senha" runat="server">
-                                <asp:Label ID="L_Senha" runat="server" Text="Senha:"></asp:Label>
-                                <asp:TextBox ID="TB_Senha" runat="server" class="form-control" ToolTip="Senha de Acesso" TextMode="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="RF_TB_Senha" runat="server" ControlToValidate="TB_Senha"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
-                                    class="validation">* Informe uma senha para acesso deste usuário</asp:RequiredFieldValidator>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div id="Campo_Confirma_Senha" runat="server">
-                                <asp:Label ID="L_Confirma_Senha" runat="server" Text="Confirme a Senha:"></asp:Label>
-                                <asp:TextBox ID="TB_Confirma_Senha" runat="server" class="form-control" ToolTip="Confirmar Senha" TextMode="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="RF_TB_Confirma_Senha" runat="server" ControlToValidate="TB_Confirma_Senha"
-                                    Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
-                                    class="validation">* Confirme a senha informada</asp:RequiredFieldValidator>
-                            </div>
-                        </div>
-                    </div>--%>
                     <div class="row rr">
                         <div class="col-md-5 col-md-offset-3">
                             Tipo do Usuário:

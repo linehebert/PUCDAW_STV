@@ -111,16 +111,25 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
         Try
             Dim Dado = Unidade.Carrega_Unidade(Cod_Unidade)
             L_Titulo.Text = Dado.Titulo
+
             If Dado.Dt_Termino < Date.Today() Then
                 L_Curso_Unidade.InnerText = "Curso: " & Dado.Curso
                 Div_Finalizado.Visible = True
                 B_Nova_Atividade.Enabled = False
                 B_Novo_Material.Enabled = False
+                Me.ViewState("Enable") = False
+                Me.ViewState("EditarAT") = "Não é possível editar atividades de um curso encerrado!"
+                Me.ViewState("ExcluirAT") = "Não é possível excluir atividades de um curso encerrado!"
+                Me.ViewState("ExcluirM") = "Não é possível excluir materiais de um curso encerrado!"
             Else
                 L_Curso_Unidade.InnerText = "Curso: " & Dado.Curso
                 Div_Finalizado.Visible = False
                 B_Nova_Atividade.Enabled = True
                 B_Novo_Material.Enabled = True
+                Me.ViewState("Enable") = True
+                Me.ViewState("EditarAT") = "Editar esta atividade"
+                Me.ViewState("ExcluirAT") = "Excluir esta atividade"
+                Me.ViewState("ExcluirM") = "Excluir este material"
             End If
 
         Catch ex As Exception
@@ -196,7 +205,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 RegistrarScript("$('#myModalI').modal('show')")
                 Div_Info_Modal.Visible = True
                 L_Info.Visible = True
-                L_Info.Text = "A data de fechamento da atividade não pode ser superior a data de encerramento do curso."
+                L_Info.Text = "A data de fechamento da atividade deve ser inferior a data de encerramento do curso."
             End If
 
         Catch ex As Exception
@@ -666,6 +675,36 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Session("ArquivoPDF") = arquivo
                 RegistrarScript(String.Format("window.open('{0}','_blank')", ResolveUrl("ExibirMaterial.aspx")))
             End If
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    'Desabilita o botão de excluir materiais caso o curso esteja encerrado.
+    Private Sub rptMateriais_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptMateriais.ItemDataBound
+        Try
+            Dim Excluir_Material As ImageButton = CType(e.Item.FindControl("Excluir_Material"), ImageButton)
+            Excluir_Material.Enabled = Me.ViewState("Enable")
+            Excluir_Material.ToolTip = Me.ViewState("ExcluirM")
+
+        Catch ex As Exception
+            L_Erro.Text = ex.Message
+            D_Erro.Visible = True
+        End Try
+    End Sub
+
+    'Desabilita os botões de alterar/excluir as atividades caso o curso esteja encerrado.
+    Private Sub rptAtividades_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptAtividades.ItemDataBound
+        Try
+            Dim Editar As ImageButton = CType(e.Item.FindControl("Editar"), ImageButton)
+            Dim Excluir_Atividade As ImageButton = CType(e.Item.FindControl("Excluir_Atividade"), ImageButton)
+            Editar.Enabled = Me.ViewState("Enable")
+            Excluir_Atividade.Enabled = Me.ViewState("Enable")
+
+            Editar.ToolTip = Me.ViewState("EditarAT")
+            Excluir_Atividade.ToolTip = Me.ViewState("ExcluirAT")
+
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
