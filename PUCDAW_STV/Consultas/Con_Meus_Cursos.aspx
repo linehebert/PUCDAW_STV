@@ -80,7 +80,7 @@
                                 <asp:TemplateField>
                                     <headertemplate>Curso</headertemplate>
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HL_Visualizar" runat="server" Text='<%# Container.DataItem("Titulo").ToString.ToUpper %>' > 
+                                        <asp:HyperLink ID="HL_Visualizar" runat="server" Text='<%# Container.DataItem("Titulo").ToString.ToUpper %>' data-toggle="ToolTip" title="Visualizar Curso" > 
                                         </asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>

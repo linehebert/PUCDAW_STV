@@ -12,9 +12,9 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
         End Get
     End Property
 
-    Private ReadOnly Property Cod_Usuario As Integer
+    Private ReadOnly Property Cod_Usuario As String
         Get
-            Return Request("Codigo")
+            Return Criptografia.Decryptdata(Request("UserCad"))
         End Get
     End Property
 
@@ -22,7 +22,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
         Try
             If Not Page.IsPostBack Then
                 Preenche_DDL_Departamento()
-                If Cod_Usuario <> Nothing Then
+                If Cod_Usuario <> "" Then
                     'Alteração de Cadastro
                     Monta_Dados()
                     TB_CPF.ReadOnly = True
@@ -31,7 +31,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     Complemento.Visible = True
                     cad_usuario.InnerText = "Alteração de Cadastro"
 
-                ElseIf Cod_Usuario = Nothing Then
+                ElseIf Cod_Usuario = "" Then
                     'Novo Cadastro
                     Complemento.Visible = False
                     B_Cancelar.Visible = False

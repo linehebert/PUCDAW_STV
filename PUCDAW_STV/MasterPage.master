@@ -22,7 +22,7 @@
 
             <div class="container">
                 <div class="head">
-                    <div class="logo"><asp:Image ID="Img_Logo" runat="server" Width="165px" Height="98px"/></div>
+                    <div class="logo"><asp:Image ID="Img_Logo" runat="server" Width="165px" Height="95px"/></div>
                 </div>
                 <nav class="navbar navbar-default" style="margin-bottom: 1px;">
                     <div class="container-fluid">

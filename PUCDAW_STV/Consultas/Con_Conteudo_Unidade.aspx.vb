@@ -71,11 +71,8 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
             If Not Page.IsPostBack() Then
                 Monta_Dados_Unidade()
 
-                'Esconde inclusão se o usuario logado for ADM
-                If Usuario_Logado.ADM = True Then
-                    B_Nova_Atividade.Visible = False
-                    B_Novo_Material.Visible = False
-                ElseIf Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
+                'Libera inclusão somente se o usuário for ADM ou Instrutor
+                If Usuario_Logado.ADM = True Or Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
                     B_Nova_Atividade.Visible = True
                     B_Novo_Material.Visible = True
                 Else
@@ -91,6 +88,7 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                     Nenhuma_Atividade.Visible = False
                     Carrega_Atividades(Cod_Unidade)
                 End If
+
                 ' Traz todos os materiais
                 Dim qntd_material As String = Biblio.Pega_Valor("SELECT Cod_Material FROM Materiais WHERE Cod_Unidade=" + Util.Sql_String(Cod_Unidade), "Cod_Material")
                 If qntd_material = "" Then
@@ -395,6 +393,9 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Material.Inserir_Material(Dados)
 
                 Nenhum_Material.Visible = False
+                D_Aviso.Visible = True
+                L_Aviso.Visible = True
+                L_Aviso.Text = "Material cadastrado com sucesso!"
             Else
                 'Salvar arquivo
                 Salvar_Material(Dados)

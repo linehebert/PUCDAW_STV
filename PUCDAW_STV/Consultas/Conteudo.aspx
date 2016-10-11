@@ -90,7 +90,7 @@
                                                 <div id="MateriaisPanel" class="panel-collapse collapse in">
                                                     <div class="row rr form-inline">
                                                         <div class="col-md-8 col-md-offset-2">
-                                                            <asp:LinkButton ID="lnk_Material" runat="server" CommandArgument='<%# Container.DataItem("Cod_Tipo").ToString() + "," + Container.DataItem("Cod_Material").ToString() %>' CommandName="ExibirMaterial">
+                                                            <asp:LinkButton ID="lnk_Material" runat="server" data-toggle="ToolTip" title="Visualizar Material" CommandArgument='<%# Container.DataItem("Cod_Tipo").ToString() + "," + Container.DataItem("Cod_Material").ToString() %>' CommandName="ExibirMaterial">
                                                         <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                             </asp:LinkButton>
                                                         </div>
@@ -125,7 +125,7 @@
                                                 <div id="AtividadesPanel" class="panel-collapse collapse in">
                                                     <div class="row rr form-inline">
                                                         <div class="col-md-8 col-md-offset-2">
-                                                            <a href="../Cadastros/Atividade.aspx?Atv=<%# Container.DataItem("Cod_Atividade") %>">
+                                                            <a href="../Cadastros/Atividade.aspx?Atv=<%# Container.DataItem("Cod_Atividade") %>" data-toggle="ToolTip" title="Visualizar Atividade">
                                                                 <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                             </a>
                                                         </div>

@@ -39,12 +39,14 @@ Namespace STV
 
         Public Function Executar_Query(Sql As String) As IDataReader
             FechaConexao()
-            Dim Query As New SqlCommand(Sql, Conexao)
+
+
+            Dim Query As New SqlCommand("SET LANGUAGE 'Brazilian' " + Sql, Conexao)
             Conexao.Open()
             Return Query.ExecuteReader()
         End Function
         Public Sub Executar_Sql(Sql As String)
-            Dim Comando = New SqlCommand(Sql, Conexao)
+            Dim Comando = New SqlCommand("SET LANGUAGE 'Brazilian' " + Sql, Conexao)
 
             Comando.CommandType = CommandType.Text
 
@@ -57,7 +59,7 @@ Namespace STV
             FechaConexao()
         End Sub
         Public Function Retorna_DataTable(Sql As String) As DataTable
-            Dim Query As New SqlDataAdapter(Sql, Conexao)
+            Dim Query As New SqlDataAdapter("SET LANGUAGE 'Brazilian' " + Sql, Conexao)
             Dim Dt As New DataTable()
 
             Query.SelectCommand.CommandTimeout = 999999999
@@ -72,7 +74,7 @@ Namespace STV
         End Function
         Public Function Existe_Registro(Sql As String) As Boolean
             Dim Retorno As Boolean = False
-            Dim Query As New SqlCommand(Sql, Conexao)
+            Dim Query As New SqlCommand("SET LANGUAGE 'Brazilian' " + Sql, Conexao)
             Conexao.Open()
             Dim Reader = Query.ExecuteReader()
 
@@ -85,7 +87,7 @@ Namespace STV
         End Function
         Public Function Pega_Valor(Sql As String, Campo As String) As String
             Dim Retorno As String = String.Empty
-            Dim Query As New SqlCommand(Sql, Conexao)
+            Dim Query As New SqlCommand("SET LANGUAGE 'Brazilian' " + Sql, Conexao)
             Conexao.Open()
             Dim Reader = Query.ExecuteReader()
 

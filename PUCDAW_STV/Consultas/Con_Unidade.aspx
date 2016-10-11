@@ -64,8 +64,8 @@
                                                         <asp:ImageButton ID="Excluir_Unidade" ImageUrl="~/Images/delete.png" OnCommand="Carrega_Modal_Exclusao" CommandArgument='<%# Container.DataItem("Cod_Unidade").ToString.ToUpper %>' runat="server" ToolTip="Excluir Unidade" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     
-                                                    <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>" style="font-size: large">
-                                                        <%# Container.DataItem("Titulo").ToString.ToUpper %>
+                                                    <a href="../Consultas/Con_Conteudo_Unidade.aspx?Unit=<%# Container.DataItem("Cod_Unidade") %>" data-toggle="ToolTip" title="Visualizar Unidade" style="font-size: large">
+                                                       <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                                     </a>
                                                     <br />
                                                     <br />

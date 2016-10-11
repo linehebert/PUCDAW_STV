@@ -173,6 +173,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Me.ViewState("Cod_Questao_Destino") = Me.ViewState("Cod_Questao_Origem")
                 Else
                     'Carregar a próxima questão
+                    Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
                     Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
                     L_Questao.Text = Proxima.Enunciado
                     L_A.Text = "A: " & Proxima.Alternativa_A
@@ -200,7 +201,8 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                         B_Finalizar.Visible = True
                         Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
                     Else
-                        Me.ViewState("Cod_Questao_Origem") = Proxima.Cod_Questao
+                        Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
+                        Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
                     End If
 
                 End If
@@ -256,6 +258,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     B_Anterior.Visible = False
                     Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
                 Else
+                    'Me.ViewState("Cod_Questao_Destino") = Me.ViewState("Cod_Questao_Origem")
                     Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
                     L_Questao.Text = Proxima.Enunciado
                     L_A.Text = "A: " & Proxima.Alternativa_A
@@ -286,7 +289,8 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                         B_Anterior.Visible = False
                         Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
                     Else
-                        Me.ViewState("Cod_Questao_Origem") = Proxima.Cod_Questao
+                        Me.ViewState("Cod_Questao_Origem") = Me.ViewState("Cod_Questao_Destino")
+                        Me.ViewState("Cod_Questao_Destino") = Proxima.Cod_Questao
                     End If
                 End If
 
@@ -321,14 +325,14 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                 'If Resposta = "C" Then RB_C.Checked = True
                 'If Resposta = "D" Then RB_D.Checked = True
 
-                Dim Resposta As String = Biblio.Pega_Valor("SELECT Alternativa_Correta FROM Questao WHERE Cod_Questao=" + Util.Sql_String(CInt(Me.ViewState("Cod_Questao"))), "Alternativa_Correta")
-                Dim Resposta_Usuario As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao")), "Resposta")
+                Dim Resposta As String = Biblio.Pega_Valor("SELECT Alternativa_Correta FROM Questao WHERE Cod_Questao=" + Util.Sql_String(CInt(Me.ViewState("Cod_Questao_Origem"))), "Alternativa_Correta")
+                Dim Resposta_Usuario As String = Biblio.Pega_Valor("SELECT Resposta FROM usuarioxrespostas WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Questao=" + Util.Sql_String(Me.ViewState("Cod_Questao_Origem")), "Resposta")
 
                 'Guarda os dados para inserir na tabela de usuarioxrespostas
                 Dim Registro As New Atividade.Dados
                 Registro.Cod_Usuario = Usuario_Logado.Cod_Usuario
                 Registro.Cod_Atividade = Cod_Atividade
-                Registro.Cod_Questao = CInt(Me.ViewState("Cod_Questao"))
+                Registro.Cod_Questao = CInt(Me.ViewState("Cod_Questao_Origem"))
 
                 If RB_A.Checked Then Registro.Resposta = "A"
                 If RB_B.Checked Then Registro.Resposta = "B"

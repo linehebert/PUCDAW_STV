@@ -5,9 +5,11 @@
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
 
     <div class="conteudo">
-        <div class="grid"> <br />
+        <div class="grid">
+            <br />
             <h2 class="text-primary">Alteração de Tema/Logotipo</h2>
-            <hr /> <br />
+            <hr />
+            <br />
 
             <div class="form-group">
 
@@ -17,7 +19,7 @@
                 <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
                     <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
                 </div>
-                 <br />
+                <br />
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -27,7 +29,7 @@
                         <div class="row rr">
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="row rr">
-                                    <asp:Label ID="L_Tema" runat="server" Text="Tema:" ></asp:Label>
+                                    <asp:Label ID="L_Tema" runat="server" Text="Tema:"></asp:Label>
                                     <asp:DropDownList ID="DDL_Tema" runat="server" DataValueField="Cod_Tema" DataTextField="Cor" class="form-control"></asp:DropDownList>
                                 </div>
                             </div>
@@ -35,27 +37,29 @@
                         <div class="row rr">
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="row rr">
-                                    <asp:Label ID="Label2" runat="server" SkinID="Skin_label" Text="Logotipo:"></asp:Label>
+                                    <asp:Label ID="Label2" runat="server"  Text="Logotipo:"></asp:Label>
                                     <asp:FileUpload ID="FU_Logo" runat="server" class="form-control" />
+                                    <asp:Label ID="Label1" runat="server" Font-Size="Smaller" Text="* Extensões válidas: JPG, JPEG, GIF e PNG"></asp:Label>
                                 </div>
                                 <br />
                                 <div class="row rr">
                                     <asp:Label ID="L_Logo_Atualizar" runat="server" SkinID="Skin_label" Text="Logo Atual:"></asp:Label>
-                                    <div class="pull-right">
-                                        <asp:Label ID="Label3" runat="server" SkinID="Skin_label" Text="Excluir"></asp:Label>
-                                        <asp:ImageButton ID="IB_Logo_Excluir" runat="server" ImageUrl="~/images/delete.png"
-                                            Style="vertical-align: middle;" />
-                                        <cc2:ConfirmButtonExtender ID="IB_Logo_Excluir_ConfirmButtonExtender" runat="server"
-                                            TargetControlID="IB_Logo_Excluir" ConfirmText="Tem certeza que deseja excluir?" />
-                                    </div>
                                 </div>
-
                                 <div class="row rr">
                                     <center> <asp:Image ID="I_Logo" runat="server" Width="100%" Height="100%" /> </center>
                                 </div>
-
+                                <div class="row rr">
+                                    <div class="pull-right">
+                                        <asp:Label ID="Label3" runat="server" SkinID="Skin_label" Text="Usar Padrão do Sistema"></asp:Label>
+                                        <asp:ImageButton ID="IB_Logo_Excluir" runat="server" ImageUrl="~/images/padrao.png"
+                                            Style="vertical-align: middle;" />
+                                        <cc2:ConfirmButtonExtender ID="IB_Logo_Excluir_ConfirmButtonExtender" runat="server"
+                                            TargetControlID="IB_Logo_Excluir" ConfirmText="Tem certeza que deseja excluir o logo atual e definir o logotipo padrão do sistema?" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
 
                     </div>
                 </div>

@@ -8,7 +8,7 @@ Namespace STV.Entidades
             Public Cod_Atividade As Integer
             Public Cod_Curso As Integer
             Public Titulo As String
-            Public Dt_Abertura As Date
+            ' Public Dt_Abertura As Date
             Public Dt_Fechamento As Date
             Public Valor As Double
             Public Cod_Unidade As Integer
@@ -33,7 +33,7 @@ Namespace STV.Entidades
 
             Dim Retorno As New Dados
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT A.Cod_Atividade, A.Titulo, A.Dt_Abertura, A.Dt_Fechamento, A.Valor, A.Cod_Unidade, U.titulo AS Unidade, C.titulo AS Curso, C.Cod_Curso")
+            Sql.AppendLine("SELECT A.Cod_Atividade, A.Titulo, A.Dt_Fechamento, A.Valor, A.Cod_Unidade, U.titulo AS Unidade, C.titulo AS Curso, C.Cod_Curso")
             Sql.AppendLine("FROM Atividade AS A")
             Sql.AppendLine("LEFT JOIN Unidade AS U ON U.Cod_Unidade = A.Cod_Unidade")
             Sql.AppendLine("LEFT JOIN Curso AS C ON C.cod_curso = U.Cod_Curso")
@@ -43,7 +43,7 @@ Namespace STV.Entidades
             If Query.Read() Then
                 Retorno.Cod_Atividade = Util.CInteger(Query("Cod_Atividade"))
                 Retorno.Titulo = Util.CString(Query("Titulo"))
-                Retorno.Dt_Abertura = Util.CString(Query("Dt_Abertura"))
+                'Retorno.Dt_Abertura = Util.CString(Query("Dt_Abertura"))
                 Retorno.Dt_Fechamento = Util.CString(Query("Dt_Fechamento"))
                 Retorno.Valor = Util.CString(Query("Valor"))
                 Retorno.Cod_Unidade = Util.CString(Query("Cod_Unidade"))
@@ -58,7 +58,7 @@ Namespace STV.Entidades
 
         Public Function Carrega_Atividades(Cod_Unidade As Integer, Publica As Boolean) As DataTable
             Dim Sql As New StringBuilder
-            Sql.AppendLine("SELECT Cod_Atividade, Titulo, Dt_Abertura, Dt_Fechamento, Valor, Cod_Unidade, Publica")
+            Sql.AppendLine("SELECT Cod_Atividade, Titulo, Dt_Fechamento, Valor, Cod_Unidade, Publica")
             Sql.AppendLine("FROM Atividade")
             Sql.AppendLine("WHERE 0 = 0")
             If Cod_Unidade <> 0 Then Sql.AppendLine("AND Cod_Unidade = " + Util.CString(Cod_Unidade))
@@ -182,7 +182,7 @@ Namespace STV.Entidades
             Dim Sql As New StringBuilder
             Sql.AppendLine("UPDATE Atividade SET")
             Sql.AppendLine("Titulo = " + Util.Sql_String(Registro.Titulo))
-            Sql.AppendLine(", Dt_Abertura= " + Util.Sql_String(Registro.Dt_Abertura))
+            ' Sql.AppendLine(", Dt_Abertura= " + Util.Sql_String(Registro.Dt_Abertura))
             Sql.AppendLine(", Dt_Fechamento= " + Util.Sql_String(Registro.Dt_Fechamento))
             Sql.AppendLine(", Valor= " + Util.Sql_String(Registro.Valor))
             Sql.AppendLine("WHERE Cod_Atividade = " + Util.Sql_String(Registro.Cod_Atividade))
@@ -200,10 +200,10 @@ Namespace STV.Entidades
 
         Public Sub Inserir_Atividade(Registro As Dados)
             Dim Sql As New StringBuilder
-            Sql.AppendLine("INSERT INTO Atividade (titulo, dt_abertura, dt_fechamento, valor, cod_unidade)")
+            Sql.AppendLine("INSERT INTO Atividade (titulo,  dt_fechamento, valor, cod_unidade)")
             Sql.AppendLine("VALUES(")
             Sql.AppendLine(Util.Sql_String(Registro.Titulo))
-            Sql.AppendLine("," + Util.Sql_String(Registro.Dt_Abertura))
+            'Sql.AppendLine("," + Util.Sql_String(Registro.Dt_Abertura))
             Sql.AppendLine("," + Util.Sql_String(Registro.Dt_Fechamento))
             Sql.AppendLine("," + Util.Sql_String(Registro.Valor))
             Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Unidade))

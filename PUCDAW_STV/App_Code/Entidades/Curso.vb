@@ -84,19 +84,20 @@ Namespace STV.Entidades
         End Function
 
         'Calcula total de materiais do curso
-        Public Function Quantidade_Materiais(Cod_Curso As Integer) As Integer
+        Public Function Quantidade_Materiais(Cod_Curso As Integer, Cod_Unidade As Integer) As Integer
             Dim Sql As New StringBuilder
             Sql.AppendLine("SELECT COUNT(*) AS TOTALM FROM MATERIAIS AS M ")
             Sql.AppendLine("LEFT JOIN  unidade AS u ON u.Cod_Unidade = M.Cod_Unidade ")
             Sql.AppendLine("LEFT JOIN curso AS c ON c.Cod_Curso = u.Cod_Curso ")
             Sql.AppendLine("WHERE c.cod_curso=" + Util.CString(Cod_Curso))
+            If Cod_Unidade <> 0 Then Sql.AppendLine("AND u.cod_unidade=" + Util.CString(Cod_Unidade))
 
             Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
             Return Util.CInteger(dt.Rows(0).Item("TOTALM"))
         End Function
 
         'Calcula quantidade de materiais visualizados
-        Public Function Quantidade_Visualizados(Cod_Curso As Integer, Cod_Usuario As Integer) As Integer
+        Public Function Quantidade_Visualizados(Cod_Curso As Integer, Cod_Usuario As Integer, Cod_Unidade As Integer) As Integer
             Dim SQL As New StringBuilder
             SQL.AppendLine("SELECT count(*) AS VISUALIZADOS FROM MATERIAISxUSUARIO AS MU")
             SQL.AppendLine(" LEFT JOIN MATERIAIS AS M ON MU.Cod_Material = M.Cod_Material")
@@ -106,10 +107,12 @@ Namespace STV.Entidades
             SQL.AppendLine(" WHERE 0=0")
             SQL.AppendLine(" AND C.Cod_Curso =" + Util.CString(Cod_Curso))
             SQL.AppendLine(" AND US.Cod_Usuario =" + Util.CString(Cod_Usuario))
+            If Cod_Unidade <> 0 Then SQL.AppendLine("AND u.cod_unidade=" + Util.CString(Cod_Unidade))
 
             Dim dt As DataTable = Biblio.Retorna_DataTable(SQL.ToString())
             Return Util.CInteger(dt.Rows(0).Item("VISUALIZADOS"))
         End Function
+
 
         Public Function Carrega_Curso(Cod_Curso As String) As Dados
 

@@ -1,5 +1,5 @@
 ﻿Imports STV.Entidades
-
+Imports STV.Seguranca
 
 Partial Class Consultas_Con_Usuario : Inherits STV.Base.Page
 
@@ -31,7 +31,8 @@ Partial Class Consultas_Con_Usuario : Inherits STV.Base.Page
 
     Protected Sub GV_Usuario_RowDataBound(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles GV_Usuario.RowDataBound
         If e.Row.RowType = DataControlRowType.DataRow Then
-            CType(e.Row.FindControl("HL_Alterar"), HyperLink).NavigateUrl = "../cadastros/Cad_Usuario.aspx?Codigo=" + Util.CInteger(e.Row.DataItem("Cod_Usuario")).ToString()
+            CType(e.Row.FindControl("HL_Alterar"), HyperLink).NavigateUrl = "../cadastros/Cad_Usuario.aspx?UserCad=" + Criptografia.Encryptdata(Util.CInteger(e.Row.DataItem("Cod_Usuario")).ToString())
+            CType(e.Row.FindControl("HL_Relatorio"), HyperLink).NavigateUrl = "../Relatorios/Relatorio_Usuarios.aspx?Rel_User=" + Criptografia.Encryptdata(Util.CInteger(e.Row.DataItem("Cod_Usuario")).ToString())
         End If
     End Sub
 

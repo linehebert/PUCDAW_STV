@@ -108,8 +108,8 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                 Return False
             Else
                 'Verificar se visualizou todos os materiais
-                Dim TotalMateriais As Integer = Curso.Quantidade_Materiais(Cod_Curso)
-                Dim TotalVisualizados As Integer = Curso.Quantidade_Visualizados(Cod_Curso, Usuario_Logado.Cod_Usuario)
+                Dim TotalMateriais As Integer = Curso.Quantidade_Materiais(Cod_Curso, 0)
+                Dim TotalVisualizados As Integer = Curso.Quantidade_Visualizados(Cod_Curso, Usuario_Logado.Cod_Usuario, 0)
 
                 If TotalMateriais = TotalVisualizados Then
                     Return True

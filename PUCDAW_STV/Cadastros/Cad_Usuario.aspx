@@ -4,12 +4,13 @@
 <asp:Content ID="C_Head" ContentPlaceHolderID="CPH_Head" runat="Server">
 </asp:Content>
 <asp:Content ID="C_Conteudo" ContentPlaceHolderID="CPH_Conteudo" runat="Server">
+
     <div class="grid"><br />
         <h2 class="text-primary" id="cad_usuario" runat="server">Cadastro de Usuários</h2>
         <hr /><br />
+        <div class="form-group">
+        
 
-        <div class="col-xs-12">
-            <div class="form-group">
                 <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                     <asp:Label ID="L_Erro" runat="server" Text=""></asp:Label>
                 </div>
@@ -44,7 +45,7 @@
                 </div>
                 <div class="col-md-3  col-md-offset-9">
                 </div>
-            </div>
+          
 
             <div class="panel panel-default" id="Complemento" runat="server">
                 <div class="panel-heading">
@@ -142,8 +143,8 @@
                     </div>
                 </div>
             </fieldset>
-        </div>
 
+</div>
     </div>
 </asp:Content>
 
