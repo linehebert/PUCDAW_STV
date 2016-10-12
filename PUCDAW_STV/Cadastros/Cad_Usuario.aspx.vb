@@ -30,6 +30,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     B_Continuar.Visible = False
                     Complemento.Visible = True
                     cad_usuario.InnerText = "Alteração de Cadastro"
+                    reset_senha.Visible = True
 
                 ElseIf Cod_Usuario = "" Then
                     'Novo Cadastro
@@ -37,6 +38,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     B_Cancelar.Visible = False
                     B_Salvar.Visible = False
                     cad_usuario.InnerText = "Novo Usuário"
+                    reset_senha.Visible = False
                 End If
             End If
         Catch ex As Exception
@@ -86,6 +88,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                         Campo_CPF.Attributes.Add("class", "form-inline has-error")
                         TB_CPF.Focus()
                     Else
+                        B_Cancelar.Visible = True
                         Complemento.Visible = True
                         B_Continuar.Visible = False
                         Ok.Visible = True

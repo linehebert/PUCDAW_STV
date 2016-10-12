@@ -117,7 +117,7 @@
                     </div>
                     <br />
                     <br />
-                    <div class="row rr">
+                    <div class="row rr" id="reset_senha" runat="server">
                         <div id="Div2" runat="server" class="form-inline col-md-6 col-md-offset-3">
                             <div style="border: 3px solid #D8D8D8; padding: 10px">
                                 <center>
@@ -138,8 +138,9 @@
                     </div>
                     <div class="col-md-4  col-md-offset-6">
                         <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary pull-right" ToolTip="Salvar Registro" CausesValidation="true" ValidationGroup="B" />
-                        <asp:Button ID="B_Cancelar" Text="CANCELAR" runat="server" class="btn btn-danger pull-right" ToolTip="Cancelar" />
                         <asp:Button ID="B_Continuar" Text="CONTINUAR" runat="server" class="btn btn-primary pull-right" ToolTip="Validar CPF" CausesValidation="true" ValidationGroup="A" />
+                        <asp:Button ID="B_Cancelar" Text="CANCELAR" runat="server" class="btn btn-danger pull-right" ToolTip="Cancelar" />
+                        
                     </div>
                 </div>
             </fieldset>

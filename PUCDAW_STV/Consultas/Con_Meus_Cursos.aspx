@@ -19,32 +19,7 @@
                 <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
             </div>
 
-            <div class="vote">
-                <label>
-                    <input type="radio" name="fb" value="1" />
-                    <i class="fa"></i>
-                </label>
-                <label>
-                    <input type="radio" name="fb" value="2" />
-                    <i class="fa"></i>
-                </label>
-                <label>
-                    <input type="radio" name="fb" value="3" />
-                    <i class="fa"></i>
-                </label>
-                <label>
-                    <input type="radio" name="fb" value="4" />
-                    <i class="fa"></i>
-                </label>
-                <label>
-                    <input type="radio" name="fb" value="5" />
-                    <i class="fa"></i>
-                </label>
-                </div>
-
-                <div id="voto" style="color:aqua">
-            </div>
-
+          
             <div class="row rr">
                 <div class="col-md-5">
                     <asp:Label ID="L_Titulo" runat="server" Text="Título:"></asp:Label>

@@ -34,6 +34,61 @@ Namespace STV.Entidades
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
 
+        'Altera Avaliação
+        Public Sub Alterar_Avaliacao(Registro As Dados)
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("UPDATE AVALIACAO SET")
+            Sql.AppendLine("Cod_Curso= " + Util.Sql_String(Registro.Cod_Curso))
+            Sql.AppendLine(", Cod_Usuario= " + Util.Sql_String(Registro.Cod_Usuario))
+            Sql.AppendLine(", Comentario= " + Util.Sql_String(Registro.Comentario))
+            Sql.AppendLine(", Avaliacao= " + Util.Sql_Numero(Registro.Avaliacao))
+            Sql.AppendLine(" WHERE Cod_Curso = " + Util.Sql_String(Registro.Cod_Curso))
+            Sql.AppendLine(" AND Cod_Usuario = " + Util.Sql_String(Registro.Cod_Usuario))
+
+            Biblio.Executar_Sql(Sql.ToString())
+        End Sub
+
+        ''Verifica se tem avaliacao anterior
+        'Public Function Verifica_Avaliacao(Cod_Curso As Integer, Cod_Usuario As Integer) As Boolean
+        '    Dim Sql As New StringBuilder
+        '    Sql.AppendLine("SELECT Avaliacao FROM Avaliacao")
+        '    Sql.AppendLine(" WHERE Cod_Curso = " + Util.Sql_String(Cod_Curso))
+        '    Sql.AppendLine(" AND Cod_Usuario = " + Util.Sql_String(Cod_Usuario))
+
+        '    Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
+        '    If dt.Rows.Count > 0 Then
+        '        'alteracao
+        '        Return True
+        '    Else
+        '        'inclusao
+        '        Return False
+        '    End If
+        'End Function
+
+        'Carrega Avaliacao
+        Public Function Carrega_Avaliacao(Cod_Curso As Integer, Cod_Usuario As Integer) As Dados
+
+            Dim Retorno As New Dados
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT Cod_Curso, Cod_Usuario, Comentario, Avaliacao FROM Avaliacao")
+            Sql.AppendLine(" WHERE Cod_Curso = " + Util.Sql_String(Cod_Curso))
+            Sql.AppendLine(" AND Cod_Usuario = " + Util.Sql_String(Cod_Usuario))
+
+            Dim Query = Biblio.Executar_Query(Sql.ToString)
+
+            If Query.Read() Then
+                Retorno.Cod_Curso = Util.CInteger(Query("Cod_Curso"))
+                Retorno.Cod_Usuario = Util.CInteger(Query("Cod_Usuario"))
+                Retorno.Comentario = Util.CString(Query("Comentario"))
+                Retorno.Avaliacao = Util.CInteger(Query("Avaliacao"))
+
+            End If
+
+            Biblio.FechaConexao()
+
+            Return Retorno
+        End Function
+
         'Verifica se tem atividade em aberto para o curso
         Public Function Verifica_Atividade_Aberta(Cod_Curso As Integer, Dt_Fecha As String) As String
             Dim Sql As New StringBuilder
@@ -54,6 +109,9 @@ Namespace STV.Entidades
                 Return ""
             End If
         End Function
+
+
+
 
         'Calcula a nota máxima do curso
         Public Function Nota_Maxima(Cod_Curso As Integer) As Double

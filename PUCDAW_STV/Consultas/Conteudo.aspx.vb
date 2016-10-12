@@ -139,6 +139,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
             Else
                 Div_Finalizado.Visible = False
             End If
+
         Catch ex As Exception
             Throw
         End Try
@@ -446,8 +447,18 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
     'Avaliar Curso
     Private Sub B_Avaliar_Click(sender As Object, e As EventArgs) Handles B_Avaliar.Click
 
-        'Verificar se já tem registro no banco e trazer na modal para update.************************
-
+        Dim Dado = Curso.Carrega_Avaliacao(Cod_Curso, Usuario_Logado.Cod_Usuario)
+        If Dado.Avaliacao <> 0 Then
+            RegistrarScript("PintarEstrelas(" + Dado.Avaliacao.ToString() + ");")
+            TB_Comentario.Text = Dado.Comentario
+        Else
+            um.Checked = False
+            dois.Checked = False
+            tres.Checked = False
+            quatro.Checked = False
+            cinco.Checked = False
+            TB_Comentario.Text = ""
+        End If
         RegistrarScript("$('#myModalAv').modal('show')")
     End Sub
     'Salvar Avaliação
@@ -471,7 +482,12 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
             End If
 
             'Verificar se já tem avaliação e dar update ************** IF e Criar Função de update.
-            Curso.Inserir_Avaliacao(Dados)
+            Dim Dado = Curso.Carrega_Avaliacao(Cod_Curso, Usuario_Logado.Cod_Usuario)
+            If Dado.Avaliacao <> 0 Then
+                Curso.Alterar_Avaliacao(Dados)
+            Else
+                Curso.Inserir_Avaliacao(Dados)
+            End If
 
             TB_Comentario.Text = ""
             RegistrarScript("$('#myModalAv').modal('hide')")

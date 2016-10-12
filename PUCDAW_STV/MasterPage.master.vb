@@ -45,7 +45,7 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                 usuarios.Visible = True
                 cursos_instrutor.Visible = False
                 meus_cursos.Visible = False
-                relatorio_usuarios.Visible = True
+                'relatorio_usuarios.Visible = True
                 categorias.Visible = True
             Else
                 tema.Visible = False
@@ -53,14 +53,14 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                     'Libera acesso de instrutor
                     departamentos.Visible = False
                     usuarios.Visible = False
-                    relatorio_usuarios.Visible = False
+                    'relatorio_usuarios.Visible = False
                     categorias.Visible = False
                 Else
                     'Libera acesso somente de usuário/aluno
                     departamentos.Visible = False
                     usuarios.Visible = False
                     cursos_instrutor.Visible = False
-                    relatorio_usuarios.Visible = False
+                    'relatorio_usuarios.Visible = False
                     categorias.Visible = False
                 End If
             End If

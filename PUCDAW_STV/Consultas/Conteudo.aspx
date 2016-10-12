@@ -50,8 +50,10 @@
                         <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
-                <asp:Button ID="B_Avaliar" Text="Avaliar Curso" runat="server" class="btn btn-primary" ToolTip="Avaliar Curso" />
+               
             </div>
+
+             
 
             <div class="panel panel-default" id="Nenhuma_Unidade" visible="false" runat="server">
                 <div class="row rr">
@@ -151,6 +153,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
+                        <asp:Button ID="B_Avaliar" Text="AVALIAR CURSO" runat="server" class="btn btn-primary pull-right" ToolTip="Avaliar Curso" />
                     </div>
                 </div>
             </fieldset>
@@ -223,7 +226,7 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </div>
-                                            <asp:Label ID="voto" runat="server" Text="" ClientIDMode="Static"></asp:Label>
+                                            <asp:Label ID="voto" runat="server" Text="" ClientIDMode="Static" style="color:white"></asp:Label>
                                             <br />
                                             Comentário:
                                             <br />
@@ -248,6 +251,18 @@
 
         <script src="../js/jsstyle.js"></script>
         <script>
+            function PintarEstrelas(notaSelecionada) {
+                $('.vote label i.fa').each(function () {
+                    /* checar de o valor clicado é menor ou igual do input atual
+                    *  se sim, adicionar classe active
+                    */
+                    var $input = $(this).prev('input');
+                    if ($input.val() <= notaSelecionada) {
+                        $(this).addClass('active');
+                    }
+                });
+            };
+
             $('.vote label i.fa').on('click mouseover', function () {
                 // remove classe ativa de todas as estrelas
                 $('.vote label i.fa').removeClass('active');

@@ -68,11 +68,9 @@
         </div>
         <fieldset class="rr">
             <div class="row">
-                <div class="col-md-2">
-                    <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default pull-left" ToolTip="Voltar" />
-                </div>
-                <div class="col-md-4  col-md-offset-6">
+                <div class="col-md-12">
                     <asp:Button ID="B_Salvar" Text="SALVAR" runat="server" class="btn btn-primary pull-right" ToolTip="Salvar Registro" CausesValidation="true" ValidationGroup="A" />
+                    <asp:Button ID="B_Voltar" Text="CANCELAR" runat="server" class="btn btn-danger pull-right" ToolTip="Cancelar" />
                 </div>
             </div>
         </fieldset>

@@ -51,7 +51,8 @@ Partial Class Dados_Acesso : Inherits STV.Base.Page
 
     Private Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
         Try
-            Dim Senha_Banco As String = Criptografia.Decryptdata(Usuario_Logado.Senha)
+            Dim senha_atual As String = Biblio.Pega_Valor("SELECT Senha FROM USUARIO WHERE Cod_Usuario=" + Util.CString(Usuario_Logado.Cod_Usuario), "Senha")
+            Dim Senha_Banco As String = Criptografia.Decryptdata(senha_atual)
             If Senha_Banco = TB_Senha_Atual.Text Then
 
                 If TB_Senha.Text = TB_Confirma_Senha.Text Then
