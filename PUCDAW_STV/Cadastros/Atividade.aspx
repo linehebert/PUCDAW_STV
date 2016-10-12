@@ -20,7 +20,7 @@
             <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
                         Informações Gerais
                     </div>
                     <fieldset id="Info_Atividade" runat="server">
@@ -69,46 +69,65 @@
                 </div>
             </div>
             <br />
+            <div class="col-xs-12" id="Aviso_Encerramento" runat="server">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
+                       <b>ATENÇÃO!</b>
+                    </div>
+                    <fieldset id="Fieldset2" runat="server">
+                        <div class="col-md-12">
+                            <br />
+                            <center> <asp:Label ID="L_Aviso_Encerramento" runat="server" Text=""  Font-Bold="true"></asp:Label></center>
+                             <br />
+                        </div>
+                    </fieldset>
+                    <br />
+                </div>
+            </div>
+            <br />
             <div class="col-xs-12" id="Realizar_Atividade" runat="server">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
                         Questões
                     </div>
                     <div id="D_Info" class="alert alert-info rr" role="alert" runat="server" visible="false">
                         <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
-                    </div><br /><br />
+                    </div>
+                    <br />
+                    <br />
                     <fieldset id="Info_Questoes" runat="server">
                         <div class="col-md-12">
                             <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                                 <ContentTemplate>
                                     <div class="row rr form-inline">
                                         <div class="col-md-10 col-md-offset-1">
-                                           <asp:Label ID="L_Questao" runat="server" Text="QUESTÃO:" style="font-weight:bold"></asp:Label>
+                                            <asp:Label ID="L_Questao" runat="server" Text="QUESTÃO:" Style="font-weight: bold"></asp:Label>
                                         </div>
                                     </div>
                                     <div class="row rr form-inline">
                                         <div class="col-md-9 col-md-offset-2">
                                             <asp:RadioButton ID="RB_A" GroupName="Alternativa" runat="server" />
-                                            <asp:Label ID="L_A" runat="server" Text="Alternativa A:" style="font-weight:bold"></asp:Label>
+                                            <asp:Label ID="L_A" runat="server" Text="Alternativa A:" Style="font-weight: bold"></asp:Label>
                                         </div>
                                     </div>
                                     <div class="row rr form-inline">
                                         <div class="col-md-9 col-md-offset-2">
                                             <asp:RadioButton ID="RB_B" GroupName="Alternativa" runat="server" />
-                                            <asp:Label ID="L_B" runat="server" Text="Alternativa B:" style="font-weight:bold"></asp:Label>
+                                            <asp:Label ID="L_B" runat="server" Text="Alternativa B:" Style="font-weight: bold"></asp:Label>
                                         </div>
                                     </div>
                                     <div class="row rr form-inline">
                                         <div class="col-md-9 col-md-offset-2">
                                             <asp:RadioButton ID="RB_C" GroupName="Alternativa" runat="server" />
-                                            <asp:Label ID="L_C" runat="server" Text="Alternativa C:" style="font-weight:bold"></asp:Label>
+                                            <asp:Label ID="L_C" runat="server" Text="Alternativa C:" Style="font-weight: bold"></asp:Label>
                                         </div>
                                     </div>
                                     <div class="row rr form-inline">
                                         <div class="col-md-9 col-md-offset-2">
                                             <asp:RadioButton ID="RB_D" GroupName="Alternativa" runat="server" />
-                                            <asp:Label ID="L_D" runat="server" Text="Alternativa D:" style="font-weight:bold"></asp:Label>
+                                            <asp:Label ID="L_D" runat="server" Text="Alternativa D:" Style="font-weight: bold"></asp:Label>
                                         </div>
                                     </div>
                                     <div class="row rr form-inline">
@@ -132,8 +151,8 @@
             <div class="col-xs-12" id="Atividade_Completa" runat="server">
                 <div class="panel panel-info table-responsive">
                     <div class="panel-heading">
-                        <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
-                        ATIVIDADE FINALIZADA - Não é possível realizar alterações.
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
+                        <b>REVISÃO DA ATIVIDADE - Não é possível realizar alterações.</b>
                     </div>
                     <div id="Div1" class="alert alert-info rr" role="alert" runat="server" visible="false">
                         <center> <asp:Label ID="Label3" runat="server" Text=""></asp:Label></center>
@@ -154,50 +173,51 @@
                                                     <asp:Repeater ID="rptQuestoes" runat="server">
                                                         <ItemTemplate>
                                                             <hr />
-                                                            <div class="row rr form-inline" >
+                                                            <div class="row rr form-inline">
                                                                 <div class="col-md-10">
-                                                                    <asp:Label ID="Label8" runat="server" Text="QUESTÃO:" style="font-weight:bold"></asp:Label>
+                                                                    <asp:Label ID="Label8" runat="server" Text="QUESTÃO:" Style="font-weight: bold"></asp:Label>
                                                                     <%# Container.DataItem("Enunciado").ToString.ToUpper %>
                                                                 </div>
                                                                 <div class="col-md-2 pull-right">
                                                                     <%--<asp:Label ID="L_Errada" runat="server" Text="INCORRETA" style="font-weight:bold; color:red" Visible='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper <> Container.DataItem("Alternativa_Correta").ToString.ToUpper, True, False) %>'></asp:Label>--%>
-                                                                     <asp:Image ID="B_Incorreto" ImageUrl="~/Images/Incorreto.png" runat="server" ImageAlign="Right" Visible='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper <> Container.DataItem("Alternativa_Correta").ToString.ToUpper, True, False) %>'  />
+                                                                    <asp:Image ID="B_Incorreto" ImageUrl="~/Images/Incorreto.png" runat="server" ImageAlign="Right" Visible='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper <> Container.DataItem("Alternativa_Correta").ToString.ToUpper, True, False) %>' />
                                                                     <%--<asp:Label ID="L_Certa" runat="server" Text="CORRETA" style="font-weight:bold; color:green" Visible='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = Container.DataItem("Alternativa_Correta").ToString.ToUpper, True, False) %>'></asp:Label>--%>
-                                                                    <asp:Image ID="B_Correto" ImageUrl="~/Images/Correto.png" runat="server" ImageAlign="Right" Visible='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = Container.DataItem("Alternativa_Correta").ToString.ToUpper, True, False) %>'  />
+                                                                    <asp:Image ID="B_Correto" ImageUrl="~/Images/Correto.png" runat="server" ImageAlign="Right" Visible='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = Container.DataItem("Alternativa_Correta").ToString.ToUpper, True, False) %>' />
                                                                 </div>
                                                             </div>
                                                             <div class="row rr form-inline">
                                                                 <div class="col-md-9 col-md-offset-1">
                                                                     <asp:RadioButton ID="RB_A" GroupName="Alternativa" runat="server" Checked='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = "A", True, False) %>' Enabled="false" />
-                                                                    <asp:Label ID="L_A" runat="server" Text="Alternativa A:" style="font-weight:bold"></asp:Label>
+                                                                    <asp:Label ID="L_A" runat="server" Text="Alternativa A:" Style="font-weight: bold"></asp:Label>
                                                                     <%# Container.DataItem("Alternativa_A").ToString.ToUpper %>
                                                                 </div>
                                                             </div>
                                                             <div class="row rr form-inline">
                                                                 <div class="col-md-9 col-md-offset-1">
                                                                     <asp:RadioButton ID="RB_B" GroupName="Alternativa" runat="server" Checked='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = "B", True, False) %>' Enabled="false" />
-                                                                    <asp:Label ID="L_B" runat="server" Text="Alternativa B:" style="font-weight:bold"></asp:Label>
+                                                                    <asp:Label ID="L_B" runat="server" Text="Alternativa B:" Style="font-weight: bold"></asp:Label>
                                                                     <%# Container.DataItem("Alternativa_B").ToString.ToUpper %>
                                                                 </div>
                                                             </div>
                                                             <div class="row rr form-inline">
                                                                 <div class="col-md-9 col-md-offset-1">
                                                                     <asp:RadioButton ID="RB_C" GroupName="Alternativa" runat="server" Checked='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = "C", True, False) %>' Enabled="false" />
-                                                                    <asp:Label ID="L_C" runat="server" Text="Alternativa C:" style="font-weight:bold" ></asp:Label>
+                                                                    <asp:Label ID="L_C" runat="server" Text="Alternativa C:" Style="font-weight: bold"></asp:Label>
                                                                     <%# Container.DataItem("Alternativa_C").ToString.ToUpper %>
                                                                 </div>
                                                             </div>
                                                             <div class="row rr form-inline">
                                                                 <div class="col-md-9 col-md-offset-1">
                                                                     <asp:RadioButton ID="RB_D" GroupName="Alternativa" runat="server" Checked='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = "D", True, False) %>' Enabled="false" />
-                                                                    <asp:Label ID="L_D" runat="server" Text="Alternativa D:" style="font-weight:bold"></asp:Label>
+                                                                    <asp:Label ID="L_D" runat="server" Text="Alternativa D:" Style="font-weight: bold"></asp:Label>
                                                                     <%# Container.DataItem("Alternativa_D").ToString.ToUpper %>
                                                                 </div>
                                                             </div>
-                                                            <br /><br />
+                                                            <br />
+                                                            <br />
                                                             <div class="row rr form-inline">
                                                                 <div class="col-md-10">
-                                                                    <asp:Label ID="L_Justificativa" runat="server" Text="JUSTIFICATIVA:" style="font-weight:bold"></asp:Label>
+                                                                    <asp:Label ID="L_Justificativa" runat="server" Text="JUSTIFICATIVA:" Style="font-weight: bold"></asp:Label>
                                                                     <label class='<%# IIf(Container.DataItem("Resposta").ToString.ToUpper = Container.DataItem("Alternativa_Correta").ToString.ToUpper, "text-success", "text-danger") %>'><%# Container.DataItem("Justificativa").ToString.ToUpper %></label>
                                                                 </div>
                                                             </div>
@@ -235,7 +255,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <asp:Button ID="B_Responder" Text="RESPONDER" runat="server" class="btn btn-primary" ToolTip="Retornar a questão para responder." Visible="true" />
-                                    
+
                                     <asp:Button ID="B_Cancelar_Finalizar" Text="CANCELAR" runat="server" class="btn btn-danger" ToolTip="Cancela a finalização da atividade" Visible="false" />
                                     <asp:Button ID="B_Confirmar" Text="CONFIRMAR" runat="server" class="btn btn-primary" ToolTip="Finalizar a atividade" Visible="false" />
                                 </div>

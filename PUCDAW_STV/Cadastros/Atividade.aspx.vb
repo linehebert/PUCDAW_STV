@@ -51,13 +51,38 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                 'Verifica se a atividade já foi finalizada pelo aluno
                 Dim Finalizada As String = Biblio.Pega_Valor("SELECT PONTOS FROM NOTAS WHERE Cod_Usuario=" + Util.Sql_String(Usuario_Logado.Cod_Usuario) + " AND Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "PONTOS")
 
-                If Finalizada <> Nothing Then
+                If Finalizada <> Nothing And CDate(Dt_Encerramento.Text) < Date.Today() Then
+                    'Exibe a revisão da atividade
+                    Aviso_Encerramento.Visible = False
                     Realizar_Atividade.Visible = False
                     Atividade_Completa.Visible = True
-                Else
+                ElseIf Finalizada <> Nothing And CDate(Dt_Encerramento.Text) >= Date.Today() Then
+                    'Atividade realizada mas ainda não encerrada. Aguarde para revisão!
+                    Realizar_Atividade.Visible = False
+                    Atividade_Completa.Visible = False
+                    L_Aviso_Encerramento.Text = "Atividade Realizada! Aguarde o encerramento da atividade para visualizar a revisão."
+
+                ElseIf Finalizada = Nothing And CDate(Dt_Encerramento.Text) < Date.Today() Then
+                    'Atividade nao realizada mas encerrada.
+                    Realizar_Atividade.Visible = False
+                    Atividade_Completa.Visible = False
+                    L_Aviso_Encerramento.Text = "Atividade Não Realizada! Não é possível realizar esta atividade pois se encontra encerrada."
+
+                ElseIf Finalizada = Nothing And CDate(Dt_Encerramento.Text) >= Date.Today() Then
+                    'Libera para realizar a atividade.
+                    Aviso_Encerramento.Visible = False
                     Realizar_Atividade.Visible = True
                     Atividade_Completa.Visible = False
                 End If
+
+
+                'If Finalizada <> Nothing Then
+                '    Realizar_Atividade.Visible = False
+                '    Atividade_Completa.Visible = True
+                'Else
+                '    Realizar_Atividade.Visible = True
+                '    Atividade_Completa.Visible = False
+                'End If
 
                 Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Questao")
                 If qntd_questao = "" Then
@@ -81,7 +106,6 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             Curso.Text = Dado.Curso
 
             Titulo.Text = Dado.Titulo
-            'Dt_Abertura.Text = Dado.Dt_Abertura.ToString("dd/MM/yyyy")
             Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("dd/MM/yyyy")
             Valor.Text = Dado.Valor
         Catch ex As Exception

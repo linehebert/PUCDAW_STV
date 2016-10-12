@@ -9,7 +9,7 @@
         <br />
         <br />
         <br />
-
+        
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
@@ -153,7 +153,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
-                        <asp:Button ID="B_Avaliar" Text="AVALIAR CURSO" runat="server" class="btn btn-primary pull-right" ToolTip="Avaliar Curso" />
+                        <asp:Button ID="B_Avaliar" Text="☆☆☆☆☆ AVALIAR CURSO" runat="server" class="btn btn-primary pull-right" ToolTip="Avaliar Curso" />
                     </div>
                 </div>
             </fieldset>
