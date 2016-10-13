@@ -56,6 +56,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Aviso_Encerramento.Visible = False
                     Realizar_Atividade.Visible = False
                     Atividade_Completa.Visible = True
+                    L_Nota.Visible = True
                 ElseIf Finalizada <> Nothing And CDate(Dt_Encerramento.Text) >= Date.Today() Then
                     'Atividade realizada mas ainda não encerrada. Aguarde para revisão!
                     Realizar_Atividade.Visible = False
@@ -108,6 +109,9 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             Titulo.Text = Dado.Titulo
             Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("dd/MM/yyyy")
             Valor.Text = Dado.Valor
+
+            Dim Nota As String = Biblio.Pega_Valor("SELECT PONTOS FROM NOTAS WHERE Cod_Usuario=" + Util.CString(Usuario_Logado.Cod_Usuario) + " AND Cod_Atividade = " + Util.CString(Dado.Cod_Atividade), "PONTOS")
+            L_Nota.Text = Nota
         Catch ex As Exception
             Throw
         End Try

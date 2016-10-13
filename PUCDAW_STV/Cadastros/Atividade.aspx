@@ -65,6 +65,7 @@
                                 <asp:Label ID="Valor" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
+                         <asp:Label ID="L_Nota" runat="server" Text="" ForeColor="Red" Visible="false"></asp:Label>
                     </fieldset>
                 </div>
             </div>
