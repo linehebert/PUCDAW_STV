@@ -67,7 +67,8 @@
                     </fieldset>
                 </div>
             </div>
-
+                                <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                        <ContentTemplate>
             <div class="col-xs-12" id="Cad_Questões" runat="server">
                 <div class="panel panel-default table-responsive">
                     <div class="panel-heading">
@@ -77,8 +78,7 @@
                     <div id="D_Info" class="alert alert-info rr" role="alert" runat="server" visible="false">
                         <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
                     </div>
-                    <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
-                        <ContentTemplate>
+
                             <fieldset id="Info_Questoes" runat="server">
                                 <div class="col-md-12">
                                     <div class="row rr">
@@ -86,7 +86,7 @@
                                             <asp:Button ID="B_Add_Questao" runat="server" class="btn btn-primary" Text="Adicionar Questão" ToolTip="Nova Questão" />
                                         </div>
                                     </div>
-                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <asp:UpdatePanel ID="UP_Questoes" runat="server">
                                         <ContentTemplate>
                                             <div class="row rr">
                                                 <div class="col-md-12">
@@ -154,8 +154,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </fieldset>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+
                 </div>
             </div>
             <fieldset class="rr">
@@ -166,7 +165,8 @@
                     </div>
                 </div>
             </fieldset>
-
+                                        </ContentTemplate>
+                    </asp:UpdatePanel>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">

@@ -47,20 +47,21 @@ Partial Class MasterPage : Inherits STV.Base.MasterPage
                 meus_cursos.Visible = False
                 'relatorio_usuarios.Visible = True
                 categorias.Visible = True
+                cursos.InnerText = "Cursos"
             Else
                 tema.Visible = False
+                cursos.InnerText = "Inscrições"
                 If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) = True Then
                     'Libera acesso de instrutor
                     departamentos.Visible = False
                     usuarios.Visible = False
-                    'relatorio_usuarios.Visible = False
                     categorias.Visible = False
+                    cursos_instrutor.InnerText = "Gerenciar Cursos"
                 Else
                     'Libera acesso somente de usuário/aluno
                     departamentos.Visible = False
                     usuarios.Visible = False
                     cursos_instrutor.Visible = False
-                    'relatorio_usuarios.Visible = False
                     categorias.Visible = False
                 End If
             End If

@@ -33,9 +33,13 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
                     Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Questao")
                     If qntd_questao = "" Then
                         Nenhuma_Questao.Visible = True
+                        B_Publicar.Attributes.Add("disabled", "disabled")
+                        B_Publicar.ToolTip = "Não há questões a serem publicadas"
                     Else
                         Nenhuma_Questao.Visible = False
                         Carrega_Questoes(Cod_Atividade)
+                        B_Publicar.Attributes.Remove("disabled")
+                        B_Publicar.ToolTip = "Publicar Atividade"
                     End If
 
                     Dim atvpublicada As Boolean = Biblio.Pega_Valor_Boolean("SELECT Publica FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(Cod_Atividade), "Publica")
@@ -172,6 +176,9 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             Nenhuma_Questao.Visible = False
             Carrega_Questoes(Cod_Atividade)
             RegistrarScript("$('#myModal').modal('hide')")
+
+            B_Publicar.Attributes.Remove("disabled")
+            UP_Atividade.Update()
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True
@@ -201,8 +208,20 @@ Partial Class Cadastros_Cad_Atividade : Inherits STV.Base.Page
             Dado.Cod_Questao = CInt(Me.ViewState("Questao_Selecionada"))
             Atividade.Excluir_Questao(Dado)
 
-            Carrega_Questoes(Cod_Atividade)
+
             RegistrarScript("$('#myModalE').modal('hide')")
+            Carrega_Questoes(Cod_Atividade)
+
+            Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Questao")
+            If qntd_questao = "" Then
+                Nenhuma_Questao.Visible = True
+
+                B_Publicar.Attributes.Add("disabled", "disabled")
+                UP_Atividade.Update()
+            Else
+                Nenhuma_Questao.Visible = False
+            End If
+            'Response.Redirect("../Cadastros/Cad_Atividade.aspx?Unit=" + Cod_Unidade + "&Atv=" + Cod_Atividade)
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

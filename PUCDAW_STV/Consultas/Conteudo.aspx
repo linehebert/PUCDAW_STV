@@ -9,7 +9,7 @@
         <br />
         <br />
         <br />
-        
+
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
@@ -50,10 +50,10 @@
                         <asp:Label ID="L_Dt_Termino" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
-               
+
             </div>
 
-             
+
 
             <div class="panel panel-default" id="Nenhuma_Unidade" visible="false" runat="server">
                 <div class="row rr">
@@ -153,7 +153,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
-                        <asp:Button ID="B_Avaliar" Text="☆☆☆☆☆ AVALIAR CURSO" runat="server" class="btn btn-primary pull-right" ToolTip="Avaliar Curso" />
+                        <asp:Button ID="B_Avaliar" Text="☆ AVALIAR CURSO" runat="server" class="btn btn-primary pull-right" ToolTip="Avaliar Curso" />
                     </div>
                 </div>
             </fieldset>
@@ -202,6 +202,9 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row rr">
+                                        <div id="D_Obrigatorio" class="alert alert-danger" role="alert" runat="server" visible="false">
+                                            <asp:Label ID="L_Obrigatorio" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
+                                        </div>
                                         <div class="col-md-12">
                                             Nota do Curso:
                                             <div class="vote">
@@ -210,7 +213,7 @@
                                                     <i class="fa"></i>
                                                 </label>
                                                 <label>
-                                                    <input type="radio" name="fb" value="2" id="dois" runat="server"/>
+                                                    <input type="radio" name="fb" value="2" id="dois" runat="server" />
                                                     <i class="fa"></i>
                                                 </label>
                                                 <label>
@@ -226,14 +229,11 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </div>
-                                            <asp:Label ID="voto" runat="server" Text="" ClientIDMode="Static" style="color:white"></asp:Label>
+                                            <asp:Label ID="voto" runat="server" Text="" ClientIDMode="Static" Style="color: white"></asp:Label>
                                             <br />
                                             Comentário:
                                             <br />
                                             <asp:TextBox ID="TB_Comentario" runat="server" class="form-control" ToolTip="Comentário sobre a avaliação" TextMode="MultiLine" Columns="50" Rows="4"></asp:TextBox>
-                                            <%--<asp:RequiredFieldValidator ID="RFV_TB_Comentario" runat="server" ControlToValidate="TB_Comentario"
-                                                Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="A"
-                                                class="validation">* Informe um título para este curso</asp:RequiredFieldValidator>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                     }
                 });
             };
-
+            function IniciarAvaliacao(){
             $('.vote label i.fa').on('click mouseover', function () {
                 // remove classe ativa de todas as estrelas
                 $('.vote label i.fa').removeClass('active');
@@ -303,5 +303,6 @@
                 }
                 $("#voto").html(val); // somente para teste
             });
+            }
         </script>
 </asp:Content>

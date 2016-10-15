@@ -69,7 +69,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                     GV_Curso.Columns(0).Visible = False
                     GV_Curso.Columns(2).Visible = False
                     GV_Curso.Columns(4).Visible = False
-                    Titulo_Page.InnerText = "Gerenciar Cursos"
+                    Titulo_Page.InnerText = "Administrar Cursos"
                 Else
 
 
@@ -84,6 +84,8 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
 
                         If Request("INST") = "S" Then
                             'Cursos de Minha Responsabilidade
+                            Titulo_Page.InnerText = "Gerenciar Cursos"
+
                             Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, False)
                             DDL_Usuario.Visible = False
                             L_Usuario.Visible = False

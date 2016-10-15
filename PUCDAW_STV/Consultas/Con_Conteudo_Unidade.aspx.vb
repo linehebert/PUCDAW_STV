@@ -200,10 +200,24 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
                 Carrega_Atividades(Cod_Unidade)
                 RegistrarScript("$('#myModalI').modal('hide')")
             Else
-                RegistrarScript("$('#myModalI').modal('show')")
-                Div_Info_Modal.Visible = True
-                L_Info.Visible = True
-                L_Info.Text = "A data de fechamento da atividade deve ser inferior a data de encerramento do curso."
+                If CDate(TB_Dt_Encerramento.Text) > CDate(dt_encerra_curso) Then
+
+                    RegistrarScript("$('#myModalI').modal('show')")
+                    Div_Info_Modal.Visible = True
+                    L_Info.Visible = True
+                    L_Info.Text = "A data de fechamento da atividade deve ser inferior a data de encerramento do curso"
+
+                ElseIf CDate(TB_Dt_Encerramento.Text) < Date.Today() Then
+
+                    RegistrarScript("$('#myModalI').modal('show')")
+                    Div_Info_Modal.Visible = True
+                    L_Info.Visible = True
+                    L_Info.Text = "A data de fechamento da atividade deve ser igual ou superior a data atual"
+
+                End If
+
+
+
             End If
 
         Catch ex As Exception
@@ -243,16 +257,31 @@ Partial Class Consultas_Con_Conteudo_Unidade : Inherits STV.Base.Page
 
     Protected Sub Carrega_Modal_Exclusao(sender As Object, e As CommandEventArgs)
         Try
-            D_Aviso.Visible = False
-            L_Aviso.Visible = False
-
-            L_Titulo_Modal_E.InnerText = "Excluir Atividade:"
-            L_Titulo_E.InnerText = "Tem certeza que deseja excluir esta atividade, bem como todo o seu conteúdo?"
-            B_Confirma_Exclusao.Visible = True
-            B_Confirma_Exclusao_Mat.Visible = False
-
             Me.ViewState("Atividade_Selecionada") = e.CommandArgument.ToString()
-            RegistrarScript("$('#myModalE').modal('show')")
+            Dim atvpublicada As Boolean = Biblio.Pega_Valor_Boolean("SELECT Publica FROM Atividade WHERE Cod_Atividade = " + Util.Sql_String(CInt(Me.ViewState("Atividade_Selecionada"))), "Publica")
+            If atvpublicada = True Then
+                D_Aviso.Visible = False
+                L_Aviso.Visible = False
+
+                L_Titulo_Modal_E.InnerText = "Atenção!"
+                L_Titulo_E.InnerText = "Não é possível excluir uma atividade publicada!"
+                B_Confirma_Exclusao.Visible = False
+                B_Confirma_Exclusao_Mat.Visible = False
+
+                'Me.ViewState("Atividade_Selecionada") = e.CommandArgument.ToString()
+                RegistrarScript("$('#myModalE').modal('show')")
+            Else
+                D_Aviso.Visible = False
+                L_Aviso.Visible = False
+
+                L_Titulo_Modal_E.InnerText = "Excluir Atividade:"
+                L_Titulo_E.InnerText = "Tem certeza que deseja excluir esta atividade, bem como todo o seu conteúdo?"
+                B_Confirma_Exclusao.Visible = True
+                B_Confirma_Exclusao_Mat.Visible = False
+
+                'Me.ViewState("Atividade_Selecionada") = e.CommandArgument.ToString()
+                RegistrarScript("$('#myModalE').modal('show')")
+            End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

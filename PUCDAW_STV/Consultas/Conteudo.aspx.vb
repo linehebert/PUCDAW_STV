@@ -136,8 +136,13 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
             If Dado.Dt_Termino < Date.Today Then
                 Div_Finalizado.Visible = True
+                ' B_Avaliar.Enabled = False
+                B_Avaliar.Attributes.Add("disabled", "disabled")
+                B_Avaliar.ToolTip = "Não é possível avaliar um curso encerrado"
             Else
                 Div_Finalizado.Visible = False
+                B_Avaliar.Enabled = True
+                B_Avaliar.ToolTip = "Avaliar Curso"
             End If
 
         Catch ex As Exception
@@ -153,7 +158,6 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
             Throw
         End Try
     End Sub
-
 
     Private Sub rptUnidades_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptUnidades.ItemDataBound
         If e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.AlternatingItem Then
@@ -446,6 +450,9 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
     'Avaliar Curso
     Private Sub B_Avaliar_Click(sender As Object, e As EventArgs) Handles B_Avaliar.Click
+        RegistrarScript("IniciarAvaliacao();")
+        D_Obrigatorio.Visible = False
+        L_Obrigatorio.Visible = False
 
         Dim Dado = Curso.Carrega_Avaliacao(Cod_Curso, Usuario_Logado.Cod_Usuario)
         If Dado.Avaliacao <> 0 Then
@@ -464,33 +471,45 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
     'Salvar Avaliação
     Private Sub B_Confirma_Avaliacao_Click(sender As Object, e As EventArgs) Handles B_Confirma_Avaliacao.Click
         Try
-            Dim Dados As New Curso.Dados
-            Dados.Cod_Curso = Cod_Curso
-            Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
-            Dados.Comentario = TB_Comentario.Text
 
-            If um.Checked = True Then
-                Dados.Avaliacao = 1
-            ElseIf dois.Checked = True Then
-                Dados.Avaliacao = 2
-            ElseIf tres.Checked = True Then
-                Dados.Avaliacao = 3
-            ElseIf quatro.Checked = True Then
-                Dados.Avaliacao = 4
-            ElseIf cinco.Checked = True Then
-                Dados.Avaliacao = 5
-            End If
-
-            'Verificar se já tem avaliação e dar update ************** IF e Criar Função de update.
-            Dim Dado = Curso.Carrega_Avaliacao(Cod_Curso, Usuario_Logado.Cod_Usuario)
-            If Dado.Avaliacao <> 0 Then
-                Curso.Alterar_Avaliacao(Dados)
+            If um.Checked = False And dois.Checked = False And tres.Checked = False And quatro.Checked = False And cinco.Checked = False Then
+                'Nao envia avaliacao
+                D_Obrigatorio.Visible = True
+                L_Obrigatorio.Visible = True
+                L_Obrigatorio.Text = "Não é possível avaliar um curso sem atribuir uma nota."
+                RegistrarScript("IniciarAvaliacao();")
             Else
-                Curso.Inserir_Avaliacao(Dados)
-            End If
+                D_Obrigatorio.Visible = False
+                L_Obrigatorio.Visible = False
 
-            TB_Comentario.Text = ""
-            RegistrarScript("$('#myModalAv').modal('hide')")
+                Dim Dados As New Curso.Dados
+                Dados.Cod_Curso = Cod_Curso
+                Dados.Cod_Usuario = Usuario_Logado.Cod_Usuario
+                Dados.Comentario = TB_Comentario.Text
+
+                If um.Checked = True Then
+                    Dados.Avaliacao = 1
+                ElseIf dois.Checked = True Then
+                    Dados.Avaliacao = 2
+                ElseIf tres.Checked = True Then
+                    Dados.Avaliacao = 3
+                ElseIf quatro.Checked = True Then
+                    Dados.Avaliacao = 4
+                ElseIf cinco.Checked = True Then
+                    Dados.Avaliacao = 5
+                End If
+
+                'Verificar se já tem avaliação para alterar e não incluir nova
+                Dim Dado = Curso.Carrega_Avaliacao(Cod_Curso, Usuario_Logado.Cod_Usuario)
+                If Dado.Avaliacao <> 0 Then
+                    Curso.Alterar_Avaliacao(Dados)
+                Else
+                    Curso.Inserir_Avaliacao(Dados)
+                End If
+
+                TB_Comentario.Text = ""
+                RegistrarScript("$('#myModalAv').modal('hide')")
+            End If
         Catch ex As Exception
             L_Erro.Text = ex.Message
             D_Erro.Visible = True

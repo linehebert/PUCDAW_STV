@@ -205,7 +205,7 @@ Namespace STV.Entidades
             Sql.AppendLine(Util.Sql_String(Registro.Titulo))
             'Sql.AppendLine("," + Util.Sql_String(Registro.Dt_Abertura))
             Sql.AppendLine("," + Util.Sql_String(Registro.Dt_Fechamento))
-            Sql.AppendLine("," + Util.Sql_String(Registro.Valor))
+            Sql.AppendLine("," + Util.Sql_Numero(Registro.Valor))
             Sql.AppendLine("," + Util.Sql_String(Registro.Cod_Unidade))
             Sql.AppendLine(")")
 
