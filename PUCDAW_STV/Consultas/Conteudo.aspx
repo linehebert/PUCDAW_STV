@@ -69,7 +69,7 @@
                         <ItemTemplate>
                             <div class="panel panel-default">
                                 <div class="panel-heading" id="Atividades">
-                                    <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>
                                     UNIDADE: <%# Container.DataItem("Titulo").ToString.ToUpper %>
                                 </div>
                                 <asp:UpdatePanel ID="UP_Materiais" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">

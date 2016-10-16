@@ -62,17 +62,31 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                 'Verifica o tipo de usuário que está logado e define suas permissões
                 If Usuario_Logado.ADM = True Then
                     'Administrador
-                    Preenche_DDL_Departamento()
-                    B_Novo.Visible = True
-                    Carrega_Grid("", 0, 0, False, False)
+                    If Request("INST") = "S" Then
+                        'Cursos de Minha Responsabilidade
+                        Titulo_Page.InnerText = "Gerenciar Cursos"
 
-                    GV_Curso.Columns(0).Visible = False
-                    GV_Curso.Columns(2).Visible = False
-                    GV_Curso.Columns(4).Visible = False
-                    Titulo_Page.InnerText = "Administrar Cursos"
+                        Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, False)
+                        DDL_Usuario.Visible = False
+                        L_Usuario.Visible = False
+                        GV_Curso.Columns(0).Visible = False
+                        GV_Curso.Columns(1).Visible = False
+                        GV_Curso.Columns(2).Visible = False
+                        GV_Curso.Columns(3).Visible = False
+                        GV_Curso.Columns(5).Visible = False
+                        GV_Curso.Columns(6).Visible = False
+                        GV_Curso.Columns(10).Visible = False
+                    Else
+                        Preenche_DDL_Departamento()
+                        B_Novo.Visible = True
+                        Carrega_Grid("", 0, 0, False, False)
+
+                        GV_Curso.Columns(0).Visible = False
+                        GV_Curso.Columns(3).Visible = False
+                        GV_Curso.Columns(5).Visible = False
+                        Titulo_Page.InnerText = "Administrar Cursos"
+                    End If
                 Else
-
-
                     If Usuario.Verifica_Responsabilidade(Usuario_Logado.Cod_Usuario) Then
                         'Instrutor
                         Titulo_Page.InnerText = "Consulta de Cursos"
@@ -80,6 +94,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                         B_Novo.Visible = False
                         CB_Inativos.Visible = False
                         GV_Curso.Columns(1).Visible = False
+                        GV_Curso.Columns(2).Visible = False
 
 
                         If Request("INST") = "S" Then
@@ -92,17 +107,18 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
                             GV_Curso.Columns(0).Visible = False
                             GV_Curso.Columns(1).Visible = False
                             GV_Curso.Columns(2).Visible = False
-                            GV_Curso.Columns(4).Visible = False
+                            GV_Curso.Columns(3).Visible = False
                             GV_Curso.Columns(5).Visible = False
-                            GV_Curso.Columns(9).Visible = False
+                            GV_Curso.Columns(6).Visible = False
+                            GV_Curso.Columns(10).Visible = False
 
                         Else
                             'Cursos Disponíveis/Papel de Aluno
                             Carrega_Grid("", 0, Usuario_Logado.Cod_Usuario, False, True)
-                            GV_Curso.Columns(2).Visible = False
                             GV_Curso.Columns(3).Visible = False
+                            GV_Curso.Columns(4).Visible = False
                             filtro_departamento.Visible = False
-                            GV_Curso.Columns(9).Visible = False
+                            GV_Curso.Columns(10).Visible = False
 
                         End If
                     Else
@@ -168,6 +184,7 @@ Partial Class Consultas_Con_Curso : Inherits STV.Base.Page
     Protected Sub GV_Curso_RowDataBound(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles GV_Curso.RowDataBound
         Try
             If e.Row.RowType = DataControlRowType.DataRow Then
+                CType(e.Row.FindControl("HL_Avaliacoes"), HyperLink).NavigateUrl = "../Consultas/Avaliacoes.aspx?AvCurso=" + Criptografia.Encryptdata(Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString())
                 CType(e.Row.FindControl("HL_Alterar"), HyperLink).NavigateUrl = "../Cadastros/Cad_Curso.aspx?Cod=" + Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString()
                 If Request("INST") = "S" Then
                     CType(e.Row.FindControl("HL_Visualizar"), HyperLink).NavigateUrl = "../Consultas/Con_Unidade.aspx?INST=S&Cod=" + Util.CInteger(e.Row.DataItem("Cod_Curso")).ToString()

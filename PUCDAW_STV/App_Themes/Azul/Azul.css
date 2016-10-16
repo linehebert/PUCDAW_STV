@@ -11,7 +11,6 @@ h2{
     font-size:3em;
     text-align:center;
 }
-
 /*Votação com Estrelas*/
 .vote label {
     cursor:pointer;
@@ -41,27 +40,21 @@ h2{
 
 /*Estrutura da Página*/
 .conteudo {
-    border: 3px solid #ddd;
     border-radius: 6px;
-    height:auto;
+    height:100%;
     background-color:white;
 }
 
-.grid{
-    margin-left:10%;
-    margin-right:10%;
-    align-content:center;
-   }
 .head{
     border: 12px solid #ddd;
-    border-bottom-color:#170B3B;
-    border-top-color:#170B3B;
+    border-bottom-color:#335987;
+    border-top-color:#335987;
     border-radius: 5px; 
-    height: 120px; 
     margin-top: 0px; 
     margin-bottom: 0px;
     background-color:white;
 }
+
 .logo{
     text-align:center;    
 }
@@ -73,6 +66,7 @@ footer#main{
 	font:normal 11px/16px Arial, Helvetica, sans-serif;
 	width:100%;
     margin-top:20px;
+    color:white;
 }
 
 /*login*/
@@ -131,4 +125,5 @@ footer#main{
 }
 .formlabel {
     font-weight:bold;
+   
 }

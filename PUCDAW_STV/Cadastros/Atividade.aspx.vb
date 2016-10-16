@@ -56,6 +56,7 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Aviso_Encerramento.Visible = False
                     Realizar_Atividade.Visible = False
                     Atividade_Completa.Visible = True
+                    L_nota_L.Visible = True
                     L_Nota.Visible = True
                 ElseIf Finalizada <> Nothing And CDate(Dt_Encerramento.Text) >= Date.Today() Then
                     'Atividade realizada mas ainda não encerrada. Aguarde para revisão!
@@ -75,15 +76,6 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
                     Realizar_Atividade.Visible = True
                     Atividade_Completa.Visible = False
                 End If
-
-
-                'If Finalizada <> Nothing Then
-                '    Realizar_Atividade.Visible = False
-                '    Atividade_Completa.Visible = True
-                'Else
-                '    Realizar_Atividade.Visible = True
-                '    Atividade_Completa.Visible = False
-                'End If
 
                 Dim qntd_questao As String = Biblio.Pega_Valor("SELECT Cod_Questao FROM Questao WHERE Cod_Atividade=" + Util.Sql_String(Cod_Atividade), "Cod_Questao")
                 If qntd_questao = "" Then
@@ -110,8 +102,8 @@ Partial Class Cadastros_Atividade : Inherits STV.Base.Page
             Dt_Encerramento.Text = Dado.Dt_Fechamento.ToString("dd/MM/yyyy")
             Valor.Text = Dado.Valor
 
-            Dim Nota As String = Biblio.Pega_Valor("SELECT PONTOS FROM NOTAS WHERE Cod_Usuario=" + Util.CString(Usuario_Logado.Cod_Usuario) + " AND Cod_Atividade = " + Util.CString(Dado.Cod_Atividade), "PONTOS")
-            L_Nota.Text = Nota
+            Dim Nota As Double = Biblio.Pega_Valor_Double("SELECT PONTOS FROM NOTAS WHERE Cod_Usuario=" + Util.CString(Usuario_Logado.Cod_Usuario) + " AND Cod_Atividade = " + Util.CString(Dado.Cod_Atividade), "PONTOS")
+            If Nota <> 0 Then L_Nota.Text = Nota.ToString("F")
         Catch ex As Exception
             Throw
         End Try

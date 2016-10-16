@@ -1,7 +1,7 @@
 /*Titulos e Tema*/
 body{
 background-color:#4fd8e8;
-background: linear-gradient(#DADEE0, #EEE9DE, #EEE9DE, gray);
+background: linear-gradient(dimgray, #EEE9DE, #EEE9DE, dimgray);
 font-family:'Century Gothic' !important;
 }
 
@@ -42,27 +42,21 @@ h2{
 
 /*Estrutura da Página*/
 .conteudo {
-    border: 3px solid #ddd;
     border-radius: 6px;
-    height:auto;
+    height:100%;
     background-color:white;
 }
 
-.grid{
-    margin-left:10%;
-    margin-right:10%;
-    align-content:center;
-   }
 .head{
     border: 12px solid #ddd;
-    border-bottom-color:#170B3B;
-    border-top-color:#170B3B;
+    border-bottom-color:dimgray;
+    border-top-color:dimgray;
     border-radius: 5px; 
-    height: 120px; 
     margin-top: 0px; 
     margin-bottom: 0px;
     background-color:white;
 }
+
 .logo{
     text-align:center;    
 }
@@ -74,6 +68,7 @@ footer#main{
 	font:normal 11px/16px Arial, Helvetica, sans-serif;
 	width:100%;
     margin-top:20px;
+    color:white;
 }
 
 /*login*/
@@ -132,4 +127,5 @@ footer#main{
 }
 .formlabel {
     font-weight:bold;
+   
 }

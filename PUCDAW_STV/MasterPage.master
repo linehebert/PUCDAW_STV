@@ -1,9 +1,13 @@
 ﻿<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head runat="server">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
     <title>STV PUCDAW</title>
     <%--<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />--%>
     <%--<link href="css/style.css" type="text/css" rel="stylesheet" />--%>
@@ -20,35 +24,47 @@
 
         <asp:ContentPlaceHolder ID="CPH_Menu" runat="server">
 
-            <div class="container">
-                <div class="head">
-                    <div class="logo"><asp:Image ID="Img_Logo" runat="server" Width="165px" Height="95px"/></div>
+
+            <div class="head container body-content">
+                <div class="logo">
+                    <asp:Image ID="Img_Logo" runat="server" Width="165px" Height="95px" />
                 </div>
-                <nav class="navbar navbar-default" style="margin-bottom: 1px;">
-                    <div class="container-fluid">
-                        <div class="navbar-header pull-right">
-                            <a class="navbar-brand" id="home" runat="server" href="Default.aspx"> Home </a>
-                            <a class="navbar-brand" id="dados_acesso" runat="server" href="Dados_Acesso.aspx" visible="false"> Dados de Acesso </a>
-                            <a class="navbar-brand" id="tema" runat="server" href="Tema.aspx"> Layout </a>
-                            <a class="navbar-brand" id="departamentos" runat="server" href="Consultas/Con_Departamento.aspx"> Departamentos </a>
-                            <a class="navbar-brand" id="categorias" runat="server" href="Consultas/Con_Categoria.aspx" visible="false"> Categorias </a>
-                            <a class="navbar-brand" id="usuarios" runat="server" href="Consultas/Con_Usuario.aspx"> Usuários </a>
-                            <a class="navbar-brand" id="cursos" runat="server" href="Consultas/Con_Curso.aspx"> Cursos Disponíveis </a>
-                            <a class="navbar-brand" id="cursos_instrutor" runat="server" href="Consultas/Con_Curso.aspx?INST=S"> Minha Responsabilidade </a>
-                            <a class="navbar-brand" id="meus_cursos" runat="server" href="Consultas/Con_Meus_Cursos.aspx"> Meus Cursos</a>
-                            <asp:LinkButton ID="LB_Sair" CssClass="navbar-brand" runat="server" Text="Sair" />
-                        </div>
-                         <asp:Label ID="L_Usuario_Logado" runat="server" class="navbar-brand pull-left" Text="" ></asp:Label>
+            </div>
+            <div class="navbar navbar-default container body-content " style="margin-bottom:6px">
+                <div class="container">
+                     <div class="navbar-header">
+                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                             <span class="icon-bar"></span>
+                             <span class="icon-bar"></span>
+                             <span class="icon-bar"></span>
+                         </button>
+                         <%--<a class="navbar-brand" href="/">STV Web</a>--%>
+                         <asp:Label ID="L_Usuario_Logado" runat="server" class="navbar-brand" Text=""></asp:Label>
+                     </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a id="home" runat="server" href="Default.aspx">Home </a></li>
+                            <li><a id="dados_acesso" runat="server" href="Dados_Acesso.aspx" visible="false">Dados de Acesso </a></li>
+                            <li><a id="tema" runat="server" href="Tema.aspx">Layout </a></li>
+                            <li><a id="departamentos" runat="server" href="Consultas/Con_Departamento.aspx">Departamentos </a></li>
+                            <li><a id="categorias" runat="server" href="Consultas/Con_Categoria.aspx" visible="false">Categorias </a></li>
+                            <li><a  id="usuarios" runat="server" href="Consultas/Con_Usuario.aspx">Usuários </a></li>
+                            <li><a id="cursos" runat="server" href="Consultas/Con_Curso.aspx">Cursos Disponíveis </a></li>
+                            <li><a  id="cursos_instrutor" runat="server" href="Consultas/Con_Curso.aspx?INST=S">Minha Responsabilidade </a></li>
+                            <li><a  id="meus_cursos" runat="server" href="Consultas/Con_Meus_Cursos.aspx">Meus Cursos</a></li>
+                            <li><asp:LinkButton ID="LB_Sair" runat="server" Text="Sair" /></li>
+                        </ul>
                     </div>
-                   
-                </nav>
-                <div class="conteudo">
+                </div>
+            </div>
+
+            <div class="conteudo container body-content">
                     <asp:ContentPlaceHolder ID="CPH_Conteudo" runat="server">
                     </asp:ContentPlaceHolder>
                 </div>
-            </div>
+
             <footer id="main">
-                Sistema de Treinamento em Vídeos - Ahebert ;*
+                Copyright© 2016 - Aline Hebert 
             </footer>
         </asp:ContentPlaceHolder>
     </form>

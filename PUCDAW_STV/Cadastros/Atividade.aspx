@@ -55,7 +55,6 @@
                             <div class="col-md-9">
                                 <asp:Label ID="Dt_Encerramento" runat="server" Text=""></asp:Label>
                             </div>
-
                         </div>
                         <div class="row rr">
                             <div class="col-md-2 col-md-offset-1" style="text-align: right;">
@@ -65,7 +64,14 @@
                                 <asp:Label ID="Valor" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
-                         <asp:Label ID="L_Nota" runat="server" Text="" ForeColor="Red" Visible="false"></asp:Label>
+                        <div class="row rr">
+                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
+                                <asp:Label ID="L_nota_L" runat="server" Text="NOTA:" CssClass="formlabel" Visible="false"></asp:Label>
+                            </div>
+                            <div class="col-md-9">
+                               <b> <asp:Label ID="L_Nota" runat="server" Text="" Forecolor="gray" Font-Size="Larger" Visible="false"></asp:Label></b>
+                            </div>
+                        </div> 
                     </fieldset>
                 </div>
             </div>

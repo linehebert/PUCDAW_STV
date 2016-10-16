@@ -34,11 +34,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading" id="Materiais">
                     <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>Materiais Didáticos
-                    <%--                    <span class="pull-right">
-                        <a data-toggle="collapse" data-parent="#panel-quote-group" href="#MateriaisPanel">
-                            <span class="toggle-icon glyphicon glyphicon-minus"></span>
-                        </a>
-                    </span>--%>
                 </div>
                 <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                     <ContentTemplate>

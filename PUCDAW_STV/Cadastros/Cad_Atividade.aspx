@@ -6,7 +6,8 @@
     <div class="grid">
         <br />
         <h2 class="text-primary">Gerenciar Atividade </h2>
-        <hr /><br />
+        <hr />
+        <br />
 
         <div class="form-group">
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
@@ -24,7 +25,7 @@
                     </div>
                     <fieldset id="Info_Atividade" runat="server">
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
+                            <div class="col-md-2 col-md-offset-1">
                                 <asp:Label ID="Label1" runat="server" Text="Curso:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -32,7 +33,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
+                            <div class="col-md-2 col-md-offset-1">
                                 <asp:Label ID="Label7" runat="server" Text="Unidade:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -40,7 +41,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
+                            <div class="col-md-2 col-md-offset-1">
                                 <asp:Label ID="L_Titulo" runat="server" Text="Atividade:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                         <div class="row rr">
-                            <div class="col-md-3" style="text-align: right;">
+                            <div class="col-md-2 col-md-offset-1">
                                 <asp:Label ID="L_Dt_Encerramento" runat="server" Text="Data de Encerramento:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -57,7 +58,7 @@
 
                         </div>
                         <div class="row rr">
-                            <div class="col-md-2 col-md-offset-1" style="text-align: right;">
+                            <div class="col-md-2 col-md-offset-1">
                                 <asp:Label ID="L_Valor" runat="server" Text="Valor:" CssClass="formlabel"></asp:Label>
                             </div>
                             <div class="col-md-9">
@@ -67,17 +68,17 @@
                     </fieldset>
                 </div>
             </div>
-                                <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
-                        <ContentTemplate>
-            <div class="col-xs-12" id="Cad_Questões" runat="server">
-                <div class="panel panel-default table-responsive">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
-                        Conteúdo da Atividade
-                    </div>
-                    <div id="D_Info" class="alert alert-info rr" role="alert" runat="server" visible="false">
-                        <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
-                    </div>
+            <asp:UpdatePanel ID="UP_Atividade" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                <ContentTemplate>
+                    <div class="col-xs-12" id="Cad_Questões" runat="server">
+                        <div class="panel panel-default table-responsive">
+                            <div class="panel-heading">
+                                <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-right: 20px;"></span>
+                                Conteúdo da Atividade
+                            </div>
+                            <div id="D_Info" class="alert alert-info rr" role="alert" runat="server" visible="false">
+                                <center> <asp:Label ID="L_Info" runat="server" Text=""></asp:Label></center>
+                            </div>
 
                             <fieldset id="Info_Questoes" runat="server">
                                 <div class="col-md-12">
@@ -155,18 +156,18 @@
                                 </div>
                             </fieldset>
 
-                </div>
-            </div>
-            <fieldset class="rr">
-                <div class="row rr">
-                    <div class="col-md-12">
-                        <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
-                        <asp:Button ID="B_Publicar" Text="PUBLICAR" runat="server" class="btn btn-primary" ToolTip="Liberar Atividade Aos Alunos" />
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-                                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                    <fieldset class="rr">
+                        <div class="row rr">
+                            <div class="col-md-12">
+                                <asp:Button ID="B_Voltar" Text="VOLTAR" runat="server" class="btn btn-default" ToolTip="Voltar" />
+                                <asp:Button ID="B_Publicar" Text="PUBLICAR" runat="server" class="btn btn-primary" ToolTip="Liberar Atividade Aos Alunos" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </ContentTemplate>
+            </asp:UpdatePanel>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">

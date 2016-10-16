@@ -50,7 +50,7 @@
                     <ContentTemplate>
                         <asp:GridView ID="GV_Curso" runat="server" AutoGenerateColumns="False" GridLines="None"
                             AllowPaging="true" PagerStyle-CssClass="pagination" CssClass="table table-striped table-hover table-condensed" AlternatingRowStyle-CssClass="alt"
-                            PageSize="10">
+                            PageSize="20">
                             <Columns>
                                 <asp:TemplateField>
                                     <headertemplate>Curso</headertemplate>

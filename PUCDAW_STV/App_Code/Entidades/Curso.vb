@@ -47,25 +47,18 @@ Namespace STV.Entidades
 
             Biblio.Executar_Sql(Sql.ToString())
         End Sub
+        'Carrega Comentarios
+        Public Function Carrega_Comentarios(Cod_Curso As Integer) As DataTable
+            Dim Sql As New StringBuilder
+            Sql.AppendLine("SELECT U.Nome, AV.Comentario, AV.Avaliacao FROM AVALIACAO AS AV")
+            Sql.AppendLine("LEFT JOIN USUARIO AS U ON U.Cod_Usuario = AV.Cod_Usuario")
+            Sql.AppendLine("WHERE 0 = 0")
+            If Cod_Curso <> 0 Then Sql.AppendLine("AND AV.Cod_Curso = " + Util.CString(Cod_Curso))
+            Sql.AppendLine("ORDER BY AV.Avaliacao ASC")
 
-        ''Verifica se tem avaliacao anterior
-        'Public Function Verifica_Avaliacao(Cod_Curso As Integer, Cod_Usuario As Integer) As Boolean
-        '    Dim Sql As New StringBuilder
-        '    Sql.AppendLine("SELECT Avaliacao FROM Avaliacao")
-        '    Sql.AppendLine(" WHERE Cod_Curso = " + Util.Sql_String(Cod_Curso))
-        '    Sql.AppendLine(" AND Cod_Usuario = " + Util.Sql_String(Cod_Usuario))
+            Return Biblio.Retorna_DataTable(Sql.ToString())
+        End Function
 
-        '    Dim dt As DataTable = Biblio.Retorna_DataTable(Sql.ToString())
-        '    If dt.Rows.Count > 0 Then
-        '        'alteracao
-        '        Return True
-        '    Else
-        '        'inclusao
-        '        Return False
-        '    End If
-        'End Function
-
-        'Carrega Avaliacao
         Public Function Carrega_Avaliacao(Cod_Curso As Integer, Cod_Usuario As Integer) As Dados
 
             Dim Retorno As New Dados
@@ -249,8 +242,9 @@ Namespace STV.Entidades
             Sql.AppendLine("AND C.Cod_Curso IN (select cursoXusuario.cod_curso from cursoXusuario where cursoXusuario.cod_usuario=" + Util.Sql_String(Cod_Usuario) + ")")
             If Instrutor <> 0 Then Sql.AppendLine("AND C.Instrutor = " + Util.Sql_String(Instrutor))
             If Not String.IsNullOrEmpty(Titulo) Then Sql.AppendLine("AND C.Titulo LIKE " + Util.Sql_String("%" + Titulo + "%"))
-            Sql.AppendLine("AND C.Curso_Inativo = 0 ")
-            Sql.AppendLine("ORDER BY C.Cod_Curso DESC")
+            Sql.AppendLine(" AND C.Curso_Inativo = 0 ")
+            Sql.AppendLine(" AND C.INstrutor <> " + Util.Sql_String(Cod_Usuario))
+            Sql.AppendLine(" ORDER BY C.Cod_Curso DESC")
 
             Return Biblio.Retorna_DataTable(Sql.ToString())
         End Function

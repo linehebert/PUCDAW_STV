@@ -21,6 +21,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
     Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Try
             If Not Page.IsPostBack Then
+                B_Salvar.Attributes.Remove("disabled")
                 Preenche_DDL_Departamento()
                 If Cod_Usuario <> "" Then
                     'Alteração de Cadastro
@@ -119,7 +120,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
     Protected Sub B_Salvar_Click(sender As Object, e As EventArgs) Handles B_Salvar.Click
         Try
             If TB_Nome.Text <> "" And TB_Email.Text <> "" Then
-                If Cod_Usuario Then
+                If Cod_Usuario <> Nothing Then
                     If Usuario.Verifica_Responsabilidade(Cod_Usuario) = True And CB_Inativos.Checked Then
                         D_Erro.Visible = True
                         L_Erro.Text = "Este usuário tem cursos sob sua responsabilidade, não é possível inativá-lo!"
@@ -133,16 +134,37 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                         Dados.Cod_Departamento = DDL_Departamento.SelectedValue
                         Dados.Email = TB_Email.Text
                         Dados.Usuario_Inativo = CB_Inativos.Checked
-                        Dados.ADM = RBL_Tipo_Usuario.SelectedValue
 
-                        Usuario.Alterar(Dados)
+                        'Verifica se tipo adm foi selecionado
+                        If RBL_Tipo_Usuario.SelectedValue = 1 Then
+                            'Verifica se está inscrito em cursos
+                            Dim Aluno As String = Biblio.Pega_Valor("SELECT Cod_Curso FROM CURSOxUSUARIO WHERE Cod_Usuario=" + Cod_Usuario, "Cod_Curso")
+                            If Aluno <> "" Then
+                                D_Erro.Visible = True
+                                L_Erro.Text = "Não é possível dar permissão de administrador para alunos."
+                            Else
+                                Dados.ADM = RBL_Tipo_Usuario.SelectedValue
 
-                        D_Erro.Visible = False
-                        D_Aviso.Visible = True
-                        L_Aviso.Text = "Registro atualizado com sucesso!"
+                                Usuario.Alterar(Dados)
 
-                        B_Cancelar.Visible = False
-                        Monta_Dados(Dados)
+                                D_Erro.Visible = False
+                                D_Aviso.Visible = True
+                                L_Aviso.Text = "Registro atualizado com sucesso!"
+                                B_Cancelar.Visible = False
+                                Monta_Dados(Dados)
+                            End If
+                        Else
+                            Dados.ADM = RBL_Tipo_Usuario.SelectedValue
+
+                            Usuario.Alterar(Dados)
+
+                            D_Erro.Visible = False
+                            D_Aviso.Visible = True
+                            L_Aviso.Text = "Registro atualizado com sucesso!"
+                            B_Cancelar.Visible = False
+                            Monta_Dados(Dados)
+                        End If
+
                     End If
                 Else
                     Dim Dados As New Usuario.Dados
@@ -154,6 +176,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
                     Dados.Senha = Criptografia.Encryptdata("123")
                     Dados.Usuario_Inativo = CB_Inativos.Checked
                     Dados.ADM = RBL_Tipo_Usuario.SelectedValue
+
                     Dados.Cod_Usuario = Usuario.Inserir(Dados)
 
                     D_Erro.Visible = False
@@ -162,6 +185,7 @@ Partial Class Cadastros_Cad_Usuario : Inherits STV.Base.Page
 
                     B_Cancelar.Visible = False
                     Monta_Dados(Dados)
+                    B_Salvar.Attributes.Add("disabled", "disabled")
                 End If
             Else
                 Monta_Dados()

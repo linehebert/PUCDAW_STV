@@ -65,12 +65,19 @@
                     <ContentTemplate>
                         <asp:GridView ID="GV_Curso" runat="server" AutoGenerateColumns="False" GridLines="None"
                             AllowPaging="true" PagerStyle-CssClass="pagination" CssClass="table table-striped table-hover table-condensed" AlternatingRowStyle-CssClass="alt"
-                            PageSize="10">
+                            PageSize="20">
                             <Columns>
                                 <asp:TemplateField ControlStyle-Width="90px" HeaderStyle-VerticalAlign="Middle">
                                     <ItemTemplate>
                                         <asp:Button ID="B_Inscrever" Text="Inscreva-se!" CommandName="B_Inscrever" CommandArgument='<%# Container.DataItem("Cod_Curso") %>' class="inscricao" runat="server" ToolTip="Inscrever-se neste curso" Visible="true" />
                                         <asp:Button ID="B_Inscrito" Text="Inscrito!" class="inscrito" runat="server" Enabled="false" ToolTip="Curso em que estou inscrito!" Visible="False" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField ControlStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:HyperLink ID="HL_Avaliacoes" runat="server">
+                                     <asp:Image ImageUrl="~/Images/avaliacao.png" runat="server" ToolTip="Avaliacoes do Curso"/>
+                                        </asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField ControlStyle-Width="30px">
@@ -84,7 +91,7 @@
                                 <asp:TemplateField>
                                     <HeaderTemplate>Curso</HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HL_Visualizar" runat="server" Text='<%# Container.DataItem("Titulo").ToString.ToUpper %>' data-toggle="ToolTip" title="Visualizar Curso" > 
+                                        <asp:HyperLink ID="HL_Visualizar" runat="server" Text='<%# Container.DataItem("Titulo").ToString.ToUpper %>' data-toggle="ToolTip" title="Visualizar Curso"> 
                                         </asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>

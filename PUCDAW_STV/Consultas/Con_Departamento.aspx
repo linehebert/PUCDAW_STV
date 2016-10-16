@@ -32,8 +32,8 @@
                     <div class="panel-heading">Departamentos </div>
                     <div class="panel-body">
                         <asp:GridView ID="GV_Departamento" runat="server" AutoGenerateColumns="False" GridLines="None"
-                            AllowPaging="true" PagerStyle-CssClass="pgr" CssClass="table table-striped table-hover table-condensed" AlternatingRowStyle-CssClass="alt"
-                            PageSize="10">
+                            AllowPaging="true" PagerStyle-CssClass="pagination" CssClass="table table-striped table-hover table-condensed" AlternatingRowStyle-CssClass="alt"
+                            PageSize="20">
                             <Columns>
                                 <asp:TemplateField ControlStyle-Width="15px">
                                     <ItemTemplate>
