@@ -60,8 +60,8 @@
                                     </asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="CPF" HeaderText="CPF" ItemStyle-VerticalAlign="Middle" />
-                            <asp:BoundField DataField="Email" HeaderText="E-mail" ItemStyle-VerticalAlign="Middle" />
+                            <asp:BoundField DataField="CPF" HeaderText="CPF" ItemStyle-VerticalAlign="Middle"  />
+                            <%--<asp:BoundField DataField="Email" HeaderText="E-mail" ItemStyle-VerticalAlign="Middle" />--%>
                             <asp:BoundField DataField="Cod_Departamento" HeaderText="Cod_Departamento" ItemStyle-VerticalAlign="Middle" Visible="false" />
                             <asp:BoundField DataField="Departamento" HeaderText="Departamento" ItemStyle-VerticalAlign="Middle" />
                             <asp:CheckBoxField HeaderText="Inativo" DataField="Usuario_Inativo" SortExpression="Inativo" />

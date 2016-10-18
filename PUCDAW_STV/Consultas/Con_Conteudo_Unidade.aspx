@@ -176,8 +176,8 @@
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TB_Link"
                                                 Display="Dynamic" ErrorMessage="Campo Obrigatório;" SetFocusOnError="True" ValidationGroup="B"
                                                 class="validation">* Preencha com o link do material</asp:RequiredFieldValidator>
-                                            <asp:RegularExpressionValidator ControlToValidate="TB_Link" class="validation" Text="* Campo Incorreto" ValidationGroup="B"
-                                                ValidationExpression="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})" runat="server"></asp:RegularExpressionValidator>
+                                            <%--<asp:RegularExpressionValidator ControlToValidate="TB_Link" class="validation" Text="* Campo Incorreto" ValidationGroup="B"
+                                                ValidationExpression="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})" runat="server"></asp:RegularExpressionValidator>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -320,5 +320,10 @@
     </div>
     </div>
     <script src="../js/jsstyle.js"></script>
+    <script>
+        $('body').on('hidden.bs.modal', '.modal', function () {
+            $('video').trigger('pause');
+        });
+    </script>
 </asp:Content>
 

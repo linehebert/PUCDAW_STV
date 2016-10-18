@@ -8,7 +8,8 @@
     <div class="grid">
         <br />
         <asp:Label ID="Default" runat="server" Text=""></asp:Label>
-        <h2 class="text-primary">Bem-Vindo ao STV Web! </h2>
+        <h2 class="text-primary">Seja bem-vindo! 
+        </h2>
         <hr />
         <br />
         <div class="col-xs-12">
@@ -31,19 +32,19 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <img src="Images/apresentacao.jpg" alt="..." width="100%" height="60%">
+                            <img src="Images/apresentacao.jpg" alt="..." width="100%" height="90%">
                             <div class="carousel-caption">
                                 ...
                             </div>
                         </div>
                         <div class="item">
-                            <img src="Images/personalizavel.jpg" alt="..." width="100%" height="60%">
+                            <img src="Images/personalizavel.jpg" alt="..." width="100%" height="90%">
                             <div class="carousel-caption">
                                 ...
                             </div>
                         </div>
                         <div class="item">
-                            <img src="Images/acessibilidade.jpg" alt="..." width="100%" height="60%">
+                            <img src="Images/acessibilidade.jpg" alt="..." width="100%" height="90%">
                             <div class="carousel-caption">
                                 ...
                             </div>

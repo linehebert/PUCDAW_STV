@@ -30,7 +30,7 @@
                     <asp:Image ID="Img_Logo" runat="server" Width="165px" Height="95px" />
                 </div>
             </div>
-            <div class="navbar navbar-default container body-content " style="margin-bottom:6px">
+            <div class="navbar navbar-default container body-content " style="margin-bottom:6px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size:medium">
                 <div class="container">
                      <div class="navbar-header">
                          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -39,20 +39,21 @@
                              <span class="icon-bar"></span>
                          </button>
                          <%--<a class="navbar-brand" href="/">STV Web</a>--%>
-                         <asp:Label ID="L_Usuario_Logado" runat="server" class="navbar-brand" Text=""></asp:Label>
+                         <asp:Label ID="L_Usuario_Logado" runat="server" class="navbar-brand" Text="" Visible="true"></asp:Label>
+                         <%--<a href="Login.aspx" class="btn btn-primary" style="margin-top: 7px;" id="BT_Login">Fazer Login</a>--%>
                      </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a id="home" runat="server" href="Default.aspx">Home </a></li>
-                            <li><a id="dados_acesso" runat="server" href="Dados_Acesso.aspx" visible="false">Dados de Acesso </a></li>
-                            <li><a id="tema" runat="server" href="Tema.aspx">Layout </a></li>
-                            <li><a id="departamentos" runat="server" href="Consultas/Con_Departamento.aspx">Departamentos </a></li>
-                            <li><a id="categorias" runat="server" href="Consultas/Con_Categoria.aspx" visible="false">Categorias </a></li>
-                            <li><a  id="usuarios" runat="server" href="Consultas/Con_Usuario.aspx">Usuários </a></li>
-                            <li><a id="cursos" runat="server" href="Consultas/Con_Curso.aspx">Cursos Disponíveis </a></li>
-                            <li><a  id="cursos_instrutor" runat="server" href="Consultas/Con_Curso.aspx?INST=S">Minha Responsabilidade </a></li>
-                            <li><a  id="meus_cursos" runat="server" href="Consultas/Con_Meus_Cursos.aspx">Meus Cursos</a></li>
-                            <li><asp:LinkButton ID="LB_Sair" runat="server" Text="Sair" /></li>
+                            <li><a id="home" runat="server" href="Default.aspx">HOME </a></li>
+                            <li><a id="dados_acesso" runat="server" href="Dados_Acesso.aspx" visible="false">DADOS DE ACESSO </a></li>
+                            <li><a id="tema" runat="server" href="Tema.aspx">LAYOUT </a></li>
+                            <li><a id="departamentos" runat="server" href="Consultas/Con_Departamento.aspx">DEPARTAMENTOS </a></li>
+                            <li><a id="categorias" runat="server" href="Consultas/Con_Categoria.aspx" visible="false">CATEGORIAS </a></li>
+                            <li><a  id="usuarios" runat="server" href="Consultas/Con_Usuario.aspx">USUÁRIOS </a></li>
+                            <li><a id="cursos" runat="server" href="Consultas/Con_Curso.aspx">CURSOS DISPONÍVEIS </a></li>
+                            <li><a  id="cursos_instrutor" runat="server" href="Consultas/Con_Curso.aspx?INST=S">GERENCIAR CURSOS </a></li>
+                            <li><a  id="meus_cursos" runat="server" href="Consultas/Con_Meus_Cursos.aspx">MEUS CURSOS</a></li>
+                            <li><asp:LinkButton ID="LB_Sair" runat="server" Text="SAIR" /></li>
                         </ul>
                     </div>
                 </div>

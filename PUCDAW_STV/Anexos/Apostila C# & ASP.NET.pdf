@@ -1,0 +1,477 @@
+﻿
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head><link href="../App_Themes/Azul/Azul.css" type="text/css" rel="stylesheet" /><link href="../App_Themes/Azul/bootstrap.css" type="text/css" rel="stylesheet" /><meta content="width=device-width,initial-scale=1" name="viewport" /><meta content="IE=edge" http-equiv="X-UA-Compatible" /><meta charset="utf-8" /><title>
+	STV PUCDAW
+</title>
+    
+    
+    
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+    <form method="post" action="./Conteudo.aspx?Cod=MQ%3d%3d" id="Principal" enctype="multipart/form-data">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="Ex3D+gJgRJHCz8D7CNE0kxYVvBq4ZEzOpQL0w6ZfDBx7Vnw5MzKdpPyartA0fcRUDA4Jei2DsRvoAeeT+mGFqii6cWiqVKUt1n5FP8tWDp9IeKUHrpyP3jxtBTUpwtJKUiAsvWTG5rQKBuWm1oShFjwUPbKwF6/NMUldLYZsqOrYpNJl3sFhW/1po2mZt3HVEuhoRB2ttXU8jwzZ1SUBBAxFAyefHWazO1MoR9Koojjc7/QWLHFmhcs8KQ5MDkgjO/fXMvjDV7WBKsgXs8HWU6v6F/92DfxKdhN4jLnexW3HcMLtK/WBGeI7DeLWbie9LWY1C0gFNdFYVFxT5A5dLRzUjdcL8osrwKs9Ij0HQYwYABUhlXuQdixfAvHX85V+DgqkwjHnOA3SCZvrEFdoenX5qgOmEIvzfbOVsFeX8aC5u/xT0k13DHWzwORbVfDqbf+npvdGVHj8YLQdo+0ULpNwAFXXt9POaVKleQQMf9/h9OATSGzPbpl+DsDCgH2pS4k1wHvI3Ky/7lN+D5AEKZGZ7Yc+MOJi+4oExHIxzUnAPt7M68UddtQngECt1cXNs7zwXQFL6drSBy1i8aGVrqO2+uvIUKV7HUWuQ1HsW7kLBoy5XgXMmHQrDZPAomwhi1yakOzhY6jk7UaML88gzyWQ4hB/O9oQoD/fsh+UMx3i8xnQKTT/YRzIW+onsdliqjY+rwZmT7UmUtPD91ELLpdRcZYW7XNUS/rvxNuS3vhUzGSqLz9nHrIVsapn9PuOLJ1TwPtlxO/qfoWcCHz0c4Jl2XLcv76ZvVGVECGebLmnHiOqTwki9n0c3LNHsck+EOGuF+urLtK0uv/ofyg60wkyzGkQbjae1rHfiocMx4ytm/SDQwYUTzEXjpi4AzMehPzWdh+zrDX0s+4JyBvTTeZGIcygPjhxox1P8VxXbTEpIKvZNihJCQc3uTUWKNQHrY7CoEsM2aVbpTkr5XQjTTX3pGO2FQdSBtdfTyh3LZtde4k0nYPU3TnZ1bhfAmrcF2i+Saisv19IbH8+gt6ott89GfIEPf6vE2uwaKXh9Uzrb/w7fmT2ROXNaWeBXZAXfrgmMvziXsCKd4vwa6/J5PA0aWiz47B+fxelpdw4V0zBp1NKgG3azFhzdYLCKb8n/1psqdrutbJoEN4u8sUmjpTRxwwt4EQfqkcgotw7GOo4DPV0Mm9SEVwdluxQixJyHx4NjM+qGQHBtPlCrelRnnA3k+dI2bnRVgANhWtzef8c9Q3RFMAw2Pe+GXzZLD+03SfiY06vEBbzmyAGDXNdWZ5T1hCnxgX1Rbtj8AZKO60aWLsDP46qV0HFArZ3MuV/4e9krFhRB3oTPfcnb3IXLnnewThAKsxySxw1zGHG3HaUxNRMm6KFEC/aSvWs+EEb8ND9nPt3wWdGC2KZHww8EddBb348wgcA2HU4Y24+0b6W1dREGNHILoq8RizcqF6efj3mb/59w/jSPYxD5SrOCXS8TIDIQsLsyiNLNq2KTKlx86eGzK1U/yWubTgP2Nxe1S7GfNKM7S/zI85+RZFI6PlSQB7ZT/s9PX50g7YwVtw4lRdsI6P3Dvt0TUU26SBXiinD9KxgOtF+BwIviaBvucrjJ1LZy/3oQz7114TEBBg8SDFM0MQV88GLyPYgASGxgLGILJm7arZj7u4gaUQbeMwu84XXdvvUSD/eNwiigvFt6xaqog5Ev5St1D927aD1JfEVgvqpXnEPX2xQljv2DWSjf+BdOXi+3v/cUlRBdHgnCJ/FYp2ov8aobBWO/YlQ2QSdc8IXNgQAgEj92Neq14RGwqHOzqLXYVmOZx+UPsOx724nA0HgnlJT4iemVY7a+KI5ufXNfhzGQ+qaFYQe/BO+INmKrqGfHo17PuyLtK05YivFR1BAbjl94rjgTMCW" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Principal'];
+if (!theForm) {
+    theForm = document.Principal;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZOpZOL2zU_4FBcA282zEEveM6HFDZ_XRwLOBIYmJBeJRvOo2l14nOeQaDTuHJsBW3A2&amp;t=635982258290602518" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+var __cultureInfo = {"name":"pt-BR","numberFormat":{"CurrencyDecimalDigits":2,"CurrencyDecimalSeparator":",","IsReadOnly":true,"CurrencyGroupSizes":[3],"NumberGroupSizes":[3],"PercentGroupSizes":[3],"CurrencyGroupSeparator":".","CurrencySymbol":"R$","NaNSymbol":"NaN (Não é um número)","CurrencyNegativePattern":9,"NumberNegativePattern":1,"PercentPositivePattern":1,"PercentNegativePattern":1,"NegativeInfinitySymbol":"-Infinito","NegativeSign":"-","NumberDecimalDigits":2,"NumberDecimalSeparator":",","NumberGroupSeparator":".","CurrencyPositivePattern":2,"PositiveInfinitySymbol":"+Infinito","PositiveSign":"+","PercentDecimalDigits":2,"PercentDecimalSeparator":",","PercentGroupSeparator":".","PercentSymbol":"%","PerMilleSymbol":"‰","NativeDigits":["0","1","2","3","4","5","6","7","8","9"],"DigitSubstitution":1},"dateTimeFormat":{"AMDesignator":"","Calendar":{"MinSupportedDateTime":"\/Date(-62135589600000)\/","MaxSupportedDateTime":"\/Date(253402300799999)\/","AlgorithmType":1,"CalendarType":1,"Eras":[1],"TwoDigitYearMax":2029,"IsReadOnly":true},"DateSeparator":"/","FirstDayOfWeek":0,"CalendarWeekRule":0,"FullDateTimePattern":"dddd, d\u0027 de \u0027MMMM\u0027 de \u0027yyyy HH:mm:ss","LongDatePattern":"dddd, d\u0027 de \u0027MMMM\u0027 de \u0027yyyy","LongTimePattern":"HH:mm:ss","MonthDayPattern":"d\u0027 de \u0027MMMM","PMDesignator":"","RFC1123Pattern":"ddd, dd MMM yyyy HH\u0027:\u0027mm\u0027:\u0027ss \u0027GMT\u0027","ShortDatePattern":"dd/MM/yyyy","ShortTimePattern":"HH:mm","SortableDateTimePattern":"yyyy\u0027-\u0027MM\u0027-\u0027dd\u0027T\u0027HH\u0027:\u0027mm\u0027:\u0027ss","TimeSeparator":":","UniversalSortableDateTimePattern":"yyyy\u0027-\u0027MM\u0027-\u0027dd HH\u0027:\u0027mm\u0027:\u0027ss\u0027Z\u0027","YearMonthPattern":"MMMM\u0027 de \u0027yyyy","AbbreviatedDayNames":["dom","seg","ter","qua","qui","sex","sáb"],"ShortestDayNames":["D","S","T","Q","Q","S","S"],"DayNames":["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"],"AbbreviatedMonthNames":["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez",""],"MonthNames":["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro",""],"IsReadOnly":true,"NativeCalendarName":"Calendário gregoriano","AbbreviatedMonthGenitiveNames":["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez",""],"MonthGenitiveNames":["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro",""]},"eras":[1,"d.C.",null,0]};//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=yeSNAJTOPtPimTGCAo3LlW61ZR3Wd4nsun3XkmvEtTfbhwnd4J5ONxQUKjo2R3Wj1MBICg1p8vSOBa_9-wAI67J1x-MNNLk9IkUxlv9bznkBhJyt3KJjPxbem5coxb970&amp;t=397b6a7" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('A estrutura do cliente do ASP.NET Ajax falhou ao ser carregada.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=DT3YJR8QaqV61-teuz0hgjmP4p96pvlL6vijmQ_urQ-y1pIz4xZTrr_3LOLLalBxdta8l7Mwmv5KlFomqBLftnMXYvkVjg_xMy8yRqwq-T3vFeynmcOAswJo5luZCpAngJPn3Su7Mf1DoMXJ9kTYvg2&amp;t=397b6a7" type="text/javascript"></script>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$SM', 'Principal', ['fctl00$CPH_Menu$CPH_Conteudo$UP_Unidades','CPH_Menu_CPH_Conteudo_UP_Unidades','tctl00$CPH_Menu$CPH_Conteudo$UpdatePanel6','CPH_Menu_CPH_Conteudo_UpdatePanel6','tctl00$CPH_Menu$CPH_Conteudo$UpdatePanel2','CPH_Menu_CPH_Conteudo_UpdatePanel2','fctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl00$UP_Materiais','CPH_Menu_CPH_Conteudo_rptUnidades_UP_Materiais_0','fctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl00$UP_Atividades','CPH_Menu_CPH_Conteudo_rptUnidades_UP_Atividades_0','fctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl01$UP_Materiais','CPH_Menu_CPH_Conteudo_rptUnidades_UP_Materiais_1','fctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl01$UP_Atividades','CPH_Menu_CPH_Conteudo_rptUnidades_UP_Atividades_1'], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+
+        
+
+
+            <div class="head container body-content">
+                <div class="logo">
+                    <img id="CPH_Menu_Img_Logo" src="../Images/Logo_Default.png" style="height:95px;width:165px;" />
+                </div>
+            </div>
+            <div class="navbar navbar-default container body-content " style="margin-bottom:6px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size:medium">
+                <div class="container">
+                     <div class="navbar-header">
+                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                             <span class="icon-bar"></span>
+                             <span class="icon-bar"></span>
+                             <span class="icon-bar"></span>
+                         </button>
+                         
+                         <span id="CPH_Menu_L_Usuario_Logado" class="navbar-brand">Olá USUÁRIO X</span>
+                         
+                     </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../Default.aspx" id="CPH_Menu_home">HOME </a></li>
+                            <li><a href="../Dados_Acesso.aspx" id="CPH_Menu_dados_acesso">DADOS DE ACESSO </a></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li><a href="Con_Curso.aspx" id="CPH_Menu_cursos">INSCRI&#199;&#213;ES</a></li>
+                            <li></li>
+                            <li><a href="Con_Meus_Cursos.aspx" id="CPH_Menu_meus_cursos">MEUS CURSOS</a></li>
+                            <li><a id="CPH_Menu_LB_Sair" href="javascript:__doPostBack(&#39;ctl00$CPH_Menu$LB_Sair&#39;,&#39;&#39;)">SAIR</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conteudo container body-content">
+                    
+
+    <div class="grid">
+        <br />
+        <br />
+        <br />
+
+        <div class="form-group">
+            <div id="CPH_Menu_CPH_Conteudo_D_Erro" class="alert alert-danger" role="alert">
+                <span id="CPH_Menu_CPH_Conteudo_L_Erro">Não foi possível localizar o arquivo 'C:\Users\Aline Hebert\Desktop\PUCDAW_STV\PUCDAW_STV\Anexos\Apostila C# & ASP.NET.pdf'.</span>
+            </div>
+            
+
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 20px;"></span>
+                    Curso
+                    
+                </div>
+                <div class="row rr">
+                    <div class="col-md-10 col-md-offset-1 table-responsive" style="text-align: center">
+                        <span id="CPH_Menu_CPH_Conteudo_L_Curso_Unidade" class="Titulo_Curso">ASP.NET E SUAS APLICAÇÕES</span>
+                    </div>
+                </div>
+                <div class="row rr form-inline">
+                    <div class="col-md-10 col-md-offset-1" style="text-align: center; margin-top: 15px">
+                        <span id="CPH_Menu_CPH_Conteudo_Dt_Inicio">Início:</span>
+                        <span id="CPH_Menu_CPH_Conteudo_L_Dt_Inicio">01/10/2016</span>|
+                        <span id="CPH_Menu_CPH_Conteudo_Dt_Termino">Término:</span>
+                        <span id="CPH_Menu_CPH_Conteudo_L_Dt_Termino">20/10/2016</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            
+
+            <div id="CPH_Menu_CPH_Conteudo_UP_Unidades">
+	
+                    
+                            <div class="panel panel-default">
+                                <div class="panel-heading" id="Atividades">
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>
+                                    UNIDADE: INTRODUÇÃO
+                                </div>
+                                <div id="CPH_Menu_CPH_Conteudo_rptUnidades_UP_Materiais_0">
+		
+                                        
+                                                <div class="row">
+                                                    <div class="col-md-8 col-md-offset-2 form-inline">
+                                                        <br />
+                                                        <div class="pull-right">
+                                                            <span id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_0_L_Title">MATERIAIS</span>
+                                                            <img src="../Images/materiais.png" />
+                                                        </div>
+                                                        <br />
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            
+                                                <div id="MateriaisPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_0_lnk_Material_0" data-toggle="ToolTip" title="Visualizar Material" href="javascript:__doPostBack(&#39;ctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl00$rptMateriais$ctl01$lnk_Material&#39;,&#39;&#39;)">SOBRE A TECNOLOGIA DA MICROSOFT</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div id="MateriaisPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_0_lnk_Material_1" data-toggle="ToolTip" title="Visualizar Material" href="javascript:__doPostBack(&#39;ctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl00$rptMateriais$ctl02$lnk_Material&#39;,&#39;&#39;)">ESTRUTURA</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row rr" style="text-align: center">
+                                                    
+                                                </div>
+                                            
+                                    
+	</div>
+                                <div id="CPH_Menu_CPH_Conteudo_rptUnidades_UP_Atividades_0">
+		
+                                        
+                                                <div class="row">
+                                                    <div class="col-md-8 col-md-offset-2 form-inline">
+                                                        <br />
+                                                        <div class="pull-right">
+                                                            <span id="CPH_Menu_CPH_Conteudo_rptUnidades_rptAtividades_0_L_Title">ATIVIDADES</span>
+                                                            <img src="../Images/atividades.png" />
+                                                        </div>
+                                                        <br />
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row rr" style="text-align: center">
+                                                    <span id="CPH_Menu_CPH_Conteudo_rptUnidades_rptAtividades_0_L_Empty">Nenhuma atividade disponível para esta unidade</span>
+                                                </div>
+                                            
+                                    
+	</div>
+                                <br />
+                                <br />
+                            </div>
+                        
+                            <div class="panel panel-default">
+                                <div class="panel-heading" id="Atividades">
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px;"></span>
+                                    UNIDADE: DESENVOLVIMENTO WEB
+                                </div>
+                                <div id="CPH_Menu_CPH_Conteudo_rptUnidades_UP_Materiais_1">
+		
+                                        
+                                                <div class="row">
+                                                    <div class="col-md-8 col-md-offset-2 form-inline">
+                                                        <br />
+                                                        <div class="pull-right">
+                                                            <span id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_1_L_Title">MATERIAIS</span>
+                                                            <img src="../Images/materiais.png" />
+                                                        </div>
+                                                        <br />
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            
+                                                <div id="MateriaisPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_1_lnk_Material_0" data-toggle="ToolTip" title="Visualizar Material" href="javascript:__doPostBack(&#39;ctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl01$rptMateriais$ctl01$lnk_Material&#39;,&#39;&#39;)">DESENVOLVENDO APLICAÇÕES COM C# E ASP.NET</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div id="MateriaisPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_1_lnk_Material_1" data-toggle="ToolTip" title="Visualizar Material" href="javascript:__doPostBack(&#39;ctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl01$rptMateriais$ctl02$lnk_Material&#39;,&#39;&#39;)">VISUAL STUDIO 2015 - LINK PARA DOWNLOAD</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div id="MateriaisPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a id="CPH_Menu_CPH_Conteudo_rptUnidades_rptMateriais_1_lnk_Material_2" data-toggle="ToolTip" title="Visualizar Material" href="javascript:__doPostBack(&#39;ctl00$CPH_Menu$CPH_Conteudo$rptUnidades$ctl01$rptMateriais$ctl03$lnk_Material&#39;,&#39;&#39;)">TUTORIAL ASP.NET</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row rr" style="text-align: center">
+                                                    
+                                                </div>
+                                            
+                                    
+	</div>
+                                <div id="CPH_Menu_CPH_Conteudo_rptUnidades_UP_Atividades_1">
+		
+                                        
+                                                <div class="row">
+                                                    <div class="col-md-8 col-md-offset-2 form-inline">
+                                                        <br />
+                                                        <div class="pull-right">
+                                                            <span id="CPH_Menu_CPH_Conteudo_rptUnidades_rptAtividades_1_L_Title">ATIVIDADES</span>
+                                                            <img src="../Images/atividades.png" />
+                                                        </div>
+                                                        <br />
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            
+                                                <div id="AtividadesPanel" class="panel-collapse collapse in">
+                                                    <div class="row rr form-inline">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <a href="../Cadastros/Atividade.aspx?Atv=2" data-toggle="ToolTip" title="Visualizar Atividade">
+                                                                AVALIAÇÃO DE CONHECIMENTO
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row rr" style="text-align: center">
+                                                    
+                                                </div>
+                                            
+                                    
+	</div>
+                                <br />
+                                <br />
+                            </div>
+                        
+                
+</div>
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Voltar" value="VOLTAR" id="CPH_Menu_CPH_Conteudo_B_Voltar" title="Voltar" class="btn btn-default" />
+                        <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Avaliar" value="☆ AVALIAR CURSO" id="CPH_Menu_CPH_Conteudo_B_Avaliar" title="Avaliar Curso" class="btn btn-primary pull-right" />
+                    </div>
+                </div>
+            </fieldset>
+            <!--Modal Exibição-->
+            <div class="modal fade bs-example-modal-lg" id="myModalExibicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div id="CPH_Menu_CPH_Conteudo_UpdatePanel6">
+	
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="L_Cabecalho">Conteúdo do Material</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            
+                                            <span id="CPH_Menu_CPH_Conteudo_LB_Download">Este material contém um arquivo para download:</span>
+                                            <br />
+                                            <br />
+                                            <span id="CPH_Menu_CPH_Conteudo_LB_Material_Download">Apostila C# & ASP.NET.pdf</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+</div>
+                        <div class="modal-footer">
+                            <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Fechar_Exibicao" value="Fechar" id="CPH_Menu_CPH_Conteudo_B_Fechar_Exibicao" title="Fechar Exibição" data-dismiss="modal" class="btn btn-default" />
+                            <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Download" value="Download" id="CPH_Menu_CPH_Conteudo_B_Download" title="Baixar Arquivo" class="btn btn-primary" />
+                            <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Abrir" value="Abrir" id="CPH_Menu_CPH_Conteudo_B_Abrir" title="Abrir Arquivo" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Modal Avaliação -->
+            <div class="modal fade" id="myModalAv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div id="CPH_Menu_CPH_Conteudo_UpdatePanel2">
+	
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="L_Titulo_MOdal_Av">Avaliar Curso:</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row rr">
+                                        
+                                        <div class="col-md-12">
+                                            Nota do Curso:
+                                            <div class="vote">
+                                                <label>
+                                                    <input value="1" name="ctl00$CPH_Menu$CPH_Conteudo$fb" type="radio" id="CPH_Menu_CPH_Conteudo_um" />
+                                                    <i class="fa"></i>
+                                                </label>
+                                                <label>
+                                                    <input value="2" name="ctl00$CPH_Menu$CPH_Conteudo$fb" type="radio" id="CPH_Menu_CPH_Conteudo_dois" />
+                                                    <i class="fa"></i>
+                                                </label>
+                                                <label>
+                                                    <input value="3" name="ctl00$CPH_Menu$CPH_Conteudo$fb" type="radio" id="CPH_Menu_CPH_Conteudo_tres" />
+                                                    <i class="fa"></i>
+                                                </label>
+                                                <label>
+                                                    <input value="4" name="ctl00$CPH_Menu$CPH_Conteudo$fb" type="radio" id="CPH_Menu_CPH_Conteudo_quatro" />
+                                                    <i class="fa"></i>
+                                                </label>
+                                                <label>
+                                                    <input value="5" name="ctl00$CPH_Menu$CPH_Conteudo$fb" type="radio" id="CPH_Menu_CPH_Conteudo_cinco" />
+                                                    <i class="fa"></i>
+                                                </label>
+                                            </div>
+                                            <span id="voto" style="color: white"></span>
+                                            <br />
+                                            Comentário:
+                                            <br />
+                                            <textarea name="ctl00$CPH_Menu$CPH_Conteudo$TB_Comentario" rows="4" cols="50" id="CPH_Menu_CPH_Conteudo_TB_Comentario" title="Comentário sobre a avaliação" class="form-control">
+</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Fecha_Avaliacao" value="Fechar" id="CPH_Menu_CPH_Conteudo_B_Fecha_Avaliacao" data-dismiss="modal" class="btn btn-default" />
+                                    <input type="submit" name="ctl00$CPH_Menu$CPH_Conteudo$B_Confirma_Avaliacao" value="Enviar Avaliação" id="CPH_Menu_CPH_Conteudo_B_Confirma_Avaliacao" title="Avaliar Curso" class="btn btn-primary" />
+                                </div>
+                                </div>
+                            
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../js/jsstyle.js"></script>
+        <script>
+            function PintarEstrelas(notaSelecionada) {
+                $('.vote label i.fa').each(function () {
+                    /* checar de o valor clicado é menor ou igual do input atual
+                    *  se sim, adicionar classe active
+                    */
+                    var $input = $(this).prev('input');
+                    if ($input.val() <= notaSelecionada) {
+                        $(this).addClass('active');
+                    }
+                });
+            };
+            function IniciarAvaliacao(){
+            $('.vote label i.fa').on('click mouseover', function () {
+                // remove classe ativa de todas as estrelas
+                $('.vote label i.fa').removeClass('active');
+                // pegar o valor do input da estrela clicada
+                var val = $(this).prev('input').val();
+                //percorrer todas as estrelas
+                $('.vote label i.fa').each(function () {
+                    /* checar de o valor clicado é menor ou igual do input atual
+                    *  se sim, adicionar classe active
+                    */
+                    var $input = $(this).prev('input');
+                    if ($input.val() <= val) {
+                        $(this).addClass('active');
+                    }
+                });
+                $("#voto").html(val); // somente para teste
+            });
+            //Ao sair da div vote
+            $('.vote').mouseleave(function () {
+                //pegar o valor clicado
+                var val = $(this).find('input:checked').val();
+                //se nenhum foi clicado remover classe de todos
+                if (val == undefined) {
+                    $('.vote label i.fa').removeClass('active');
+                } else {
+                    //percorrer todas as estrelas
+                    $('.vote label i.fa').each(function () {
+                        /* Testar o input atual do laço com o valor clicado
+                        *  se maior, remover classe, senão adicionar classe
+                        */
+                        var $input = $(this).prev('input');
+                        if ($input.val() > val) {
+                            $(this).removeClass('active');
+                        } else {
+                            $(this).addClass('active');
+                        }
+                    });
+                }
+                $("#voto").html(val); // somente para teste
+            });
+            }
+        </script>
+
+                </div>
+
+            <footer id="main">
+                Copyright© 2016 - Aline Hebert 
+            </footer>
+        
+    
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="E88FCF48" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="xoAoZfFUqL04z8DU+BGBlq7EN7AI8lmfeM9lluA1klOpzRMX+j6+4/SLNdU/wU0qC8OjCgtrnxtvzhOhrnrrSxCfLH8GvyTVZc3l1r5lsKJbcwfbLp/GiviTSmkJ4IgNCFOcdUs14fa1R/h+JZ6jj9SYzwe1l37wUzU7xvEOktnRjKp/mi3zgCKtbomd3uvMpUWHTyn0KjttaeCXMwxIJtenT9+v/vWSNqicHu2rt4aIpYeXfl/NOQ57r3vKOlwW4gn5cbBk3y/Lmts7XbJBnzyUP+0AloZLgCSkOoFwZoQEN20w45rHxCoxizZ5JJSdJWhtswG2fhXJRkARGqaZLjqQS00s1MP4KDdlu7QmC6usIPUMFGqadTELzqsqWbhkWTzqlBJtXHvag5OdrpPgNUOR03WDsd9RR2/OtMR5QSjnWQ2Q/1/IsidHKQikDkWaRHfLWxFN9hLl9rD3mJLWo3TwFEKgeb1151nQqSzHPrSlDSxECdS8U43q1Z6T/R26" />
+</div></form>
+
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Chrome","requestId":"38c6aa49f82647e9873a4dcf67224af3"}
+</script>
+<script type="text/javascript" src="http://localhost:49657/944adae756e8425bb84ff7b6c4f66802/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+</body>
+</html>

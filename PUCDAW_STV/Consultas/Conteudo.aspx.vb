@@ -265,16 +265,22 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         'Exibir vídeo com URL de terceiros
                         LIT_Video.Visible = True
                         LB_Download.Visible = False
+                        LB_Material_Download.Visible = False
+
+                        'Dim SB As New StringBuilder
+                        'SB.Append("<iframe width = '868px' height='568px'")
+                        'SB.Append("src = '" + Conteudo_Material + "' >")
+                        'SB.Append("</iframe>")
 
                         Dim SB As New StringBuilder
-                        SB.Append("<iframe width = '868px' height='568px'")
-                        SB.Append("src = '" + Conteudo_Material + "' >")
-                        SB.Append("</iframe>")
+                        SB.Append("<a class='embedly-card'  href='" + Conteudo_Material + "'> </a>")
+                        SB.Append("<script Async src='//cdn.embedly.com/widgets/platform.js' charset='UTF-8'></script>")
 
                         LIT_Video.Text = SB.ToString
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = False
+                        B_Abrir.Visible = False
 
                         If Dado.Dt_Termino > Date.Today Then
                             'Grava a visualização do material
@@ -301,6 +307,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = False
+                        B_Abrir.Visible = False
 
                         If Dado.Dt_Termino > Date.Today Then
                             'Grava a visualização do material
@@ -316,9 +323,10 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         'Abrir modal para mostrar o vídeo
                         LIT_Video.Visible = True
                         LB_Download.Visible = False
+                        LB_Material_Download.Visible = False
 
                         Dim SB As New StringBuilder
-                        SB.Append("<video width='868px' height='568px' controls>")
+                        SB.Append("<video width='100%' height='100%' controls>")
                         SB.Append("<source src='http://" + URL + "' type='video/mp4'>")
                         SB.Append("<source src='http://" + URL + "' type='video/webm'>")
                         SB.Append(" Seu navegador não suporte HTML5 ")
@@ -328,6 +336,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = True
+                        B_Abrir.Visible = False
 
                         If Dado.Dt_Termino > Date.Today Then
                             'Grava a visualização do material
@@ -353,6 +362,8 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
 
                         B_Download.Visible = True
                         B_Abrir.Visible = True
+
+
                     Case "5"
                         'Fazer download do arquivo
                         B_Abrir.Visible = False
@@ -366,11 +377,13 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         RegistrarScript("$('#myModalExibicao').modal('show')")
 
                         B_Download.Visible = True
+                        B_Abrir.Visible = False
 
                     Case "6"
                         'Abrir modal para mostrar a imagem
                         LIT_Video.Visible = True
                         LB_Download.Visible = False
+                        LB_Material_Download.Visible = False
 
                         Dim SB As New StringBuilder
                         SB.Append("<img src='.." + Conteudo_Material + "' width='868px'  />")
@@ -383,7 +396,7 @@ Partial Class Consultas_Conteudo : Inherits STV.Base.Page
                         Me.ViewState("Material_Selecionado") = Cod_Material
 
                         B_Download.Visible = True
-
+                        B_Abrir.Visible = False
 
                         If Dado.Dt_Termino > Date.Today Then
 

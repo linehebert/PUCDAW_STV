@@ -43,7 +43,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="com conclusão em " + Fields!Dt_Termino.Value + " e aproveitamento satisfatório."</Value>
+                <Value>="com conclusão em " + Format(Fields!Dt_Termino.Value, "dd/MM/yyyy") + " e aproveitamento satisfatório."</Value>
                 <Style>
                   <FontSize>14pt</FontSize>
                   <FontWeight>SemiBold</FontWeight>

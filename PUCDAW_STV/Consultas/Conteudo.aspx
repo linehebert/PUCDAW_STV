@@ -305,4 +305,9 @@
             });
             }
         </script>
+            <script>
+        $('body').on('hidden.bs.modal', '.modal', function () {
+            $('video').trigger('pause');
+        });
+    </script>
 </asp:Content>

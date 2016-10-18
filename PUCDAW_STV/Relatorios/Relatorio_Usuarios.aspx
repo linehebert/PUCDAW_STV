@@ -15,7 +15,7 @@
         <div class="form-group">
             <br /><br />
             <div id="D_Erro" class="alert alert-danger" role="alert" runat="server" visible="false">
-                <asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label>
+                <center><asp:Label ID="L_Erro" runat="server" SkinID="Skin_label_error" Text=""></asp:Label></center>
             </div>
             <div id="D_Aviso" class="alert alert-success" role="alert" runat="server" visible="false">
                 <asp:Label ID="L_Aviso" runat="server" Text=""></asp:Label>
