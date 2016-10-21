@@ -57,8 +57,13 @@ h2{
 }
 
 .logo{
-    text-align:center;    
+    text-align:center; 
+    width:auto;
+    height:auto;
+    margin-top:5px;
+    margin-bottom:5px;   
 }
+
 footer#main{
 	position:relative;
 	left:0;
